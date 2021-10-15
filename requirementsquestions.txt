@@ -1,2 +1,6 @@
-Web or desktop frontend
+Web or desktop frontend?
 Licensing
+Should students be exposed to system?
+Specific data that should be prioritised
+Applications of data on the frontend (e.g graphs, interactive elements)
+Faculty relevant to contract
