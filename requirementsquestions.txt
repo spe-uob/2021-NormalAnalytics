@@ -3,4 +3,5 @@ Licensing
 Should students be exposed to system?
 Specific data that should be prioritised
 Applications of data on the frontend (e.g graphs, interactive elements)
-Faculty relevant to contract
+Faculty relevant to contract + ensure acting on behalf of university rather than as individual
+Would the project be open or closed sourced?
