@@ -1,0 +1,35 @@
+
+
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### MAC ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+gh-md-toc
+/pgdata_docker/
