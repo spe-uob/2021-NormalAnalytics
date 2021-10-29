@@ -11,11 +11,17 @@ compile this data across units to again give personal tutors the information req
 for students and offer further support.”
 
 Instalation guide:
-Clone the repository.
-Go to parent directory.
-Run the folllowing command : mvn spring-boot:run
-Open in browser on localhost:8080
+
+1. Clone the repository.
+
+2. Go to parent directory.
+
+3. Run the folllowing command : mvn spring-boot:run
+
+4. Open in browser on localhost:8080
 
 Dependencies:
+
 Java 11 or higher
+
 Maven 
