@@ -10,14 +10,12 @@ log on data, attainment in formative and summative tests and the analytics from 
 compile this data across units to again give personal tutors the information required to spot difficulties
 for students and offer further support.”
 
-Stakeholders:
-- Personal tutors
-- Current students
-- Legal stakeholders (consured GDPR)
+Instalation guide:
+Clone the repository.
+Go to parent directory.
+Run the folllowing command : mvn spring-boot:run
+Open in browser on localhost:8080
 
-User Stories:
-- As a personal tutor, I would like to be able to see student formative assignment data, not just the summative assignment data
-- As a personal tutor, I would like to be able to see a the entirety of a student's academic data throughout all units, not just unit-by-unit
-- As a personal tutor, I would like to be able to compare student assignment data to the general result of the cohort
-- As a personal tutor, I would like access to data which provides context as to how many assignments students have been given for particular units
-- As a personal tutor, I would to be able to see a student's average overall grade taking into account the different weightings of each unit
+Dependencies:
+Java 11 or higher
+Maven 
