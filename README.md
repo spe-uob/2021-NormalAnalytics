@@ -11,14 +11,13 @@ compile this data across units to again give personal tutors the information req
 for students and offer further support.”
 
 Stakeholders:
--Current students, using Blackboard
--Tutors
--Lectures
-
-Legal stakeholders(consured GDPR)
+- Personal tutors
+- Current students
+- Legal stakeholders (consured GDPR)
 
 User Stories:
--If a tutor wants to look at student data and achviements to identify some areas where they might be struggling
--Students can look at general statistics ? 
--Lecturers can look at student by student level plus overview 
-// More to be added after initual meeting
+- As a personal tutor, I would like to be able to see student formative assignment data, not just the summative assignment data
+- As a personal tutor, I would like to be able to see a the entirety of a student's academic data throughout all units, not just unit-by-unit
+- As a personal tutor, I would like to be able to compare student assignment data to the general result of the cohort
+- As a personal tutor, I would like access to data which provides context as to how many assignments students have been given for particular units
+- As a personal tutor, I would to be able to see a student's average overall grade taking into account the different weightings of each unit
