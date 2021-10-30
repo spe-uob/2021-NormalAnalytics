@@ -10,15 +10,18 @@ log on data, attainment in formative and summative tests and the analytics from 
 compile this data across units to again give personal tutors the information required to spot difficulties
 for students and offer further support.”
 
-Stakeholders:
--Current students, using Blackboard
--Tutors
--Lectures
+Instalation guide:
 
-Legal stakeholders(consured GDPR)
+1. Clone the repository.
 
-User Stories:
--If a tutor wants to look at student data and achviements to identify some areas where they might be struggling
--Students can look at general statistics ? 
--Lecturers can look at student by student level plus overview 
-// More to be added after initual meeting
+2. Go to parent directory.
+
+3. Run the folllowing command : mvn spring-boot:run
+
+4. Open in browser on localhost:8080
+
+Dependencies:
+
+Java 11 or higher
+
+Maven 
