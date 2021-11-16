@@ -10,13 +10,9 @@ import javax.persistence.Access;
 @Controller
 public class HelloWorldController {
 
-    @Autowired
-    CustomDatabaseReciever rec;
-
     @GetMapping("/hello")
     @ResponseBody
     public String helloWorld(){
-        //return "Hello world";
-        return rec.VerifyLogin("joss","donthackme");
+        return "Hello world";
     }
 }

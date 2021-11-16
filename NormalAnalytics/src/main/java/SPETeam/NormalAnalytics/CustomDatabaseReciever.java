@@ -4,12 +4,14 @@ import SPETeam.NormalAnalytics.Database.TutorRepository;
 import SPETeam.NormalAnalytics.Database.Tutors;
 import org.hibernate.boot.model.relational.Database;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Primary
+@Component("CustomDatabaseReceiver")
 public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Autowired
