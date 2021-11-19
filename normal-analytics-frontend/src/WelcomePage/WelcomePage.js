@@ -10,16 +10,14 @@ class WelcomePage extends React.Component {
   render(){
     return (
     <body>
-      <div className="fullpage">
-        <div className="login">
-          <p>Personal tutors sign in</p>
-          <button onClick={this.handleClick}>
-        Click me
-      </button>
-        </div>
-
+    <div className="fullpage">
+      <div className="login">
+        <p>Personal tutors sign in</p>
+        <button className="button" onClick={this.handleClick}>
+          Log In
+        </button>
+      </div>
      </div>
-    
     </body>)
   } 
 }
