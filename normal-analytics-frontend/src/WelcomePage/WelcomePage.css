@@ -1,0 +1,17 @@
+.fullpage{
+    background-image: url(../image/backgroundimage.jpg);
+    background-attachment:'fixed';
+    background-size:cover;
+    background-position: top;
+    height:100vh;
+    display: flex;
+    align-items: center;
+justify-content: center;
+}
+
+.login{
+    background-color: aliceblue;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+}
