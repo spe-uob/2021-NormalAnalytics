@@ -13,8 +13,8 @@ class WelcomePage extends React.Component {
       <div className="fullpage">
         <div className="login">
           <p>Personal tutors sign in</p>
-          <button onClick={this.handleClick}>
-        Click me
+          <button class="button" onClick={this.handleClick}>
+        Log In 
       </button>
         </div>
 
