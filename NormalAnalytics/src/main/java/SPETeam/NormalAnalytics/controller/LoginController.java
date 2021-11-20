@@ -1,5 +1,6 @@
 package SPETeam.NormalAnalytics.controller;
 
+import SPETeam.NormalAnalytics.entity.Token;
 import SPETeam.NormalAnalytics.entity.User;
 import SPETeam.NormalAnalytics.utils.JwtUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,13 @@ public class LoginController {
     private final String PASSWORD = "123123";
 
     @PostMapping("/login")
-    public String login(@RequestBody User user){
+    public Token login(@RequestBody User user){
         if(USERNAME.equals(user.getUsername()) && PASSWORD.equals(user.getPassword())){
             //add token
             user.setToken(JwtUtil.createToken());
-            return user.getToken();
+            return Token.fromUser(user);
         }
-        return "password incorrect";
+        return Token.failed();
     }
 
     @GetMapping("/verifyToken")
