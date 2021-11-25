@@ -17,13 +17,13 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     @Autowired
     TutorRepository repo;
 
-    public String VerifyLogin(String name,String password){
+    public boolean VerifyLogin(String name,String password){
         Optional<Tutors> users = repo.findByUsername(name);
-        if(users.isEmpty()) return "User not found";
+        if(users.isEmpty()) return false;
         if(users.get().getPassword().equals(password)){
-            return "Login successful";
+            return true;
         }else{
-            return "Incorrect password";
+            return false;
         }
     }
 }

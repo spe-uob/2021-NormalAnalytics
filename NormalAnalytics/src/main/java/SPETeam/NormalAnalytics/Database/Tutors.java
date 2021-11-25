@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="Tutors")
+@Table(name="Tutor")
 public class Tutors {
     @Id
     @GeneratedValue @Column(name="Id") @Getter @Setter
