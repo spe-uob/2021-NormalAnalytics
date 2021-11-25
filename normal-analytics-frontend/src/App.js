@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import WelcomePage from './WelcomePage/WelcomePage';
-
+import LogIn from './LogIn/LogIn';
 
 class App extends Component {
 
@@ -22,18 +23,18 @@ class App extends Component {
 
   render() {
     return (
-        /*<div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">{this.state.message}</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+        <div className="App">
+          <BrowserRouter>
+            <Switch>
+              <Route path="/welcome">
+                <WelcomePage />
+              </Route>
+              <Route path="/login">
+                <LogIn />
+              </Route>
+            </Switch>  
+          </BrowserRouter>
         </div>
-        <img src={backgroundimage} style={{backgroundSize:'cover',width:'100%',height:'100%'}}/>
-        */
-        <WelcomePage />
     );
   }
 }
