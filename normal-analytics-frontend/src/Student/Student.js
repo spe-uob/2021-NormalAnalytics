@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router';
 import { withRouter } from 'react-router-dom';
- 
-import "./LogIn.css"
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
-class LogIn extends React.Component {
+import "./Student.css"
+
+
+const options = [
+    'one', 'two', 'three'
+  ]
+const defaultOption = options[0];
+
+class Student extends React.Component {
   constuctor() {
     this.routeChange = this.routeChange.bind(this);
     this.state = {value: ''};
@@ -12,28 +20,21 @@ class LogIn extends React.Component {
 
 
   handleClick = () => {
-    this.props.history.push("/student");
+    this.props.history.push("/dashboard");
     console.log('this is:', this);
   }
-  
+
   render(){
     return (
     <body>
     <div className="fullpage">
       <div className="login">
-        <p>Sign in</p>
-        <form className="text">
-        <label>
-          Name:
-          <input type="text" className="input"  />
-        </label>
-        <label>
-          Password:
-          <input type="text" className="input"  />
-        </label>
-        </form>
+        <p>Choose a student, please</p>
+        <Dropdown options={options} onChange={this._onSelect} 
+        value={defaultOption} 
+        placeholder="Select an option" />
         <button className="button" onClick={this.handleClick.bind(this)}>
-          Log In
+          Next
         </button>
       </div>
      </div>
@@ -41,4 +42,4 @@ class LogIn extends React.Component {
   } 
 }
 //export default LogIn;
-export default withRouter (LogIn);
+export default withRouter (Student);

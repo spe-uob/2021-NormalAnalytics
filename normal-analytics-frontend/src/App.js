@@ -4,6 +4,8 @@ import logo from './logo.svg';
 import './App.css';
 import WelcomePage from './WelcomePage/WelcomePage';
 import LogIn from './LogIn/LogIn';
+import Student from './Student/Student'
+import DashBoard from './DashBoard/DashBoard'
 
 class App extends Component {
 
@@ -31,6 +33,12 @@ class App extends Component {
               </Route>
               <Route path="/login">
                 <LogIn />
+              </Route>
+              <Route path="/student">
+                <Student />
+              </Route>
+              <Route path="/dashboard">
+                <DashBoard />
               </Route>
             </Switch>  
           </BrowserRouter>
