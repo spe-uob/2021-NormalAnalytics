@@ -1,12 +1,12 @@
+/* welcome */
+
 .fullpage{
-    background-image: url(../../images/backgroundimage.jpg);
-    background-attachment:'fixed';
-    background-size:cover;
-    background-position: top;
     height:100vh;
+    background: url(../../images/backgroundimage.jpg) no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     align-items: center;
-justify-content: center;
+    justify-content: center;
 }
 
 .login{

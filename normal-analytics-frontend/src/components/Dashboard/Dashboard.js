@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
-import { Router } from 'react-router';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import "./DashBoard.css"
+import "./Dashboard.css"
 
 
 
-class DashBoard extends React.Component {
+class Dashboard extends React.Component {
   constuctor() {
     this.routeChange = this.routeChange.bind(this);
     this.state = {value: ''};
@@ -34,4 +32,4 @@ class DashBoard extends React.Component {
   } 
 }
 //export default LogIn;
-export default withRouter (DashBoard);
+export default withRouter (Dashboard);

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Router } from 'react-router';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
  
-import "./LogIn.css"
+import "./Login.css"
 
-class LogIn extends React.Component {
+class Login extends React.Component {
   constuctor() {
     this.routeChange = this.routeChange.bind(this);
     this.state = {value: ''};
@@ -40,5 +39,5 @@ class LogIn extends React.Component {
     </body>)
   } 
 }
-//export default LogIn;
-export default withRouter (LogIn);
+//export default Login;
+export default withRouter (Login);

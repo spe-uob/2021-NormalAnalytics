@@ -1,0 +1,21 @@
+/* login */
+
+.login{
+    background-color: aliceblue;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    border: 2px solid #50a2bb;
+    font-size: 20px;
+}
+
+.text{
+    text-decoration: none;
+    font-size: 14px;
+    margin: 4px 2px;
+}
+
+.input{
+    padding: 16px 32px;
+    margin: 4px 2px;
+}

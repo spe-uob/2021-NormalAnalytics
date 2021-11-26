@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Router } from 'react-router';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import "./WelcomePage.css"

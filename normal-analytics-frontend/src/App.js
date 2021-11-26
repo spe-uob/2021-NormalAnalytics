@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import WelcomePage from './components/WelcomePage/WelcomePage';
-import LogIn from './components/LogIn/LogIn';
+import Login from './components/Login/Login';
 import Student from './components/Student/Student'
-import DashBoard from './components/DashBoard/DashBoard'
+import Dashboard from './components/Dashboard/Dashboard'
 
 class App extends Component {
 
@@ -32,13 +31,13 @@ class App extends Component {
                 <WelcomePage />
               </Route>
               <Route path="/login">
-                <LogIn />
+                <Login />
               </Route>
               <Route path="/student">
                 <Student />
               </Route>
               <Route path="/dashboard">
-                <DashBoard />
+                <Dashboard />
               </Route>
             </Switch>  
           </BrowserRouter>
