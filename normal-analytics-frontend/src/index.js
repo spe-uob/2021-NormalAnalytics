@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import WelcomePage from './WelcomePage/WelcomePage'
+import WelcomePage from './components/WelcomePage/WelcomePage'
 
 ReactDOM.render(
   <React.StrictMode>

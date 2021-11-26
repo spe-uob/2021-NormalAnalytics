@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
-import WelcomePage from './WelcomePage/WelcomePage';
-import LogIn from './LogIn/LogIn';
-import Student from './Student/Student'
-import DashBoard from './DashBoard/DashBoard'
+import WelcomePage from './components/WelcomePage/WelcomePage';
+import LogIn from './components/LogIn/LogIn';
+import Student from './components/Student/Student'
+import DashBoard from './components/DashBoard/DashBoard'
 
 class App extends Component {
 
