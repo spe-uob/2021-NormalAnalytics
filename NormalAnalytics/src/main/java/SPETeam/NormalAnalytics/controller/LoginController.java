@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
 
     @Autowired
-    @Qualifier("TestingDatabaseReceiver")
     IDatabaseReceiver receiver;
 
     @PostMapping("/login")
