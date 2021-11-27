@@ -28,6 +28,15 @@ public class LoginController {
         }
         return Token.failed();
     }
+    /*
+    public Token login(@RequestBody User user){
+        if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
+            //add token
+            user.setToken(JwtUtil.createToken());
+            return Token.fromUser(user);
+        }
+        return Token.failed();
+    }*/
 
     @GetMapping("/verifyToken")
     public Boolean verifyToken(HttpServletRequest request){

@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics;
+package SPETeam.NormalAnalytics.IntegrationTests;
 
 import SPETeam.NormalAnalytics.controller.LoginController;
 import SPETeam.NormalAnalytics.entity.Token;
