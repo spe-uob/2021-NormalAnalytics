@@ -5,6 +5,7 @@ import WelcomePage from './components/WelcomePage/WelcomePage';
 import Login from './components/Login/Login';
 import Student from './components/Student/Student'
 import Dashboard from './components/Dashboard/Dashboard'
+import NotFound from './components/NotFound/NotFound'
 
 class App extends Component {
 
@@ -38,6 +39,9 @@ class App extends Component {
               </Route>
               <Route path="/dashboard">
                 <Dashboard />
+              </Route>
+              <Route path='*'>
+                <NotFound />
               </Route>
             </Switch>  
           </BrowserRouter>
