@@ -1,0 +1,11 @@
+User stories: 
+
+	As a personal tutor, I would like to be able to see student formative assignment data, not just the summative assignment data 
+
+	As a personal tutor, I would like to be able to see the entirety of a student's academic data throughout all units, not just unit-by-unit 
+
+	As a personal tutor, I would like to be able to compare student assignment data to the general result of the cohort 
+
+	As a personal tutor, I would to be able to see a student's average overall grade taking into account the different weightings of each unit 
+
+	As a personal tutor, I would like to be able to select the student I want to see the data for from a list of just my tutees 
