@@ -1,29 +1,37 @@
 package SPETeam.NormalAnalytics;
 
-import SPETeam.NormalAnalytics.Database.TutorRepository;
-import SPETeam.NormalAnalytics.Database.Tutors;
+import SPETeam.NormalAnalytics.Database.Repositories.StudentRepository;
+import SPETeam.NormalAnalytics.Database.Repositories.UnitRepository;
+import SPETeam.NormalAnalytics.Database.Tables.StudentTable;
+import SPETeam.NormalAnalytics.Database.Repositories.TutorRepository;
+import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
+import SPETeam.NormalAnalytics.Database.Tables.UnitTable;
 import SPETeam.NormalAnalytics.entity.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Student;
 import SPETeam.NormalAnalytics.entity.Unit;
-import SPETeam.NormalAnalytics.entity.User;
-import org.hibernate.boot.model.relational.Database;
+import SPETeam.NormalAnalytics.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Primary
 @Component("CustomDatabaseReceiver")
 public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Autowired
-    TutorRepository repo;
+    TutorRepository tutorRepository;
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    UnitRepository unitRepository;
 
     @Override
     public boolean VerifyLogin(String name,String password){
-        Optional<Tutors> users = repo.findByUsername(name);
+        Optional<TutorTable> users = tutorRepository.findByUsername(name);
         if(users.isEmpty()) return false;
         if(users.get().getPassword().equals(password)){
             return true;
@@ -34,7 +42,13 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Override
     public List<Student> StudentsFromTutor(String tutorUsername) {
-        return null;
+        List<StudentTable> tutees = studentRepository.findStudentByTutorUsername(tutorUsername);
+        System.out.println(tutees);
+        List<Student> jsonTutees = new ArrayList<>();
+        for(StudentTable t : tutees){
+            jsonTutees.add(t.asData());
+        }
+        return jsonTutees;
     }
 
     @Override
@@ -44,7 +58,17 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Override
     public List<Unit> UnitsFromStudent(String studentUsername) {
-        return null;
+        Optional<StudentTable> student = studentRepository.findStudentTableByUsername(studentUsername);
+        if(studentUsername.isEmpty()){
+            return null;
+        }else {
+            Set<UnitTable> units = unitRepository.findUnitTablesByMembersContaining(student.get());
+            List<Unit> unitJsons = new ArrayList<>();
+            for(UnitTable u: units){
+                unitJsons.add(u.asData());
+            }
+            return unitJsons;
+        }
     }
 
     @Override

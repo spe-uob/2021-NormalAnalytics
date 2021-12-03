@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.Database;
+package SPETeam.NormalAnalytics.Database.Tables;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="Tutor")
-public class Tutors {
+public class TutorTable {
     @Id
     @GeneratedValue @Column(name="Id") @Getter @Setter
     int id;
