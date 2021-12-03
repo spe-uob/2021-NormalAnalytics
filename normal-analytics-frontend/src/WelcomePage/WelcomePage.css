@@ -1,0 +1,38 @@
+.fullpage{
+    background-image: url(../image/backgroundimage.jpg);
+    background-attachment:'fixed';
+    background-size:cover;
+    background-position: top;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login{
+    background-color: aliceblue;
+    width: 200px;
+    height: 150px;
+    text-align: center;
+    border: 3px solid #50a2bb;
+    padding: 20px 0;
+
+}
+
+.button{
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #50a2bb;
+}
+.button:hover{
+    background-color: #50a2bb;
+    color: white;
+  }
