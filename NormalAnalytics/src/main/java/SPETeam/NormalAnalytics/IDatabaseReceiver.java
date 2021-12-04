@@ -1,8 +1,16 @@
 package SPETeam.NormalAnalytics;
 
+import SPETeam.NormalAnalytics.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public interface IDatabaseReceiver {
-    //Could send profile data if login is confirmed
-    String VerifyLogin(String name,String password);
+    boolean VerifyLogin(String name,String password);
+    List<Student> StudentsFromTutor(String tutorUsername);
+    List<AssessmentScore> ScoresFromUnit(String studentUsername,String unitCode);
+    List<Unit> UnitsFromStudent(String studentUsername);
+    float AttendanceFromUnit(String studentUsername,String unitCode);
+    float UnitMedianForAssessment(String unitCode,String assessmentName);
 }
