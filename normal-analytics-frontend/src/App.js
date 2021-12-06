@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import WelcomePage from './WelcomePage/WelcomePage';
-
+import WelcomePage from './components/WelcomePage/WelcomePage';
+import Login from './components/Login/Login';
+import Student from './components/Student/Student'
+import Dashboard from './components/Dashboard/Dashboard'
+import NotFound from './components/NotFound/NotFound'
 
 class App extends Component {
 
@@ -22,18 +25,27 @@ class App extends Component {
 
   render() {
     return (
-        /*<div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">{this.state.message}</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+        <div className="App">
+          <BrowserRouter>
+            <Switch>
+              <Route path="/welcome">
+                <WelcomePage />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/student">
+                <Student />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Route path='*'>
+                <NotFound />
+              </Route>
+            </Switch>  
+          </BrowserRouter>
         </div>
-        <img src={backgroundimage} style={{backgroundSize:'cover',width:'100%',height:'100%'}}/>
-        */
-        <WelcomePage />
     );
   }
 }
