@@ -11,18 +11,6 @@ class App extends Component {
 
   state = {};
 
-  componentDidMount() {
-    setInterval(this.hello, 250);
-  }
-
-  hello = () => {
-    fetch('/hello')
-        .then(response => response.text())
-        .then(message => {
-          this.setState({message: message});
-        });
-  };
-
   render() {
     return (
         <div className="App">
