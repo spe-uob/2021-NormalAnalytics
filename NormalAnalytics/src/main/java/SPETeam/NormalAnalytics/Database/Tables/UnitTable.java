@@ -1,7 +1,7 @@
 package SPETeam.NormalAnalytics.Database.Tables;
 
 import SPETeam.NormalAnalytics.Database.IGivesEntity;
-import SPETeam.NormalAnalytics.entity.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.Unit;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,13 +1,11 @@
 package SPETeam.NormalAnalytics.Database.Tables;
 
 import SPETeam.NormalAnalytics.Database.IGivesEntity;
-import SPETeam.NormalAnalytics.entity.Student;
-import SPETeam.NormalAnalytics.entity.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.Student;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity @Table(name="Student")

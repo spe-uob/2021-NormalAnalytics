@@ -1,9 +1,8 @@
 package SPETeam.NormalAnalytics;
 
-import SPETeam.NormalAnalytics.entity.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Student;
-import SPETeam.NormalAnalytics.entity.Unit;
-import SPETeam.NormalAnalytics.entity.User;
+import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
+import SPETeam.NormalAnalytics.entity.Responses.Student;
+import SPETeam.NormalAnalytics.entity.Responses.Unit;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

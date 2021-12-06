@@ -1,11 +1,10 @@
 package SPETeam.NormalAnalytics.controller;
 
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
-import SPETeam.NormalAnalytics.entity.Token;
-import SPETeam.NormalAnalytics.entity.User;
+import SPETeam.NormalAnalytics.entity.Responses.Token;
+import SPETeam.NormalAnalytics.entity.Requests.User;
 import SPETeam.NormalAnalytics.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

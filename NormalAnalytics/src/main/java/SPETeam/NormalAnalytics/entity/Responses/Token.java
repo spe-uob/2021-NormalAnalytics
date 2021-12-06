@@ -1,5 +1,6 @@
-package SPETeam.NormalAnalytics.entity;
+package SPETeam.NormalAnalytics.entity.Responses;
 
+import SPETeam.NormalAnalytics.entity.Requests.User;
 import lombok.Data;
 
 @Data

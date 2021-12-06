@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.entity;
+package SPETeam.NormalAnalytics.entity.Requests;
 
 import lombok.AccessLevel;
 import lombok.Data;

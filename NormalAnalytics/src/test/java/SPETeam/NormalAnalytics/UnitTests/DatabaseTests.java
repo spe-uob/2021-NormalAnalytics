@@ -1,12 +1,12 @@
 package SPETeam.NormalAnalytics.UnitTests;
 
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
-import SPETeam.NormalAnalytics.entity.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
+import SPETeam.NormalAnalytics.entity.Responses.Unit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import SPETeam.NormalAnalytics.entity.Student;
+import SPETeam.NormalAnalytics.entity.Responses.Student;
 
 import java.util.List;
 

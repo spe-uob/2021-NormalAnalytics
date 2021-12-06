@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.entity;
+package SPETeam.NormalAnalytics.entity.Responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

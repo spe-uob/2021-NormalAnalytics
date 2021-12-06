@@ -2,9 +2,9 @@ package SPETeam.NormalAnalytics;
 
 import SPETeam.NormalAnalytics.Database.Repositories.*;
 import SPETeam.NormalAnalytics.Database.Tables.*;
-import SPETeam.NormalAnalytics.entity.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Unit;
-import SPETeam.NormalAnalytics.entity.Student;
+import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
+import SPETeam.NormalAnalytics.entity.Responses.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
