@@ -9,11 +9,10 @@ class WelcomePage extends React.Component {
     this.routeChange = this.routeChange.bind(this);
   }
 
-
   handleClick = () => {
     this.props.history.push("/login");
-    console.log('this is:', this);
   }
+
   render(){
     return (
     <body>

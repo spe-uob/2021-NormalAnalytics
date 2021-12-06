@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import WelcomePage from './components/WelcomePage/WelcomePage';
@@ -7,35 +7,18 @@ import Student from './components/Student/Student'
 import Dashboard from './components/Dashboard/Dashboard'
 import NotFound from './components/NotFound/NotFound'
 
-class App extends Component {
-
-  state = {};
-
-  render() {
-    return (
-        <div className="App">
-          <BrowserRouter>
-            <Switch>
-              <Route path="/welcome">
-                <WelcomePage />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/student">
-                <Student />
-              </Route>
-              <Route path="/dashboard">
-                <Dashboard />
-              </Route>
-              <Route path='*'>
-                <NotFound />
-              </Route>
-            </Switch>  
-          </BrowserRouter>
-        </div>
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={WelcomePage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/student" component={Student} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
     );
-  }
 }
 
 export default App;
