@@ -123,49 +123,52 @@ function Dashboard () {
 
     return (
         <div style={{ display: "flex", backgroundColor:"#b0e0e6" }}>
-        <Sidebar />
-         
-                <h2>Search</h2>
-             
+          <Sidebar />
+            <div class="col-md-12 col-sm-12">
+              <div class="title_left">
+                  <h3>Search</h3>
+              </div>
+            </div>
+          <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
               <div class="x_content">
-                <form id="search_form" class="form-horizontal form-label-left" /> 
-                  <div class="row">
-                  <div class="form-group col-md-4">
-                    <label class="control-label">Name</label>
+                      <div class="row"> 
+                      <div class="form-group col-md-4">
+                      <label class="control-label">Name</label>
+                      <br />
+                      <input type="text" />  
+                      </div>
+                    <div class="form-group col-md-4">
+                      <label class="control-label">Student number</label>
+                      <br />
+                      <input type="text" /> 
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="control-label">Username</label>
+                      <br />
+                      <input type="text" /> 
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label class="control-label">Date from</label>
+                      <br />
+                    </div>
+                  
+                  <div class="form-group col-md-3">
+                    <label class="control-label">Date to</label>
                     <br />
-                    <input type="text" />  
-                     </div>
-                  <div class="form-group col-md-4">
-                    <label class="control-label">Student number</label>
-                    <br />
-                    <input type="text" /> 
                   </div>
-                  <div class="form-group col-md-4">
-                    <label class="control-label">Username</label>
-                    <br />
-                    <input type="text" /> 
+                    </div>
                   </div>
 
-                </div>
-              </div>
-          
-            <div class="form-group col-md-3">
-              <label class="control-label">Date from</label>
-              <br />
-            </div>
-          
-          <div class="form-group col-md-3">
-            <label class="control-label">Date to</label>
-            <br />
-          </div>
-      
             <div>
                   <button>Search</button>
-            </div>  
+            </div>
+            </div>
+          
             <hr />
             <Table columns={columns} data={data} />
+            </div>
       </div> 
-        
     )
   } 
 
