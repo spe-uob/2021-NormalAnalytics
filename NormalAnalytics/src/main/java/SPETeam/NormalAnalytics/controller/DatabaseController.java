@@ -22,9 +22,9 @@ public class DatabaseController {
         return new JSONValue(receiver.UnitMedianForAssessment(unitCode,assessmentName));
     }
 
-    @GetMapping("/getAttendance")
-    public JSONValue unitAttendance(@RequestBody UnitCodeAndStudent request){
-        return new JSONValue(receiver.AttendanceFromUnit(request.getStudentUsername(),request.getUnitCode()));
+    @GetMapping("/getAttendance/{unitCode}/{studentUsername}")
+    public JSONValue unitAttendance(@PathVariable String unitCode,@PathVariable String studentUsername){
+        return new JSONValue(receiver.AttendanceFromUnit(studentUsername,unitCode));
     }
 
     @GetMapping("/getStudents/{tutorUsername}")
@@ -34,16 +34,16 @@ public class DatabaseController {
         return new StudentList(studentArray);
     }
 
-    @GetMapping("/getAssessments")
-    public AssessmentScoreList getAssessments(@RequestBody UnitCodeAndStudent request){
-        List<AssessmentScore> scoreList = receiver.ScoresFromUnit(request.getStudentUsername(),request.getUnitCode());
+    @GetMapping("/getAssessments/{unitCode}/{studentUsername}")
+    public AssessmentScoreList getAssessments(@PathVariable String unitCode,@PathVariable String studentUsername){
+        List<AssessmentScore> scoreList = receiver.ScoresFromUnit(studentUsername,unitCode);
         AssessmentScore[] scoreArray = (AssessmentScore[]) scoreList.toArray(new AssessmentScore[scoreList.size()]);
         return new AssessmentScoreList(scoreArray);
     }
 
-    @GetMapping("/getUnits")
-    public UnitList getUnits(@RequestBody UnitRequest request){
-        List<Unit> unitList = receiver.UnitsFromStudent(request.getStudentUsername());
+    @GetMapping("/getUnits/{studentUsername}")
+    public UnitList getUnits(@PathVariable String studentUsername){
+        List<Unit> unitList = receiver.UnitsFromStudent(studentUsername);
         Unit[] unitArray = (Unit[]) unitList.toArray(new Unit[unitList.size()]);
         return new UnitList(unitArray);
     }
