@@ -7,10 +7,7 @@ import SPETeam.NormalAnalytics.entity.Requests.UnitAverageRequest;
 import SPETeam.NormalAnalytics.entity.Requests.UnitRequest;
 import SPETeam.NormalAnalytics.entity.Responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +17,9 @@ public class DatabaseController {
     @Autowired
     IDatabaseReceiver receiver;
 
-    @GetMapping("/getUnitAverage")
-    public JSONValue unitMedian(@RequestBody UnitAverageRequest request){
-        return new JSONValue(receiver.UnitMedianForAssessment(request.getUnitCode(),request.getAssessmentName()));
+    @GetMapping("/getUnitAverage/{unitCode}/{assessmentName}")
+    public JSONValue unitMedian(@PathVariable String unitCode,@PathVariable String assessmentName){
+        return new JSONValue(receiver.UnitMedianForAssessment(unitCode,assessmentName));
     }
 
     @GetMapping("/getAttendance")
@@ -30,9 +27,9 @@ public class DatabaseController {
         return new JSONValue(receiver.AttendanceFromUnit(request.getStudentUsername(),request.getUnitCode()));
     }
 
-    @GetMapping("/getStudents")
-    public StudentList getStudents(@RequestBody TutorStudentRequest request){
-        List<Student> studentList = receiver.StudentsFromTutor(request.getTutorUsername());
+    @GetMapping("/getStudents/{tutorUsername}")
+    public StudentList getStudents(@PathVariable String tutorUsername){
+        List<Student> studentList = receiver.StudentsFromTutor(tutorUsername);
         Student[] studentArray = (Student[]) studentList.toArray(new Student[studentList.size()]);
         return new StudentList(studentArray);
     }
