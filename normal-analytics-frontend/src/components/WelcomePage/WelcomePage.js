@@ -1,31 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import "./WelcomePage.css"
-
  
 class WelcomePage extends React.Component {
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
-  }
-
-  handleClick = () => {
-    this.props.history.push("/login");
-  }
-
   render(){
     return (
-    <body>
     <div className="fullpage">
       <div className="login">
         <p>Personal tutors sign in</p>
-        <button className="button" onClick={this.handleClick.bind(this)}>
-          Log In
-        </button>
+        <Link to="/login" className="button">Log In</Link>
       </div>
-     </div>
-    </body>)
+     </div>)
   } 
 }
-//export default WelcomePage;
+
 export default withRouter (WelcomePage);

@@ -4,13 +4,10 @@ import { withRouter } from 'react-router-dom';
 import "./Login.css"
 
 class Login extends React.Component {
-  constuctor() {
-      this.routeChange = this.routeChange.bind(this);
-  }
-
   handleClick = () => {
     const username = document.getElementById('input-username').value
     const password = document.getElementById('input-password').value
+    let options = [];
 
     fetch("/login", {
         method : "POST",
@@ -19,12 +16,27 @@ class Login extends React.Component {
     })
             .then(response => response.text())
             .then(message => {
-                console.log(message)
-                let myObj = JSON.parse(message)
-                console.log(myObj["token"])
-            });
+                let token = JSON.parse(message)["token"]
+                if (token != null) {
+                    const url = "/database/getStudents/" + username
 
-    // this.props.history.push("/student");
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(message => {
+                            let tutees = message["students"];
+
+                            for (let i = 0; i < tutees.length; i++) {
+                                let name = tutees[i]["firstName"] + " " + tutees[i]["surname"]
+                                options.push(name)
+                            }
+                        });
+
+                    this.props.history.push({
+                        pathname: '/student',
+                            state: {"username": username, "students": options}
+                    })
+                }
+            });
   }
   
   render(){
@@ -42,12 +54,10 @@ class Login extends React.Component {
           <input type="text" className="input" id="input-password" />
         </label>
         </form>
-        <button className="button" onClick={this.handleClick.bind(this)}>
-          Log In
-        </button>
+        <button className="button" onClick={this.handleClick.bind(this)}>Log In</button>
       </div>
      </div>)
   }
 }
-//export default Login;
+
 export default withRouter (Login);

@@ -5,40 +5,36 @@ import 'react-dropdown/style.css';
 
 import "./Student.css"
 
-
-const options = [
-    'one', 'two', 'three'
-  ]
-const defaultOption = options[0];
-
 class Student extends React.Component {
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
-    this.state = {value: ''};
+  selectedItem = null;
+  tutorAndStudents = null;
+
+  handleChange = (e) => {
+    this.selectedItem = e;
   }
 
-
   handleClick = () => {
-    this.props.history.push("/dashboard");
-    console.log('this is:', this);
+    if (this.selectedItem != null) {
+      this.props.history.push({
+        pathname: '/dashboard',
+        state: {"studentUsername": this.selectedItem, "tutorUsername": this.tutorAndStudents}
+      })
+    }
   }
 
   render(){
+    const {state} = this.props.location;
+    this.tutorAndStudents = state;
+
     return (
-    <body>
     <div className="fullpage">
       <div className="login">
-        <p>Choose a student, please</p>
-        <Dropdown options={options} onChange={this._onSelect} 
-        value={defaultOption} 
-        placeholder="Select an option" />
-        <button className="button" onClick={this.handleClick.bind(this)}>
-          Next
-        </button>
+        <p>Choose a student</p>
+        <Dropdown options={state["students"]} onChange={this.handleChange} value={state["students"][0]} placeholder="Select a student" />
+        <button className="button" onClick={this.handleClick.bind(this)}>Next</button>
       </div>
-     </div>
-    </body>)
-  } 
+     </div>)
+  }
 }
-//export default LogIn;
+
 export default withRouter (Student);

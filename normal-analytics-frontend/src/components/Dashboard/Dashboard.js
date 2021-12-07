@@ -1,35 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import 'react-dropdown/style.css';
 
 import "./Dashboard.css"
 
-
-
 class Dashboard extends React.Component {
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
-    this.state = {value: ''};
-  }
-
-
-  handleClick = () => {
-    this.props.history.push("/dashboard");
-    console.log('this is:', this);
-  }
-
-  
   render(){
     return (
-    <body>
-        <div className="fullpage">
+    <div className="fullpage">
         <div className="login">
-            <p>Choose a student, please</p>
-            
+            <h1>Dashboard</h1>
         </div>
-        </div>
-    </body>)
-  } 
+    </div>)
+  }
 }
-//export default LogIn;
+
 export default withRouter (Dashboard);
