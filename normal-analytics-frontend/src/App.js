@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import Student from './components/Student/Student'
 import Dashboard from './components/Dashboard/Dashboard'
 import NotFound from './components/NotFound/NotFound'
+import SideBar from './components/SideBar/SideBar'
 
 class App extends Component {
 
