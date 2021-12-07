@@ -43,8 +43,8 @@ class Login extends React.Component {
     return (
     <div className="fullpage">
       <div className="login">
-        <p>Sign in</p>
-        <form className="text">
+        <span className="title">Sign In</span>
+        <form>
         <label>
           Name:
           <input type="text" className="input" id="input-username" />
@@ -54,7 +54,7 @@ class Login extends React.Component {
           <input type="text" className="input" id="input-password" />
         </label>
         </form>
-        <button className="button" onClick={this.handleClick.bind(this)}>Log In</button>
+        <button className="login-button" onClick={this.handleClick.bind(this)}>Log In</button>
       </div>
      </div>)
   }

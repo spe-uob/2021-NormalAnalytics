@@ -8,8 +8,8 @@ class WelcomePage extends React.Component {
     return (
     <div className="fullpage">
       <div className="login">
-        <p>Personal tutors sign in</p>
-        <Link to="/login" className="button">Log In</Link>
+        <span className="title">Personal Tutor Sign In</span>
+        <Link to="/login" className="button welcome-button">Sign In</Link>
       </div>
      </div>)
   } 
