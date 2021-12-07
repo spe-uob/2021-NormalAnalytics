@@ -7,6 +7,7 @@ import Student from './components/Student/Student'
 import Dashboard from './components/Dashboard/Dashboard'
 import NotFound from './components/NotFound/NotFound'
 import SideBar from './components/SideBar/SideBar'
+import AllData from './components/AllData/AllData'
 
 class App extends Component {
 
@@ -40,6 +41,9 @@ class App extends Component {
               </Route>
               <Route path="/dashboard">
                 <Dashboard />
+              </Route>
+              <Route path="/alldata">
+                <AllData />
               </Route>
               <Route path='*'>
                 <NotFound />

@@ -166,6 +166,9 @@ function Dashboard () {
             </div>
           
             <hr />
+            <div class="title_left">
+                  <h3>Information for student compared to general cohord</h3>
+            </div>
             <Table columns={columns} data={data} />
             </div>
       </div> 
