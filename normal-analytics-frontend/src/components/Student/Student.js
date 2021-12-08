@@ -17,20 +17,19 @@ class Student extends React.Component {
     if (this.selectedItem != null) {
       this.props.history.push({
         pathname: '/dashboard',
-        state: {"studentUsername": this.selectedItem, "tutorAndTutees": this.tutorAndTutees}
+        state: {"tutorAndStudents": this.tutorAndTutees, "studentUsername": this.selectedItem}
       })
     }
   }
 
   render(){
-    const {state} = this.props.location;
-    this.tutorAndTutees = state;
+    this.tutorAndTutees = this.props.location.state;
 
     return (
     <div className="fullpage">
       <div className="login">
         <span className="title">Choose a Student</span>
-        <Dropdown options={state["students"]} onChange={this.handleChange} value={state["students"][0]} className="dropdown-students" />
+        <Dropdown options={this.props.location.state["students"]} onChange={this.handleChange} value={this.props.location.state["students"][0]} className="dropdown-students" />
         <button className="student-button" onClick={this.handleClick.bind(this)}>Next</button>
       </div>
      </div>)

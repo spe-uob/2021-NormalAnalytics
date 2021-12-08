@@ -1,1 +1,23 @@
 /* dashboard */
+
+.sidebar {
+    width: 15vw;
+    height: 100vh;
+    background-color: lightpink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidebar-link {
+    font-size: 21rem;
+    margin: 10rem 0;
+    color: black;
+    text-transform: lowercase;
+    letter-spacing: 1rem;
+}
+
+.sidebar-link:hover {
+    opacity: .6;
+}
