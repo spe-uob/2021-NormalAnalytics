@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import 'react-dropdown/style.css';
 import "./Dashboard.css"
 
@@ -21,8 +21,8 @@ class Dashboard extends React.Component {
         return (
             <div className="sidebar">
                 <button className="sidebar-link" onClick={this.handleClick.bind(this)}>Change Student</button>
-                <Link to="#" className="sidebar-link">General</Link>
-                <Link to="#" className="sidebar-link">All Data for Student</Link>
+                <button className="sidebar-link" >General</button>
+                <button className="sidebar-link" >All Data for Student</button>
             </div>
         );
     }

@@ -17,7 +17,7 @@ class Student extends React.Component {
     if (this.selectedItem != null) {
       this.props.history.push({
         pathname: '/dashboard',
-        state: {"tutorAndStudents": this.tutorAndTutees, "studentUsername": this.selectedItem}
+        state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
       })
     }
   }

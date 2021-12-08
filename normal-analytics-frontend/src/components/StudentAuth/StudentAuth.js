@@ -17,7 +17,7 @@ class StudentAuth extends React.Component {
         if (this.selectedItem != null) {
             this.props.history.push({
                 pathname: '/dashboard',
-                state: {"tutorAmdTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
+                state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
             })
         }
     }
@@ -27,11 +27,9 @@ class StudentAuth extends React.Component {
         let myObj = JSON.stringify(state);
         let myNewObj = JSON.parse(myObj);
         console.log(myNewObj);
-        console.log(myNewObj["tutorAndStudents"]["students"])
 
-        this.tutorAndTutees = myNewObj["tutorAndStudents"];
-
-
+        this.tutorAndTutees = myNewObj["tutorAndTutees"];
+        
         return (
             <div className="fullpage">
                 <div className="login">
