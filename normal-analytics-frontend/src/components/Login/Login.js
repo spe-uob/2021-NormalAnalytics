@@ -8,6 +8,7 @@ class Login extends React.Component {
     const username = document.getElementById('input-username').value
     const password = document.getElementById('input-password').value
     let options = [];
+    let studentObjects = {};
 
     fetch("/login", {
         method : "POST",
@@ -26,14 +27,16 @@ class Login extends React.Component {
                             let tutees = message["students"];
 
                             for (let i = 0; i < tutees.length; i++) {
-                                let name = tutees[i]["firstName"] + " " + tutees[i]["surname"]
-                                options.push(name)
+                                let name = tutees[i]["firstName"] + " " + tutees[i]["surname"];
+                                let studentUsername = tutees[i]["username"];
+                                studentObjects[name] = studentUsername;
+                                options.push(name);
                             }
                         });
 
                     this.props.history.push({
                         pathname: '/student',
-                            state: {"username": username, "students": options}
+                            state: {"tutorUsername": username, "studentNames": options, "studentObjects": studentObjects}
                     })
                 }
             });

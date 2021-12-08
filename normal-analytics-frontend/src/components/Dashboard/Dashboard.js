@@ -16,8 +16,18 @@ class Dashboard extends React.Component {
     render() {
         const {state} = this.props.location;
         this.passedState = state;
-        console.log(state);
+        let myObj = JSON.stringify(state);
+        let myNewObj = JSON.parse(myObj);
 
+        let studentObjects = myNewObj["tutorAndTutees"]["studentObjects"];
+        let studentName = myNewObj["studentUsername"]["value"]
+
+        for (const [key, value] of Object.entries(studentObjects)) {
+            if (studentName === key) {
+                console.log(value);
+            }
+        }
+        
         return (
             <div className="sidebar">
                 <button className="sidebar-link" onClick={this.handleClick.bind(this)}>Change Student</button>

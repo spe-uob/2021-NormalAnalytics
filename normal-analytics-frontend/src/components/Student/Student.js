@@ -29,7 +29,7 @@ class Student extends React.Component {
     <div className="fullpage">
       <div className="login">
         <span className="title">Choose a Student</span>
-        <Dropdown options={this.props.location.state["students"]} onChange={this.handleChange} value={this.props.location.state["students"][0]} className="dropdown-students" />
+        <Dropdown options={this.props.location.state["studentNames"]} onChange={this.handleChange} value={this.props.location.state["studentNames"][0]} className="dropdown-students" />
         <button className="student-button" onClick={this.handleClick.bind(this)}>Next</button>
       </div>
      </div>)
