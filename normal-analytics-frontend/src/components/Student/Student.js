@@ -7,7 +7,7 @@ import "./Student.css"
 
 class Student extends React.Component {
   selectedItem = null;
-  tutorAndStudents = null;
+  tutorAndTutees = null;
 
   handleChange = (e) => {
     this.selectedItem = e;
@@ -17,21 +17,20 @@ class Student extends React.Component {
     if (this.selectedItem != null) {
       this.props.history.push({
         pathname: '/dashboard',
-        state: {"studentUsername": this.selectedItem, "tutorUsername": this.tutorAndStudents}
+        state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
       })
     }
   }
 
   render(){
-    const {state} = this.props.location;
-    this.tutorAndStudents = state;
+    this.tutorAndTutees = this.props.location.state;
 
     return (
     <div className="fullpage">
       <div className="login">
-        <p>Choose a student</p>
-        <Dropdown options={state["students"]} onChange={this.handleChange} value={state["students"][0]} placeholder="Select a student" />
-        <button className="button" onClick={this.handleClick.bind(this)}>Next</button>
+        <span className="title">Choose a Student</span>
+        <Dropdown options={this.props.location.state["studentNames"]} onChange={this.handleChange} value={this.props.location.state["studentNames"][0]} className="dropdown-students" />
+        <button className="student-button" onClick={this.handleClick.bind(this)}>Next</button>
       </div>
      </div>)
   }

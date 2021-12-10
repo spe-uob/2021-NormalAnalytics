@@ -1,21 +1,31 @@
 /* login */
 
-.login{
-    background-color: aliceblue;
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    border: 2px solid #50a2bb;
-    font-size: 20px;
-}
-
-.text{
+.login-button{
+    padding: 16rem 32rem;
     text-decoration: none;
-    font-size: 14px;
-    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2rem solid #50a2bb;
+    border-radius: 10rem;
 }
 
-.input{
-    padding: 16px 32px;
-    margin: 4px 2px;
+.login-button:hover{
+    background-color: #50a2bb;
+    color: white;
+}
+
+.login-title {
+    font-size: 28rem;
+    font-weight: 600;
+}
+
+form {
+    margin: 25rem 0;
+}
+
+.input {
+    margin: 5rem 0;
+    display: block;
 }
