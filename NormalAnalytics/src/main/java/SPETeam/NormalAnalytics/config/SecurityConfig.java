@@ -33,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/", "/*.html", "/css/**")
-                .permitAll().anyRequest().authenticated();
+                .antMatchers("/", "/*.html", "/css/**").permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -3,7 +3,10 @@ package SPETeam.NormalAnalytics.entity.Responses;
 import SPETeam.NormalAnalytics.entity.Requests.User;
 import lombok.Data;
 
+import javax.persistence.Entity;
+
 @Data
+@Entity
 public class Token {
     private boolean succeed;
     private String username;
