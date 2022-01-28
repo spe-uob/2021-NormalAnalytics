@@ -31,15 +31,15 @@ public class JwtUtil {
     }
 
     //verify token
-    public static boolean verifyToken(String token){
-        if(token == null){
-            return false;
-        }
-        try{
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(signature).parseClaimsJws(token);
-        }catch (Exception e){
-            return false;
-        }
-        return true;
-    }
+//    public static boolean verifyToken(String token){
+//        if(token == null){
+//            return false;
+//        }
+//        try{
+//            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(signature).parseClaimsJws(token);
+//        }catch (Exception e){
+//            return false;
+//        }
+//        return true;
+//    }
 }
