@@ -37,9 +37,9 @@ public class LoginController {
         return Token.failed();
     }*/
 
-    @GetMapping("/verifyToken")
-    public Boolean verifyToken(HttpServletRequest request){
-        String token = request.getHeader("token");
-        return JwtUtil.verifyToken(token);
-    }
+//    @GetMapping("/verifyToken")
+//    public Boolean verifyToken(HttpServletRequest request){
+//        String token = request.getHeader("token");
+//        return JwtUtil.verifyToken(token);
+//    }
 }

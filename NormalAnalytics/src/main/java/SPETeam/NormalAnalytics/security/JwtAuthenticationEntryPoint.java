@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.handler;
+package SPETeam.NormalAnalytics.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
