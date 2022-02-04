@@ -43,8 +43,8 @@ PRIMARY KEY (student_id, unit_id)
 );
 
 CREATE TABLE grades (
-student_id int UNIQUE NOT NULL,
-assessment_id int UNIQUE NOT NULL,
+student_id int NOT NULL,
+assessment_id int NOT NULL,
 grade real NOT NULL,
 FOREIGN KEY (student_id) REFERENCES student(student_id),
 FOREIGN KEY (assessment_id) REFERENCES assessment(assessment_id),
@@ -52,8 +52,8 @@ PRIMARY KEY (student_id, assessment_id)
 );
 
 CREATE TABLE unit_enrollment(
-student_id int UNIQUE NOT NULL,
-unit_id int UNIQUE NOT NULL,
+student_id int NOT NULL,
+unit_id int NOT NULL,
 FOREIGN KEY (student_id) REFERENCES student(student_id),
 FOREIGN KEY (unit_id) REFERENCES unit(unit_id),
 PRIMARY KEY (student_id,unit_id)
