@@ -1,8 +1,6 @@
 package SPETeam.NormalAnalytics;
 
-import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Responses.Student;
-import SPETeam.NormalAnalytics.entity.Responses.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +22,7 @@ public class TestingDatabaseReceiver implements IDatabaseReceiver {
     }
 
     @Override
-    public List<AssessmentScore> ScoresFromUnit(String studentUsername, String unitCode) {
+    public AssessmentScoreList ScoresFromUnit(String studentUsername, String unitCode) {
         return null;
     }
 
@@ -41,5 +39,15 @@ public class TestingDatabaseReceiver implements IDatabaseReceiver {
     @Override
     public float UnitMedianForAssessment(String unitCode, String assessmentName) {
         return 0;
+    }
+
+    @Override
+    public Student StudentFromUsername(String studentName) {
+        return null;
+    }
+
+    @Override
+    public UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername) {
+        return new UnitAndGrades[0];
     }
 }

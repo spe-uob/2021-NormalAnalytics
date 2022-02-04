@@ -2,9 +2,7 @@ package SPETeam.NormalAnalytics;
 
 import SPETeam.NormalAnalytics.Database.Repositories.*;
 import SPETeam.NormalAnalytics.Database.Tables.*;
-import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Responses.Unit;
-import SPETeam.NormalAnalytics.entity.Responses.Student;
+import SPETeam.NormalAnalytics.entity.Responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -54,7 +52,7 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     }
 
     @Override
-    public List<AssessmentScore> ScoresFromUnit(String studentUsername, String unitCode) {
+    public AssessmentScoreList ScoresFromUnit(String studentUsername, String unitCode) {
         Optional<UnitTable> unit = unitRepository.findUnitTableByCode(unitCode);
         if(unit.isEmpty()){
             return null;
@@ -73,7 +71,8 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
                         }
                     }
                 }
-                return scoresToReturn;
+                AssessmentScore[] scoreArray = (AssessmentScore[]) scoresToReturn.toArray(new AssessmentScore[scoresToReturn.size()]);
+                return new AssessmentScoreList(scoreArray);
             }
         }
     }
@@ -121,4 +120,28 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
             }
         }
     }
+
+    @Override
+    public Student StudentFromUsername(String studentUsername){
+        Optional<StudentTable> student = studentRepository.findStudentTableByUsername(studentUsername);
+        if(student.isEmpty()){
+            return null;
+        }else{
+            return student.get().asData();
+        }
+    }
+
+    public UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername){
+        List<Unit> units = UnitsFromStudent(studentUsername);
+        List<UnitAndGrades> unitAndGradesList = new ArrayList<>();
+        for(Unit u: units){
+            UnitAndGrades unitAndGrades = new UnitAndGrades();
+            unitAndGrades.setUnit(u);
+            unitAndGrades.setScoreList(ScoresFromUnit(studentUsername,u.getCode()));
+            unitAndGradesList.add(unitAndGrades);
+        }
+        return ((UnitAndGrades[]) unitAndGradesList.toArray(new UnitAndGrades[unitAndGradesList.size()]));
+    }
+
+
 }
