@@ -20,26 +20,13 @@ public class LoginController {
 
     @PostMapping("/login")
     public Token login(@RequestBody User user){
-        if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
-            //add token
-            user.setToken(JwtUtil.createToken());
-            return Token.fromUser(user);
-        }
-        return Token.failed();
+//        if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
+//            //add token
+//            user.setToken(JwtUtil.createToken());
+//            return Token.fromUser(user);
+//        }
+//        return Token.failed();
+        return null;
     }
-    /*
-    public Token login(@RequestBody User user){
-        if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
-            //add token
-            user.setToken(JwtUtil.createToken());
-            return Token.fromUser(user);
-        }
-        return Token.failed();
-    }*/
 
-//    @GetMapping("/verifyToken")
-//    public Boolean verifyToken(HttpServletRequest request){
-//        String token = request.getHeader("token");
-//        return JwtUtil.verifyToken(token);
-//    }
 }
