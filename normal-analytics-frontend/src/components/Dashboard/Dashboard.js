@@ -44,6 +44,7 @@ class Dashboard extends React.Component {
             <div className="dashboard">
                 <div className="nav-bar">
                     <button className="nav-item left" onClick={this.handleClick.bind(this)}>Change Student</button>
+                    <button className="nav-item">Current student: {currentStudentName}</button>
                 </div>
                 <div className="sidebar">
                     <button className="sidebar-link" >General</button>
