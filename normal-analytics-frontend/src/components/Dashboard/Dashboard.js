@@ -13,6 +13,13 @@ class Dashboard extends React.Component {
         })
     }
 
+    handleClickLogin = () => {
+        this.props.history.push({
+            pathname: '/login',
+            state: this.passedState
+        })
+    }
+
     render() {
         const {state} = this.props.location;
         this.passedState = state;
@@ -20,19 +27,28 @@ class Dashboard extends React.Component {
         let myNewObj = JSON.parse(myObj);
 
         let studentObjects = myNewObj["tutorAndTutees"]["studentObjects"];
+        console.log(studentObjects);
         let studentName = myNewObj["studentUsername"]["value"]
+        let currentStudentName = null;
 
         for (const [key, value] of Object.entries(studentObjects)) {
             if (studentName === key) {
                 console.log(value);
+                currentStudentName = key
             }
         }
-        
+
+        let tutorName = myNewObj["tutorAndTutees"]["tutorUsername"];
+
         return (
-            <div className="sidebar">
-                <button className="sidebar-link" onClick={this.handleClick.bind(this)}>Change Student</button>
-                <button className="sidebar-link" >General</button>
-                <button className="sidebar-link" >All Data for Student</button>
+            <div className="dashboard">
+                <div className="nav-bar">
+                    <button className="nav-item left" onClick={this.handleClick.bind(this)}>Change Student</button>
+                </div>
+                <div className="sidebar">
+                    <button className="sidebar-link" >General</button>
+                    <button className="sidebar-link" >All Data for Student</button>
+                </div>
             </div>
         );
     }
