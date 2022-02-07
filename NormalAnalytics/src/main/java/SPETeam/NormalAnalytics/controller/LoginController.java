@@ -1,8 +1,11 @@
 package SPETeam.NormalAnalytics.controller;
 
+import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
+import SPETeam.NormalAnalytics.entity.Responses.ResponseResult;
 import SPETeam.NormalAnalytics.entity.Responses.Token;
 import SPETeam.NormalAnalytics.entity.Requests.User;
+import SPETeam.NormalAnalytics.service.LoginService;
 import SPETeam.NormalAnalytics.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
 
     @Autowired
-    IDatabaseReceiver receiver;
+    private LoginService loginService;
 
     @PostMapping("/login")
-    public Token login(@RequestBody User user){
-//        if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
-//            //add token
-//            user.setToken(JwtUtil.createToken());
-//            return Token.fromUser(user);
-//        }
-//        return Token.failed();
-        return null;
+    public ResponseResult login(@RequestBody TutorTable tutor){
+        return loginService.login(tutor);
     }
 
 }

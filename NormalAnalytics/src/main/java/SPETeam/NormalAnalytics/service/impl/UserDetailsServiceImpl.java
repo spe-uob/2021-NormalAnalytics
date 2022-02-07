@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.service;
+package SPETeam.NormalAnalytics.service.impl;
 
 import SPETeam.NormalAnalytics.Database.Repositories.TutorRepository;
 import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
