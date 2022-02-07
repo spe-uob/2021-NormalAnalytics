@@ -7,6 +7,7 @@ import SPETeam.NormalAnalytics.entity.Responses.Unit;
 import SPETeam.NormalAnalytics.entity.Responses.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,16 +31,24 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     AttendanceRepository attendanceRepository;
     @Autowired
     GradesRepository gradesRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public boolean VerifyLogin(String name,String password){
-        Optional<TutorTable> users = tutorRepository.findByUsername(name);
-        if(users.isEmpty()) return false;
-        if(users.get().getPassword().equals(password)){
+        Optional<TutorTable> tutor = tutorRepository.findByUsername(name);
+        if(tutor.isEmpty()) return false;
+
+        if (passwordEncoder.matches(password,tutor.get().getPassword())) {
             return true;
         }else{
             return false;
         }
+//        if(users.get().getPassword().equals(password)){
+//            return true;
+//        }else{
+//            return false;
+//        }
     }
 
     @Override
