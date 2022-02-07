@@ -3,7 +3,7 @@ package SPETeam.NormalAnalytics.controller;
 import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
 import SPETeam.NormalAnalytics.entity.Responses.ResponseResult;
-import SPETeam.NormalAnalytics.entity.Responses.Token;
+
 import SPETeam.NormalAnalytics.entity.Requests.User;
 import SPETeam.NormalAnalytics.service.LoginService;
 import SPETeam.NormalAnalytics.utils.JwtUtil;

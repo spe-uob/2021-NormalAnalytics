@@ -1,5 +1,5 @@
 package SPETeam.NormalAnalytics.entity.Responses;
-
+/*
 import SPETeam.NormalAnalytics.entity.Requests.User;
 import lombok.Data;
 
@@ -25,3 +25,5 @@ public class Token {
         return token;
     }
 }
+
+ */
