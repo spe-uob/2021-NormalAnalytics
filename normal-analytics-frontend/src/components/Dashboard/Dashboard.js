@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
                     <div className="dropdown">
                         <button className="nav-item">Tutor logged in: {tutorName}</button>
                         <div className="dropdown-content">
-                            <a className="log-out"  onClick={this.handleClickLogin.bind(this)}>Log Out</a>
+                            <button className="log-out" onClick={this.handleClickLogin.bind(this)}>Log Out</button>
                         </div>
                     </div>
                 </div>
