@@ -44,8 +44,11 @@ public class LoginServiceImpl implements LoginService {
         int numId = User.getId();
         String userid = String.valueOf(numId);
         String jwt = JwtUtil.createJWT(userid);
-
-        return new ResponseResult(200,"Login successful",null);
+        Map<String,String> map = new HashMap<>();
+        map.put("token",jwt);
+        //Store the complete user information in redis, userid as key
+        redisCache.setCacheObject("login:"+userid,User);
+        return new ResponseResult(200,"Login successful",map);
 
     }
 }
