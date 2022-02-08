@@ -1,9 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import 'react-dropdown/style.css';
-import "./Dashboard.css"
-import Sidebar from '../SideBar/SideBar';
-class Dashboard extends React.Component {
+import "./Attendance.css"
+
+class Attendance extends React.Component {
     passedState = null;
 
     handleClick = () => {
@@ -39,10 +39,9 @@ class Dashboard extends React.Component {
         }
 
         let tutorName = myNewObj["tutorAndTutees"]["tutorUsername"];
-//border: solid black
+
         return (
             <div className="dashboard">
-                
                 <div className="nav-bar">
                     <button className="nav-item left" onClick={this.handleClick.bind(this)}>Change Student</button>
                     <button className="nav-item">Current student: {currentStudentName}</button>
@@ -53,10 +52,13 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-             <Sidebar />   
+                <div className="sidebar">
+                    <button className="sidebar-link" >General</button>
+                    <button className="sidebar-link" >All Data for Student</button>
+                </div>
             </div>
         );
     }
 }
 
-export default withRouter (Dashboard);
+export default withRouter (Attendance);
