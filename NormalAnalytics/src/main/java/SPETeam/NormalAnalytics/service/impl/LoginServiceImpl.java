@@ -40,8 +40,7 @@ public class LoginServiceImpl implements LoginService {
         //If the authentication is passed, a jwt is generated using the userid,
         // and the jwt is stored in the ResponseResult and returned
         User User = (User) authenticate.getPrincipal();
-//        String userid = loginUser.getId().toString();
-        int numId = User.getId();
+        int numId = User.getTutor().getId();
         String userid = String.valueOf(numId);
         String jwt = JwtUtil.createJWT(userid);
         Map<String,String> map = new HashMap<>();
