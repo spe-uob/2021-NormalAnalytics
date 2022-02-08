@@ -1,5 +1,6 @@
 package SPETeam.NormalAnalytics.entity.Requests;
 
+import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,23 +12,22 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
-    private int id;
-    private String username;
-    private String password;
 
-//    private String token;
-
-//    private TutorTable tutorTable;
-
-    public User(String username, String password, Object o) {
-        this.username = username;
-        this.password = password;
-    }
-
+    private TutorTable tutor;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return tutor.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return tutor.getUsername();
     }
 
 
