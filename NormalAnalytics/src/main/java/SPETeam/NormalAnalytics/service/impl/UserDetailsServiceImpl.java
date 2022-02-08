@@ -21,15 +21,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //Query user information from the database based on username
-        Optional<TutorTable> user = tutorRepository.findByUsername(username);
+        Optional<TutorTable> tutorTable = tutorRepository.findByUsername(username);
         //If the data is not queried, an alert is given by throwing an exception
-        if (user==null){
+        if (tutorTable.isEmpty()){
             throw new UsernameNotFoundException("Username does not exist");
         }
 
         //TODO Query permission information by user Add to LoginUser
         
         //Wrapped into a UserDetails object to return
-        return new User(user.get().getUsername(),user.get().getPassword(),null);
+        return new User(tutorTable.get());
     }
 }
