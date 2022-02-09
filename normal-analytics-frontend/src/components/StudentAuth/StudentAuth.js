@@ -33,7 +33,7 @@ class StudentAuth extends React.Component {
             <div className="fullpage">
                 <div className="login">
                     <span className="title">Choose a Student</span>
-                    <Dropdown options={this.tutorAndTutees["studentNames"]} onChange={this.handleChange} value={this.tutorAndTutees["studentNames"][0]} className="dropdown-students" />
+                    <Dropdown options={this.tutorAndTutees["studentNames"]} onChange={this.handleChange} className="dropdown-students" />
                     <button onClick={this.handleClick.bind(this)} className="student-button">Next</button>
                 </div>
             </div>)
