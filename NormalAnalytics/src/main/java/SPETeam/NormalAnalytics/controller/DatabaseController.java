@@ -6,6 +6,7 @@ import SPETeam.NormalAnalytics.entity.Requests.TutorStudentRequest;
 import SPETeam.NormalAnalytics.entity.Requests.UnitAverageRequest;
 import SPETeam.NormalAnalytics.entity.Requests.UnitRequest;
 import SPETeam.NormalAnalytics.entity.Responses.*;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,11 +35,17 @@ public class DatabaseController {
         return new StudentList(studentArray);
     }
 
+    @GetMapping("/getGradesAndUnits/{studentUsername}")
+    public StudentUnitsAndGrades getStudentData(@PathVariable String studentUsername){
+        StudentUnitsAndGrades unitsAndGrades = new StudentUnitsAndGrades();
+        unitsAndGrades.setStudent(receiver.StudentFromUsername(studentUsername));
+        unitsAndGrades.setUnitAndGrades(receiver.UnitAndGradesFromStudent(studentUsername));
+        return unitsAndGrades;
+    }
+
     @GetMapping("/getAssessments/{unitCode}/{studentUsername}")
     public AssessmentScoreList getAssessments(@PathVariable String unitCode,@PathVariable String studentUsername){
-        List<AssessmentScore> scoreList = receiver.ScoresFromUnit(studentUsername,unitCode);
-        AssessmentScore[] scoreArray = (AssessmentScore[]) scoreList.toArray(new AssessmentScore[scoreList.size()]);
-        return new AssessmentScoreList(scoreArray);
+        return receiver.ScoresFromUnit(studentUsername,unitCode);
     }
 
     @GetMapping("/getUnits/{studentUsername}")
