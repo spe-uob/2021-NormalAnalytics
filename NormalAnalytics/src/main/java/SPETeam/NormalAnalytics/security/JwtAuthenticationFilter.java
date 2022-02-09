@@ -1,7 +1,10 @@
 package SPETeam.NormalAnalytics.security;
 
+import SPETeam.NormalAnalytics.entity.Requests.User;
 import SPETeam.NormalAnalytics.utils.JwtUtil;
+import SPETeam.NormalAnalytics.utils.RedisCache;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -10,8 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private RedisCache redisCache;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -21,12 +29,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        String userid;
         try {
             Claims claims = JwtUtil.parseJWT(token);
-            String userid = claims.getSubject();
+            userid = claims.getSubject();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("token illegal");
+        }
+        String redisKey = "login: " + userid;
+        User user = redisCache.getCacheObject(redisKey);
+        if (Objects.isNull(user)) {
+            throw new RuntimeException("User not logged in");
         }
 
     }
