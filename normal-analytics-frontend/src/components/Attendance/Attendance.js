@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import 'react-dropdown/style.css';
 import "./Attendance.css"
+import Sidebar from '../SideBar/SideBar';
 
 class Attendance extends React.Component {
     passedState = null;
@@ -52,10 +53,7 @@ class Attendance extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="sidebar">
-                    <button className="sidebar-link" >General</button>
-                    <button className="sidebar-link" >All Data for Student</button>
-                </div>
+                <Sidebar />
             </div>
         );
     }

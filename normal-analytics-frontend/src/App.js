@@ -7,6 +7,7 @@ import Student from './components/Student/Student'
 import Dashboard from './components/Dashboard/Dashboard'
 import StudentAuth from './components/StudentAuth/StudentAuth'
 import NotFound from './components/NotFound/NotFound'
+import Attendance from './components/Attendance/Attendance';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/student" component={Student} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/attendance" component={Attendance} />
         <Route exact path="/student-auth" component={StudentAuth} />
         <Route component={NotFound} />
       </Switch>

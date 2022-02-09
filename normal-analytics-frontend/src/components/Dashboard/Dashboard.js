@@ -3,6 +3,9 @@ import {withRouter} from 'react-router-dom';
 import 'react-dropdown/style.css';
 import "./Dashboard.css"
 import Sidebar from '../SideBar/SideBar';
+import ReactTable from "react-table";  
+import Table from '../TableContainer';
+
 class Dashboard extends React.Component {
     passedState = null;
 
@@ -21,6 +24,59 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        //https://www.bacancytechnology.com/blog/react-table-tutorial-part-1/#1
+        //used this tutorial, instead of hard-coding use UseEffect to fetch it, just didnt have time
+        //if you want leave the styling to me
+        //there is a separate file called TableContainer used to hold the table 
+        // i have moved the sidebar into its own component, not sure for the navigation bar
+
+        /*const [data, setData] = useState([]);
+ 
+        useEffect(() => {
+        const {state} = this.props.location;
+        this.passedState = state;
+            .then((res) => {
+            setData(res.data);
+            })
+            .catch((err) => console.log(err))
+        }, []);
+        */
+        const data = 
+        [
+        {
+        name: 'Computer systems A',
+        address: '20',
+        date: '07/12/2021',
+        order: '67',
+        },
+        {
+        name: 'Algorithms II',
+        address: '10',
+        date: '07/11/2021',
+        order: '85',
+        },
+        ]
+
+        const columns =  [
+            {
+            Header: 'Units ',
+            columns: [
+            {
+            Header: 'Name',
+            accessor: 'name',
+            },
+            {
+            Header: 'Credit points',
+            accessor: 'address',
+            },
+            {
+             Header: 'Score',
+             accessor: 'order',
+             },
+            ],
+           },
+        ]
+        
         const {state} = this.props.location;
         this.passedState = state;
         let myObj = JSON.stringify(state);
@@ -39,7 +95,7 @@ class Dashboard extends React.Component {
         }
 
         let tutorName = myNewObj["tutorAndTutees"]["tutorUsername"];
-//border: solid black
+
         return (
             <div className="dashboard">
                 
@@ -53,7 +109,11 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-             <Sidebar />   
+                <Sidebar /> 
+                <div>  
+                <Table columns={columns} data={data} /> 
+                </div>  
+              
             </div>
         );
     }
