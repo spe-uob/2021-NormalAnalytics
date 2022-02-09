@@ -5,6 +5,8 @@ import SPETeam.NormalAnalytics.utils.JwtUtil;
 import SPETeam.NormalAnalytics.utils.RedisCache;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -42,6 +44,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (Objects.isNull(user)) {
             throw new RuntimeException("User not logged in");
         }
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(user,null,null);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        //Release
+        filterChain.doFilter(request,response);
 
     }
 }
