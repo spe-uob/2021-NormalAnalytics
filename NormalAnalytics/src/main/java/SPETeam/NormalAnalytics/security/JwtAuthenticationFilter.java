@@ -1,5 +1,7 @@
 package SPETeam.NormalAnalytics.security;
 
+import SPETeam.NormalAnalytics.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,6 +20,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //Release
             filterChain.doFilter(request, response);
             return;
+        }
+        try {
+            Claims claims = JwtUtil.parseJWT(token);
+            String userid = claims.getSubject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("token illegal");
         }
 
     }
