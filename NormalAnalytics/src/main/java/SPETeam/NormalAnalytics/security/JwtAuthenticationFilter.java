@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             e.printStackTrace();
             throw new RuntimeException("token illegal");
         }
-        String redisKey = "login: " + userid;
+        String redisKey = "login:" + userid;
         User user = redisCache.getCacheObject(redisKey);
         if (Objects.isNull(user)) {
             throw new RuntimeException("User not logged in");
