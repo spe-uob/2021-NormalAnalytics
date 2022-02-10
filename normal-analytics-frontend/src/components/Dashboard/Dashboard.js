@@ -8,14 +8,14 @@ import axios from "axios";
 function DashboardComponent(props) {
     let passedState = props.location.state;
 
-    let handleClick = () => {
+    let handleClickChangeStudent = () => {
         props.history.push({
             pathname: '/student-auth',
             state: passedState
         })
     }
 
-    let handleClickLogin = () => {
+    let handleClickLogOut = () => {
         props.history.push({
             pathname: '/login',
             state: passedState
@@ -46,21 +46,20 @@ function DashboardComponent(props) {
 
     return (
         <div className="dashboard">
-
          <div className="nav-bar">
-            <button className="nav-item left" onClick={handleClick.bind(this)}>Change Student</button>
+            <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
              <button className="nav-item">Current student: {studentName}</button>
              <div className="dropdown">
                  <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
                 <div className="dropdown-content">
-                     <a className="log-out" onClick={handleClickLogin.bind(this)}>Log Out</a>
+                     <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
                  </div>
              </div>
          </div>
 
          <div className="dashboard-content">
              <Sidebar />
-             <div className="box">
+             <div className="section">
                  <table>
                      <tr>
                          <th>Units</th>

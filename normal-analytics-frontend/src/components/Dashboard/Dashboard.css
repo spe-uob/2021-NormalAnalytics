@@ -1,13 +1,5 @@
 /* dashboard */
 
-.dashboard-content {
-    width: 100vw;
-    height: 90vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
 .nav-bar {
     width: 100vw;
     height: 10vh;
@@ -67,7 +59,15 @@
     cursor: pointer;
 }
 
-.box {
+.dashboard-content {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.section {
     width: 42.5vw;
     height: 45vh;
     background-color: red;
@@ -75,6 +75,8 @@
     align-items: center;
     justify-content: center;
 }
+
+
 
 
 
