@@ -1,5 +1,13 @@
 /* dashboard */
 
+.dashboard-content {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .nav-bar {
     width: 100vw;
     height: 10vh;
@@ -59,12 +67,19 @@
     cursor: pointer;
 }
 
-
-
-
-.database {
-    width: 85vh;
-    height: 100vh;
-    background-color: blue;
+.box {
+    width: 42.5vw;
+    height: 45vh;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.box-2 {
+    background-color: pink;
+    display: block;
+}
+
+
 
