@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import Sidebar from "../SideBar/SideBar";
 import "./Dashboard.css"
+import axios from "axios";
+
 
 function DashboardComponent(props) {
     let passedState = props.location.state;
@@ -32,6 +34,16 @@ function DashboardComponent(props) {
         }
     }
 
+    const [data, setData] = useState();
+    const url = "/database/getUnits/" + studentUsername;
+    useEffect(() => {
+        axios(url)
+            .then((res) => {
+                setData(res.data);
+            })
+            .catch((err) => console.log(err))
+    }, []);
+
     return (
         <div className="dashboard">
 
@@ -48,6 +60,20 @@ function DashboardComponent(props) {
 
          <div className="dashboard-content">
              <Sidebar />
+             <div className="box">
+                 <table>
+                     <tr>
+                         <th>Units</th>
+                     </tr>
+                     {data && data["units"].map((val, key) => {
+                         return (
+                             <tr key={key}>
+                                 <td>{val.name}</td>
+                             </tr>
+                         )
+                     })}
+                 </table>
+             </div>
          </div>
 
         </div>
