@@ -3,37 +3,34 @@ import { withRouter } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import "./Student.css"
+function StudentComponent(props) {
+    let passedState = props.location.state;
 
-class Student extends React.Component {
-  selectedItem = null;
-  tutorAndTutees = null;
+    let tutorAndTutees = passedState;
+    let selectedItem = null;
 
-  handleChange = (e) => {
-    this.selectedItem = e;
-  }
-
-  handleClick = () => {
-    if (this.selectedItem != null) {
-      this.props.history.push({
-        pathname: '/dashboard',
-        state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
-      })
+    let handleChange = (e) => {
+        selectedItem = e;
     }
-  }
 
-  render(){
-    this.tutorAndTutees = this.props.location.state;
+    let handleClick = () => {
+        if (selectedItem != null) {
+            props.history.push({
+                pathname: '/dashboard',
+                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem}
+            })
+        }
+    }
 
     return (
-    <div className="fullpage">
-      <div className="login">
-        <span className="title">Choose a Student</span>
-        <Dropdown options={this.props.location.state["studentNames"]} onChange={this.handleChange} value={this.props.location.state["studentNames"][0]} className="dropdown-students" />
-        <button className="student-button" onClick={this.handleClick.bind(this)}>Next</button>
-      </div>
-     </div>)
-  }
+        <div className="fullpage">
+            <div className="login">
+                <span className="title">Choose a Student</span>
+                <Dropdown options={tutorAndTutees["studentNames"]} onChange={handleChange} className="dropdown-students" />
+                <button onClick={handleClick.bind(this)} className="student-button">Next</button>
+            </div>
+        </div>
+    );
 }
 
-export default withRouter (Student);
+export default withRouter (StudentComponent);
