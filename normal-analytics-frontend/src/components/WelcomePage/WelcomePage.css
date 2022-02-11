@@ -1,0 +1,45 @@
+/* welcome */
+
+.fullpage{
+    height:100vh;
+    background: url(../../images/backgroundimage.jpg) no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login{
+    background-color: aliceblue;
+    width: 30vw;
+    height: 40vh;
+    border-radius: 5rem;
+    border: 3rem solid #50a2bb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 28rem;
+    font-weight: 500;
+    letter-spacing: 1rem;
+}
+
+.button{
+    padding: 16rem 32rem;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2rem solid #50a2bb;
+    margin-top: 25rem;
+    border-radius: 10rem;
+}
+
+.button:hover{
+    background-color: #50a2bb;
+    color: white;
+}

@@ -78,7 +78,7 @@ public class JwtUtil {
         return builder.compact();
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
 //        String jwt = createJWT("123123");
 //        System.out.println(jwt);
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyN2Y1ZjczMGFlMTA0YWQxOGM4NGQwNDNlMDdkM2NiZCIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTY0NDMwNDQ2NiwiZXhwIjoxNjQ0MzA4MDY2fQ.GH_2UM2sp-h8KdchBdPHyWphMBgbfhG7PwBWybDHWmM";
@@ -86,7 +86,7 @@ public class JwtUtil {
         System.out.println(claims);
         String userId = claims.getSubject();
         System.out.println(userId);
-    }
+    }*/
 
     /**
      * 生成加密后的秘钥 secretKey
