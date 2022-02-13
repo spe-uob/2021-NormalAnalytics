@@ -1,18 +1,21 @@
 INSERT INTO tutor (tutor_username,tutor_password,tutor_firstname,tutor_surname)
 VALUES
-("jross","password123","Joel","Ross");
+("jross","password123","Joel","Ross"),
+("fakeTutor","password","Fake","Tutor");
 
 INSERT INTO student (student_username,student_firstname,student_surname,tutor_id)
 VALUES
 ("iq20064","William","Tripp",1),
 ("oj20075","Siana","Dicheva",1),
 ("ne20327","Sam","Thomas",1),
-("kk19041","Luo","Zhao",1);
+("kk19041","Luo","Zhao",1),
+("ab12345","John","Doe",2);
 
 INSERT INTO unit (code,unit_name)
 VALUES
 ("COMS20006","SPE"),
-("COMS20008","Computer Systems A");
+("COMS20008","Computer Systems A"),
+("COMS30042","Advanced Algorithms");
 
 INSERT INTO assessment (assessment_name,summative,unit_id)
 VALUES
