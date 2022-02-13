@@ -1,41 +1,27 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
-import WelcomePage from './WelcomePage/WelcomePage';
+import WelcomePage from './components/WelcomePage/WelcomePage';
+import Login from './components/Login/Login';
+import Student from './components/Student/Student'
+import Dashboard from './components/Dashboard/Dashboard'
+import StudentAuth from './components/StudentAuth/StudentAuth'
+import NotFound from './components/NotFound/NotFound'
+import Attendance from './components/Attendance/Attendance';
 
-
-class App extends Component {
-
-  state = {};
-
-  componentDidMount() {
-    setInterval(this.hello, 250);
-  }
-
-  hello = () => {
-    fetch('/hello')
-        .then(response => response.text())
-        .then(message => {
-          this.setState({message: message});
-        });
-  };
-
-  render() {
-    return (
-        /*<div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">{this.state.message}</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-        </div>
-        <img src={backgroundimage} style={{backgroundSize:'cover',width:'100%',height:'100%'}}/>
-        */
-        <WelcomePage />
-    );
-  }
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={WelcomePage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/student" component={Student} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/attendance" component={Attendance} />
+        <Route exact path="/student-auth" component={StudentAuth} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>);
 }
 
 export default App;
