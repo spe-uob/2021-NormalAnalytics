@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard/Dashboard'
 import StudentAuth from './components/StudentAuth/StudentAuth'
 import NotFound from './components/NotFound/NotFound'
 import Attendance from './components/Attendance/Attendance';
+import AllData from './components/AllData/AllData'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/student" component={Student} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/attendance" component={Attendance} />
+        <Route exact path="/alldata" component={AllData} />
         <Route exact path="/student-auth" component={StudentAuth} />
         <Route component={NotFound} />
       </Switch>

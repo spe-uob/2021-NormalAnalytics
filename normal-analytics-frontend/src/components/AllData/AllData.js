@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import Sidebar from "../SideBar/SideBar";
-import "./Dashboard.css"
+import "./AllData.css"
 import axios from "axios";
 
 
-function DashboardComponent(props) {
+function AllData(props) {
+    
+
     let passedState = props.location.state;
 
     let handleClickChangeStudent = () => {
@@ -22,23 +24,24 @@ function DashboardComponent(props) {
         })
     }
 
+    let handleClickDashboard = ()=>{
+        props.history.push({
+            pathname: '/dashboard',
+            state: passedState
+        })
+    }
+
     let handleClickAttendance = () => {
         props.history.push({
             pathname: '/attendance',
             state: passedState
         })
     }
-
-    let handleClickAllData = () =>{
-        props.history.push({
-            pathname: '/alldata',
-            state: passedState
-        })
-    }
-
+    
     let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
     let studentName = passedState["studentUsername"]["value"];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
+    
 
     let studentUsername = null;
     for (const [key, value] of Object.entries(studentObjects)) {
@@ -64,7 +67,7 @@ function DashboardComponent(props) {
             <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
              <button className="nav-item">Current student: {studentName}</button>
              <div className="dropdown">
-                 <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+             <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
                 <div className="dropdown-content">
                      <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
                  </div>
@@ -72,10 +75,10 @@ function DashboardComponent(props) {
          </div>
 
          <div className="dashboard-content">
-            <div className="sidebar">
-                <button className="sidebar-link" >General</button>
+         <div className="sidebar">
+                <button className="sidebar-link" onClick={handleClickDashboard.bind(this)} >General</button>
                 <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
-                <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
+                <button className="sidebar-link" >All Data for Student</button>
             </div>
              <div className="section">
                  <table>
@@ -95,8 +98,6 @@ function DashboardComponent(props) {
 
         </div>
     );
-
-    
 }
 
-export default withRouter(DashboardComponent);
+export default withRouter(AllData);

@@ -4,6 +4,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 function StudentAuthComponent(props) {
+    
     let passedState = props.location.state;
 
     let tutorAndTutees = passedState["tutorAndTutees"];

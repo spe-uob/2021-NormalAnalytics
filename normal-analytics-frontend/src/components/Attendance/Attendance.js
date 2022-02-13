@@ -1,62 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
-import 'react-dropdown/style.css';
+import Sidebar from "../SideBar/SideBar";
 import "./Attendance.css"
-import Sidebar from '../SideBar/SideBar';
+import axios from "axios";
 
-class Attendance extends React.Component {
-    passedState = null;
 
-    handleClick = () => {
-        this.props.history.push({
+function Attendance(props) {
+    
+
+    let passedState = props.location.state;
+
+    let handleClickChangeStudent = () => {
+        props.history.push({
             pathname: '/student-auth',
-            state: this.passedState
+            state: passedState
         })
     }
 
-    handleClickLogin = () => {
-        this.props.history.push({
+    let handleClickLogOut = () => {
+        props.history.push({
             pathname: '/login',
-            state: this.passedState
+            state: passedState
         })
     }
 
-    render() {
-        const {state} = this.props.location;
-        this.passedState = state;
-        let myObj = JSON.stringify(state);
-        let myNewObj = JSON.parse(myObj);
-
-        let studentObjects = myNewObj["tutorAndTutees"]["studentObjects"];
-        console.log(studentObjects);
-        let studentName = myNewObj["studentUsername"]["value"]
-        let currentStudentName = null;
-
-        for (const [key, value] of Object.entries(studentObjects)) {
-            if (studentName === key) {
-                console.log(value);
-                currentStudentName = key
-            }
-        }
-
-        let tutorName = myNewObj["tutorAndTutees"]["tutorUsername"];
-
-        return (
-            <div className="dashboard">
-                <div className="nav-bar">
-                    <button className="nav-item left" onClick={this.handleClick.bind(this)}>Change Student</button>
-                    <button className="nav-item">Current student: {currentStudentName}</button>
-                    <div className="dropdown">
-                        <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorName}</button>
-                        <div className="dropdown-content">
-                            <a className="log-out"  onClick={this.handleClickLogin.bind(this)}>Log Out</a>
-                        </div>
-                    </div>
-                </div>
-                <Sidebar />
-            </div>
-        );
+    let handleClickDashboard = ()=>{
+        props.history.push({
+            pathname: '/dashboard',
+            state: passedState
+        })
     }
+    
+    let handleClickAllData = () =>{
+        props.history.push({
+            pathname: '/alldata',
+            state: passedState
+        })
+    }
+
+    let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
+    let studentName = passedState["studentUsername"]["value"];
+    let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
+    
+
+    let studentUsername = null;
+    for (const [key, value] of Object.entries(studentObjects)) {
+        if (studentName === key) {
+            studentName = key
+            studentUsername = value;
+        }
+    }
+
+    const [data, setData] = useState();
+    const url = "/database/getUnits/" + studentUsername;
+    useEffect(() => {
+        axios(url)
+            .then((res) => {
+                setData(res.data);
+            })
+            .catch((err) => console.log(err))
+    }, []);
+
+    return (
+        <div className="dashboard">
+         <div className="nav-bar">
+            <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+             <button className="nav-item">Current student: {studentName}</button>
+             <div className="dropdown">
+             <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                <div className="dropdown-content">
+                     <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
+                 </div>
+             </div>
+         </div>
+
+         <div className="dashboard-content">
+         <div className="sidebar">
+                <button className="sidebar-link" onClick={handleClickDashboard.bind(this)} >General</button>
+                <button className="sidebar-link" >Attendance</button>
+                <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
+            </div>
+             <div className="section">
+                 <table>
+                     <tr>
+                         <th>Units</th>
+                     </tr>
+                     {data && data["units"].map((val, key) => {
+                         return (
+                             <tr key={key}>
+                                 <td>{val.name}</td>
+                             </tr>
+                         )
+                     })}
+                 </table>
+             </div>
+         </div>
+
+        </div>
+    );
 }
 
-export default withRouter (Attendance);
+export default withRouter(Attendance);

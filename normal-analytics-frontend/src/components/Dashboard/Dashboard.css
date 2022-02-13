@@ -70,12 +70,42 @@
 .section {
     width: 42.5vw;
     height: 45vh;
-    background-color: red;
+    background-color: rgb(228, 243, 248);
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.sidebar {
+    width: 15vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-right: 2rem solid black;
+    background-color: #2fb0c4b0;
+}
 
+.database {
+    width: 85vh;
+    height: 100vh;
+    background-color: blue;
+}
+.sidebar-link {
+    font-size: 20rem;
+    margin: 10rem 0;
+    color: black;
+    text-transform: lowercase;
+    text-decoration: underline;
+    letter-spacing: 1rem;
+    background: none;
+    border: none;
+}
+
+.sidebar-link:hover {
+    opacity: .6;
+    cursor: pointer;
+}
 
 
 

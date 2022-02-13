@@ -7,9 +7,9 @@ export default class Sidebar extends Component {
     return (
       <div className="sidebar-container">
         <div className="sidebar">
-          <a className="sidebar-link" href="/attendance"> Attendance records</a>
-          <a className="sidebar-link" href="/alldata">All data </a>
           <a className="sidebar-link" href="/dashboard">General</a>
+          <a className="sidebar-link" href="/alldata">All data </a>
+          <a className="sidebar-link" href="/attendance"> Attendance records</a>
         </div>
       </div>
     );
