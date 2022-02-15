@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
-import Sidebar from "../SideBar/SideBar";
 import "./Attendance.css"
 import axios from "axios";
 
 
 function Attendance(props) {
-    
-
     let passedState = props.location.state;
 
     let handleClickChangeStudent = () => {
@@ -41,7 +38,6 @@ function Attendance(props) {
     let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
     let studentName = passedState["studentUsername"]["value"];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-    
 
     let studentUsername = null;
     for (const [key, value] of Object.entries(studentObjects)) {
@@ -60,6 +56,21 @@ function Attendance(props) {
             })
             .catch((err) => console.log(err))
     }, []);
+
+    // loop through each unit taken by the given student and work out 'Unit Name: Attendance:
+    let unitNameAndAttendance = {};
+    data && Object.keys(data.units).forEach(function(key) {
+        let unitCode = data.units[key].code;
+        let attendanceUrl = "/database/getAttendance/" + unitCode + "/" + studentUsername;
+
+        fetch(attendanceUrl)
+            .then(response => response.json())
+            .then(message => {
+                unitNameAndAttendance[data.units[key].name] = message;
+            });
+    });
+
+    console.log(unitNameAndAttendance);
 
     return (
         <div className="dashboard">
