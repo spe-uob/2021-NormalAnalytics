@@ -10,6 +10,7 @@ import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,6 +54,23 @@ public class DatabaseController {
         List<Unit> unitList = receiver.UnitsFromStudent(studentUsername);
         Unit[] unitArray = (Unit[]) unitList.toArray(new Unit[unitList.size()]);
         return new UnitList(unitArray);
+    }
+
+    @GetMapping("/getAssessmentData/{unitCode}/{studentUsername}")
+    public AssessmentData getAssessmentData(@PathVariable String unitCode,@PathVariable String studentUsername){
+        AssessmentScoreList data = receiver.ScoresFromUnit(studentUsername,unitCode);
+        List<String> assessmentNames = new ArrayList<>();
+        List<String> assessmentScores = new ArrayList<>();
+        for(AssessmentScore a: data.getAssessments()){
+            assessmentNames.add(a.getName());
+            assessmentScores.add(Float.toString(a.getScore()));
+        }
+        AssessmentData toReturn = new AssessmentData();
+        String[] nameArray = (String[]) assessmentNames.toArray(new String[assessmentNames.size()]);
+        String[] scoreArray = (String[]) assessmentScores.toArray(new String[assessmentScores.size()]);
+        toReturn.setNames(nameArray);
+        toReturn.setScores(scoreArray);
+        return toReturn;
     }
 
 }
