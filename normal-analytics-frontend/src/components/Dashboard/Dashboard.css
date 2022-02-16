@@ -107,6 +107,11 @@
     cursor: pointer;
 }
 
+table {
+    border: 3rem solid black;
+    margin: 10rem;
+}
+
 
 
 

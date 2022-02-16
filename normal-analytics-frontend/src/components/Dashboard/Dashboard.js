@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
-import Sidebar from "../SideBar/SideBar";
 import "./Dashboard.css"
 import axios from "axios";
 
@@ -48,6 +47,7 @@ function DashboardComponent(props) {
         }
     }
 
+    // get each unit a student studies
     const [data, setData] = useState();
     const url = "/database/getUnits/" + studentUsername;
     useEffect(() => {
@@ -57,6 +57,33 @@ function DashboardComponent(props) {
             })
             .catch((err) => console.log(err))
     }, []);
+
+    // get unit codes into array
+    let units = [];
+    data && Object.keys(data.units).forEach(function(key) {
+        units.push(data.units[key].code);
+    });
+
+    // get assessments for each unit
+    const [assessmentData, setAssessmentData] = useState([]);
+    const [scoreData, setScoreData] = useState([]);
+
+    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
+
+    const getAssessmentDataFetch = async (assessmentUrl) => {
+        const response = await fetch(assessmentUrl);
+        const jsonData = await response.json();
+        setAssessmentData(jsonData.names);
+        setScoreData(jsonData.scores);
+    };
+
+    useEffect(() => {
+        getAssessmentDataFetch(assessmentUrl);
+    }, []);
+
+    for (let i = 0; i < assessmentData.length; i++) {
+        console.log(assessmentData[i]);
+    }
 
     return (
         <div className="dashboard">
@@ -78,24 +105,37 @@ function DashboardComponent(props) {
                 <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
             </div>
              <div className="section">
-                 <table>
-                     <tr>
-                         <th>Units</th>
-                     </tr>
-                     {data && data["units"].map((val, key) => {
-                         return (
+                 {data && data["units"].map((val, key) => {
+                     return (
+                         <table>
                              <tr key={key}>
                                  <td>{val.name}</td>
                              </tr>
-                         )
-                     })}
-                 </table>
+
+                             {assessmentData.map((val, key) => {
+                                 return (
+                                     <tr key={key}>
+                                         <td>{val}</td>
+                                     </tr>
+                                 )
+                             })}
+
+                             {scoreData.map((val, key) => {
+                                 return (
+                                     <tr key={key}>
+                                         <td>{val}</td>
+                                     </tr>
+                                 )
+                             })}
+                         </table>
+                     )
+                 })}
+
              </div>
          </div>
 
         </div>
     );
-
     
 }
 
