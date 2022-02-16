@@ -58,32 +58,67 @@ function DashboardComponent(props) {
             .catch((err) => console.log(err))
     }, []);
 
+
     // get unit codes into array
     let units = [];
     data && Object.keys(data.units).forEach(function(key) {
         units.push(data.units[key].code);
     });
 
-    // get assessments for each unit
-    const [assessmentData, setAssessmentData] = useState([]);
-    const [scoreData, setScoreData] = useState([]);
 
-    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
+    /////////////////////////
 
-    const getAssessmentDataFetch = async (assessmentUrl) => {
-        const response = await fetch(assessmentUrl);
-        const jsonData = await response.json();
-        setAssessmentData(jsonData.names);
-        setScoreData(jsonData.scores);
-    };
 
-    useEffect(() => {
-        getAssessmentDataFetch(assessmentUrl);
-    }, []);
 
-    for (let i = 0; i < assessmentData.length; i++) {
-        console.log(assessmentData[i]);
-    }
+
+
+
+
+    ////////////////////////
+
+
+
+
+
+    // // get assessments for each unit
+    // let assessments = null;
+    // for (let i = 0; i < units.length; i++) {
+    //     let assessmentUrl = "/database/getAssessments/" + units[i] + "/" + studentUsername;
+    //
+    //
+    //     fetch(assessmentUrl)
+    //         .then(response => response.json())
+    //         .then(message => {
+    //             // unitsAndAssessments[data.units[key].name] = message.assessments;
+    //             assessments = message;
+    //
+    //             // data && message.assessments.forEach(function(key) {
+    //             //     let assessmentAndScore = {
+    //             //         assessmentName: key.name,
+    //             //         assessmentScore: key.score
+    //             //     }
+    //             //     assessments.push(assessmentAndScore);
+    //             // });
+    //         });
+    // }
+    //
+    // assessments && console.log(assessments);
+
+    // // get assessments for each unit
+    // let unitsAndAssessments = {};
+    //
+    // data && Object.keys(data.units).forEach(function(key) {
+    //     let unitCode = data.units[key].code;
+    //     let assessmentUrl = "/database/getAssessments/" + unitCode + "/" + studentUsername;
+    //
+    //     fetch(assessmentUrl)
+    //         .then(response => response.json())
+    //         .then(message => {
+    //             unitsAndAssessments = message;
+    //         });
+    // });
+    //
+    // console.log(unitsAndAssessments);
 
     return (
         <div className="dashboard">
@@ -106,36 +141,37 @@ function DashboardComponent(props) {
             </div>
              <div className="section">
                  {data && data["units"].map((val, key) => {
+                     let unitName = val.name;
+
                      return (
                          <table>
-                             <tr key={key}>
-                                 <td>{val.name}</td>
+                             <tr>
+                                 <td>{unitName}</td>
                              </tr>
-
-                             {assessmentData.map((val, key) => {
-                                 return (
-                                     <tr key={key}>
-                                         <td>{val}</td>
-                                     </tr>
-                                 )
-                             })}
-
-                             {scoreData.map((val, key) => {
-                                 return (
-                                     <tr key={key}>
-                                         <td>{val}</td>
-                                     </tr>
-                                 )
-                             })}
                          </table>
                      )
                  })}
 
+
+
+                 {/*<table>*/}
+                 {/*    <tr>*/}
+                 {/*        <th>Units</th>*/}
+                 {/*    </tr>*/}
+                 {/*    {data && data["units"].map((val, key) => {*/}
+                 {/*        return (*/}
+                 {/*            <tr key={key}>*/}
+                 {/*                <td>{val.name}</td>*/}
+                 {/*            </tr>*/}
+                 {/*        )*/}
+                 {/*    })}*/}
+                 {/*</table>*/}
              </div>
          </div>
 
         </div>
     );
+
     
 }
 
