@@ -110,8 +110,17 @@
 table {
     border: 3rem solid black;
     margin: 10rem;
+    border-spacing: 50rem 5rem;
 }
 
+.column-header {
+    font-weight: 700;
+}
 
+table tr td:empty {
+    width: 15rem;
+}
 
-
+table tr td {
+    padding: 5rem 0;
+}

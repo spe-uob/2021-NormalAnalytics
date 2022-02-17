@@ -49,63 +49,43 @@ function Attendance(props) {
             studentUsername = value;
         }
     }
-    console.log(studentUsername)
+
+    // gets all units
     const [data, setData] = useState();
     const url = "/database/getUnits/" + studentUsername;
     useEffect(() => {
         axios(url)
             .then((res) => {
                 setData(res.data);
+                console.log(res.data);
             })
             .catch((err) => console.log(err))
     }, []);
-    // loop through each unit taken by the given student and work out 'Unit Name: Attendance:
-    /*let unitNameAndAttendance = {};
-    data && Object.keys(data.units).forEach(function (key) {
-        let unitCode = data.units[key].code;
-        let attendanceUrl = "/database/getAttendance/" + unitCode + "/" + studentUsername;
 
-        fetch(attendanceUrl)
-            .then(response => response.json())
-            .then(message => {
-                unitNameAndAttendance[data.units[key].name] = message;
-
-            });
-    });
-    */
-    //console.log(this.Object.value)
-    //console.log(unitNameAndAttendance);
-
-    let units = [];
-    data && Object.keys(data.units).forEach(function(key) {
-        units.push(data.units[key].code);
-    });
 
 
     // get assessments for each unit
-    //const [assessmentData, setAssessmentData] = useState([]);
     const [attendanceData, setAttendanceData] = useState([]);
 
-    //let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
     let attendanceUrl = "/database/getAttendance/" + "COMS20006" + "/" + studentUsername; 
     const getAttendanceDataFetch = async (attendanceUrl) => {
         const response = await fetch(attendanceUrl);
         const jsonData = await response.json();
         setAttendanceData(jsonData.value);
-        //setScoreData(jsonData.scores);
     };
 
-    console.log(attendanceUrl)
 
     useEffect(() => {
         getAttendanceDataFetch(attendanceUrl);
     }, []);
 
-   
+    console.log(attendanceData);
 
-    for (let i = 0; i < attendanceData.length; i++) {
-        console.log(attendanceData[i]);
-    }
+
+
+
+
+    /////////////
 
 
     const data1 = [
@@ -140,6 +120,10 @@ function Attendance(props) {
                     <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="section">
+
+
+
+
                     <table>
                         <tr>
                             <th>Units</th>
@@ -162,6 +146,12 @@ function Attendance(props) {
                             )
                         })}
                     </table>
+
+
+
+
+
+
                 </div>
                 <div>
                     <LineChart

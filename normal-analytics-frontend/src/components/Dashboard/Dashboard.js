@@ -58,121 +58,80 @@ function DashboardComponent(props) {
             .catch((err) => console.log(err))
     }, []);
 
+    // get assessments for each unit
+    const [assessmentData, setAssessmentData] = useState([]);
+    const [scoreData, setScoreData] = useState([]);
 
-    // get unit codes into array
-    let units = [];
-    data && Object.keys(data.units).forEach(function(key) {
-        units.push(data.units[key].code);
-    });
+    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
 
+    const getAssessmentDataFetch = async (assessmentUrl) => {
+        const response = await fetch(assessmentUrl);
+        const jsonData = await response.json();
+        setAssessmentData(jsonData.names);
+        setScoreData(jsonData.scores);
+    };
 
-    /////////////////////////
+    useEffect(() => {
+        getAssessmentDataFetch(assessmentUrl);
+    }, []);
 
-
-
-
-
-
-
-    ////////////////////////
-
-
-
-
-
-    // // get assessments for each unit
-    // let assessments = null;
-    // for (let i = 0; i < units.length; i++) {
-    //     let assessmentUrl = "/database/getAssessments/" + units[i] + "/" + studentUsername;
-    //
-    //
-    //     fetch(assessmentUrl)
-    //         .then(response => response.json())
-    //         .then(message => {
-    //             // unitsAndAssessments[data.units[key].name] = message.assessments;
-    //             assessments = message;
-    //
-    //             // data && message.assessments.forEach(function(key) {
-    //             //     let assessmentAndScore = {
-    //             //         assessmentName: key.name,
-    //             //         assessmentScore: key.score
-    //             //     }
-    //             //     assessments.push(assessmentAndScore);
-    //             // });
-    //         });
-    // }
-    //
-    // assessments && console.log(assessments);
-
-    // // get assessments for each unit
-    // let unitsAndAssessments = {};
-    //
-    // data && Object.keys(data.units).forEach(function(key) {
-    //     let unitCode = data.units[key].code;
-    //     let assessmentUrl = "/database/getAssessments/" + unitCode + "/" + studentUsername;
-    //
-    //     fetch(assessmentUrl)
-    //         .then(response => response.json())
-    //         .then(message => {
-    //             unitsAndAssessments = message;
-    //         });
-    // });
-    //
-    // console.log(unitsAndAssessments);
 
     return (
         <div className="dashboard">
-         <div className="nav-bar">
-            <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
-             <button className="nav-item">Current student: {studentName}</button>
-             <div className="dropdown">
-                 <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                <div className="dropdown-content">
-                     <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                 </div>
-             </div>
-         </div>
-
-         <div className="dashboard-content">
-            <div className="sidebar">
-                <button className="sidebar-link" >General</button>
-                <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
-                <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
+            <div className="nav-bar">
+                <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+                <button className="nav-item">Current student: {studentName}</button>
+                <div className="dropdown">
+                    <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <div className="dropdown-content">
+                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
+                    </div>
+                </div>
             </div>
-             <div className="section">
-                 {data && data["units"].map((val, key) => {
-                     let unitName = val.name;
 
-                     return (
-                         <table>
-                             <tr>
-                                 <td>{unitName}</td>
-                             </tr>
-                         </table>
-                     )
-                 })}
+            <div className="dashboard-content">
+                <div className="sidebar">
+                    <button className="sidebar-link" >General</button>
+                    <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
+                    <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
+                </div>
+                <div className="section">
+                    {data && data["units"].map((val, key) => {
+                        return (
+                            <table>
+                                <tr key={key} className="table-header">
+                                    <td className="column-header">Unit: {val.name}</td>
+                                    <td></td>
+                                    <td className="column-header">Score</td>
+                                </tr>
 
+                                {assessmentData.map((val, key) => {
+                                    return (
+                                        <tr key={key}>
+                                            <td>{val}</td>
+                                            <td></td>
+                                            <td>{scoreData[key]}</td>
+                                        </tr>
+                                    )
+                                })}
 
+                                {/*{scoreData.map((val, key) => {*/}
+                                {/*    return (*/}
+                                {/*        <tr key={key}>*/}
+                                {/*            <td>{val}</td>*/}
+                                {/*        </tr>*/}
+                                {/*    )*/}
+                                {/*})}*/}
+                            </table>
+                        )
+                    })}
 
-                 {/*<table>*/}
-                 {/*    <tr>*/}
-                 {/*        <th>Units</th>*/}
-                 {/*    </tr>*/}
-                 {/*    {data && data["units"].map((val, key) => {*/}
-                 {/*        return (*/}
-                 {/*            <tr key={key}>*/}
-                 {/*                <td>{val.name}</td>*/}
-                 {/*            </tr>*/}
-                 {/*        )*/}
-                 {/*    })}*/}
-                 {/*</table>*/}
-             </div>
-         </div>
+                </div>
+            </div>
 
         </div>
     );
 
-    
 }
 
 export default withRouter(DashboardComponent);
