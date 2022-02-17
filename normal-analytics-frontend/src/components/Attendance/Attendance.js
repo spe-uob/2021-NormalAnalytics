@@ -63,28 +63,6 @@ function Attendance(props) {
     }, []);
 
 
-
-    // get assessments for each unit
-    const [attendanceData, setAttendanceData] = useState([]);
-
-    let attendanceUrl = "/database/getAttendance/" + "COMS20006" + "/" + studentUsername; 
-    const getAttendanceDataFetch = async (attendanceUrl) => {
-        const response = await fetch(attendanceUrl);
-        const jsonData = await response.json();
-        setAttendanceData(jsonData.value);
-    };
-
-
-    useEffect(() => {
-        getAttendanceDataFetch(attendanceUrl);
-    }, []);
-
-    console.log(attendanceData);
-
-
-
-
-
     /////////////
 
 
@@ -122,27 +100,21 @@ function Attendance(props) {
                 <div className="section">
 
 
-
-
                     <table>
-                        <tr>
-                            <th>Units</th>
+                        <tr className="table-header">
+                            <td className="column-header">Unit</td>
+                            <td></td>
+                            <td className="column-header">Attendance</td>
                         </tr>
+
                         {data && data["units"].map((val, key) => {
                             return (
-                                <tr key={key}>
+                                <tr>
                                     <td>{val.name}</td>
+                                    <td></td>
+                                    <td>{val.attendance}%</td>
                                 </tr>
-                            )
-                        })}
-                        <tr>
-                            <th>Score</th>
-                        </tr>
-                        {data && data["units"].map((val, key) => {
-                            return (
-                                <tr key={key}>
-                                    <td>{val.name}</td>
-                                </tr>
+
                             )
                         })}
                     </table>
