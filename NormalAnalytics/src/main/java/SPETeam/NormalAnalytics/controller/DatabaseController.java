@@ -52,6 +52,10 @@ public class DatabaseController {
     @GetMapping("/getUnits/{studentUsername}")
     public UnitList getUnits(@PathVariable String studentUsername){
         List<Unit> unitList = receiver.UnitsFromStudent(studentUsername);
+        for(int i = 0;i < unitList.size();i++){
+            Unit u = unitList.get(i);
+            u.setAttendance(receiver.AttendanceFromUnit(studentUsername,u.getCode()));
+        }
         Unit[] unitArray = (Unit[]) unitList.toArray(new Unit[unitList.size()]);
         return new UnitList(unitArray);
     }

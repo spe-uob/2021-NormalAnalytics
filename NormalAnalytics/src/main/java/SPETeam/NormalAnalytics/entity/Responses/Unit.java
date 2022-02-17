@@ -6,4 +6,5 @@ import lombok.Data;
 public class Unit {
     private String name;
     private String code;
+    private float attendance;
 }
