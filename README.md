@@ -10,18 +10,26 @@ log on data, attainment in formative and summative tests and the analytics from 
 compile this data across units to again give personal tutors the information required to spot difficulties
 for students and offer further support.”
 
-Instalation guide:
+Deployment guide:
 
 1. Clone the repository.
 
-2. Go to parent directory.
+2. If not already done so, initialise your database using the database/db-init.sql and populate it either using your own data or using the database/test_data.sql script
 
-3. Run the folllowing command : mvn spring-boot:run
+3. Enter your database and Redis server credentials in ./NormalAnalytics/src/main/resources/application.properties
 
-4. Open in browser on localhost:8080
+4. Navigate to to ./NormalAnalytics and run the command 'mvn clean install'
+
+5. Navigate to ./NormalAnalytics/target and run the command 'java -jar NormalAnalytics-0.0.1-SNAPSHOT.jar'
+
+6. Open in browser on localhost:8080
 
 Dependencies:
 
 Java 11 or higher
 
 Maven 
+
+MariaDB
+
+Redis
