@@ -6,9 +6,11 @@ import SPETeam.NormalAnalytics.entity.Requests.TutorStudentRequest;
 import SPETeam.NormalAnalytics.entity.Requests.UnitAverageRequest;
 import SPETeam.NormalAnalytics.entity.Requests.UnitRequest;
 import SPETeam.NormalAnalytics.entity.Responses.*;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,18 +36,45 @@ public class DatabaseController {
         return new StudentList(studentArray);
     }
 
+    @GetMapping("/getGradesAndUnits/{studentUsername}")
+    public StudentUnitsAndGrades getStudentData(@PathVariable String studentUsername){
+        StudentUnitsAndGrades unitsAndGrades = new StudentUnitsAndGrades();
+        unitsAndGrades.setStudent(receiver.StudentFromUsername(studentUsername));
+        unitsAndGrades.setUnitAndGrades(receiver.UnitAndGradesFromStudent(studentUsername));
+        return unitsAndGrades;
+    }
+
     @GetMapping("/getAssessments/{unitCode}/{studentUsername}")
     public AssessmentScoreList getAssessments(@PathVariable String unitCode,@PathVariable String studentUsername){
-        List<AssessmentScore> scoreList = receiver.ScoresFromUnit(studentUsername,unitCode);
-        AssessmentScore[] scoreArray = (AssessmentScore[]) scoreList.toArray(new AssessmentScore[scoreList.size()]);
-        return new AssessmentScoreList(scoreArray);
+        return receiver.ScoresFromUnit(studentUsername,unitCode);
     }
 
     @GetMapping("/getUnits/{studentUsername}")
     public UnitList getUnits(@PathVariable String studentUsername){
         List<Unit> unitList = receiver.UnitsFromStudent(studentUsername);
+        for(int i = 0;i < unitList.size();i++){
+            Unit u = unitList.get(i);
+            u.setAttendance(receiver.AttendanceFromUnit(studentUsername,u.getCode()));
+        }
         Unit[] unitArray = (Unit[]) unitList.toArray(new Unit[unitList.size()]);
         return new UnitList(unitArray);
+    }
+
+    @GetMapping("/getAssessmentData/{unitCode}/{studentUsername}")
+    public AssessmentData getAssessmentData(@PathVariable String unitCode,@PathVariable String studentUsername){
+        AssessmentScoreList data = receiver.ScoresFromUnit(studentUsername,unitCode);
+        List<String> assessmentNames = new ArrayList<>();
+        List<String> assessmentScores = new ArrayList<>();
+        for(AssessmentScore a: data.getAssessments()){
+            assessmentNames.add(a.getName());
+            assessmentScores.add(Float.toString(a.getScore()));
+        }
+        AssessmentData toReturn = new AssessmentData();
+        String[] nameArray = (String[]) assessmentNames.toArray(new String[assessmentNames.size()]);
+        String[] scoreArray = (String[]) assessmentScores.toArray(new String[assessmentScores.size()]);
+        toReturn.setNames(nameArray);
+        toReturn.setScores(scoreArray);
+        return toReturn;
     }
 
 }

@@ -2,6 +2,7 @@ package SPETeam.NormalAnalytics.UnitTests;
 
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
 import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
+import SPETeam.NormalAnalytics.entity.Responses.AssessmentScoreList;
 import SPETeam.NormalAnalytics.entity.Responses.Unit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +49,14 @@ public class DatabaseTests {
 
     @Test
     void TestRetrievesScores(){
-        List<AssessmentScore> SPEAssessments = receiver.ScoresFromUnit("iq20064","COMS20006");
+        AssessmentScoreList SPEAssessments = receiver.ScoresFromUnit("iq20064","COMS20006");
         assert containsAssessmentWithScore("MVP",50,SPEAssessments);
         assert containsAssessmentWithScore("Beta",70,SPEAssessments);
         assert containsAssessmentWithScore("Release",100,SPEAssessments);
     }
 
-    boolean containsAssessmentWithScore(String assessment,float score,List<AssessmentScore> list){
-        for(AssessmentScore a : list){
+    boolean containsAssessmentWithScore(String assessment,float score,AssessmentScoreList list){
+        for(AssessmentScore a : list.getAssessments()){
             if(a.getName().equals(assessment) && a.getScore() == score) return true;
         }
         return false;
