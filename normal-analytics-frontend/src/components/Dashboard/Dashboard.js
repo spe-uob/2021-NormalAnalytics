@@ -59,24 +59,24 @@ function DashboardComponent(props) {
     }, []);
 
     // get assessments for each unit
-    const [assessmentData, setAssessmentData] = useState([]);
-    const [scoreData, setScoreData] = useState([]);
+    // const [assessmentData, setAssessmentData] = useState([]);
+    // const [scoreData, setScoreData] = useState([]);
     const units = ["COMS20006", "COMS20008"];
 
-    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
-
-    const getAssessmentDataFetch = async (assessmentUrl) => {
-        const response = await fetch(assessmentUrl);
-        const jsonData = await response.json();
-        setAssessmentData(jsonData.names);
-        setScoreData(jsonData.scores);
-    };
-
-    useEffect(() => {
-        getAssessmentDataFetch(assessmentUrl);
-    }, []);
-
-    //////////
+    // let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
+    //
+    // const getAssessmentDataFetch = async (assessmentUrl) => {
+    //     const response = await fetch(assessmentUrl);
+    //     const jsonData = await response.json();
+    //     setAssessmentData(jsonData.names);
+    //     setScoreData(jsonData.scores);
+    // };
+    //
+    // useEffect(() => {
+    //     getAssessmentDataFetch(assessmentUrl);
+    // }, []);
+    //
+    // //////////
 
     const [pleaseData, setPleaseData] = useState([]);
 
@@ -110,9 +110,6 @@ function DashboardComponent(props) {
         pleaseLoadUsers();
     }, []);
 
-
-    let myTable = "";
-
     return (
         <div className="dashboard">
             <div className="nav-bar">
@@ -134,45 +131,98 @@ function DashboardComponent(props) {
                 </div>
                 <div className="section">
 
-                    <table id="Computer Systems A"/>
-                    <table id="SPE"/>
+                    {/*<table id="Computer Systems A"/>*/}
+                    {/*<table id="SPE"/>*/}
 
                     {/*NEED TO STOP SOME COMPONENT RE-RENDERING - MAYBE USE REACT.MEMO BUT DUNNO WHERE*/}
 
-                    {/*for each unit*/}
-                    {data && data["units"].map((val, key1) => {
-                        myTable = "";
 
-                            myTable += "<table id={val.name}>"
-                            myTable += "<tr className=\"table-header\">" + "<td className=\"column-header\">" + "Unit: " + val.name + "</td>"
-                                + "<td/>" + "<td className=\"column-header\">Score</td>" + "</tr>";
-                            {/*<tr key={key} className="table-header">*/}
-                            {/*    <td className="column-header">Unit: {val.name}</td>*/}
-                            {/*    <td/>*/}
-                            {/*    <td className="column-header">Score</td>*/}
-                            {/*</tr>*/}
+                    {
+                        data && data["units"].map((val, key1) => {
+                            return (
+                                <table id={val.name}>
+                                    <tr>
+                                        <td>{val.name}</td>
+                                    </tr>
 
-                            {pleaseData.map((value, key2) => {
+                                    {
+                                        pleaseData[key1].names.map((val2, key2) => {
+                                            // val2.names.map((val3, key3) => {
+                                            //     return (
+                                            //         <tr>
+                                            //             <td>{val3}</td>
+                                            //         </tr>
+                                            //     )
+                                            // })
 
-                                if (key1 === key2) {
-                                    for (let inc = 0; inc < pleaseData[key1].names.length; inc++) {
-                                        myTable +=
-                                            "<tr>" + "<td>" + pleaseData[key1].names[inc] + "</td>" + "<td/>"
-                                            + "<td>" + pleaseData[key1].scores[inc] + "</td>"
-                                            + "</tr>"
+                                            return (
+                                                <tr>
+                                                    <td>{val2}</td>
+                                                    <td></td>
+                                                    <td>{pleaseData[key1].scores[key2]}</td>
+                                                </tr>
+                                            )
+
+
+                                            // above doesn't work
+                                            // what we need to do is if key2 == key 1 (if correct array in pleaseData
+                                            // need to loop through size of val2[key1].names.length and add row with following
+                                            // pleaseData[key1].names[inc] and pleaseData[key1].scores[inc]
+                                        })
                                     }
-                                }
-                            })}
+                                </table>
+                            )
+                        })
+                    }
 
-                            myTable += "</table>";
 
-                            {
-                                return (
-                                    document.getElementById(val.name).innerHTML = myTable
-                                )
-                            }
 
-                    })}
+
+
+
+                    {/*/!*for each unit*!/*/}
+                    {/*{data && data["units"].map((val, key1) => {*/}
+                    {/*    myTable = "";*/}
+
+                    {/*        myTable += "<table id={val.name}>"*/}
+                    {/*        myTable += "<tr className=\"table-header\">" + "<td className=\"column-header\">" + "Unit: " + val.name + "</td>"*/}
+                    {/*            + "<td/>" + "<td className=\"column-header\">Score</td>" + "</tr>";*/}
+                    {/*        /!*<tr key={key} className="table-header">*!/*/}
+                    {/*        /!*    <td className="column-header">Unit: {val.name}</td>*!/*/}
+                    {/*        /!*    <td/>*!/*/}
+                    {/*        /!*    <td className="column-header">Score</td>*!/*/}
+                    {/*        /!*</tr>*!/*/}
+
+                    {/*        {pleaseData.map((value, key2) => {*/}
+
+                    {/*            if (key1 === key2) {*/}
+                    {/*                for (let inc = 0; inc < pleaseData[key1].names.length; inc++) {*/}
+                    {/*                    myTable +=*/}
+                    {/*                        "<tr>" + "<td>" + pleaseData[key1].names[inc] + "</td>" + "<td/>"*/}
+                    {/*                        + "<td>" + pleaseData[key1].scores[inc] + "</td>"*/}
+                    {/*                        + "</tr>"*/}
+                    {/*                }*/}
+                    {/*            }*/}
+                    {/*        })}*/}
+
+                    {/*        // {scoreData.map((val, key) => {*/}
+                    {/*        //     return (*/}
+                    {/*        //         <tr key={key}>*/}
+                    {/*        //             <td>{val}</td>*/}
+                    {/*        //         </tr>*/}
+                    {/*        //     )*/}
+                    {/*        // )}*/}
+
+                    {/*        myTable += "</table>";*/}
+
+                    {/*        {*/}
+                    {/*            return (*/}
+                    {/*                document.getElementById(val.name).innerHTML = myTable*/}
+                    {/*            )*/}
+                    {/*        }*/}
+
+                    {/*})}*/}
+
                 </div>
             </div>
 
