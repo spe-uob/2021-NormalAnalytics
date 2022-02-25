@@ -65,8 +65,8 @@ PRIMARY KEY (student,unit)
 
 INSERT INTO tutor (username,password,firstname,surname)
 VALUES
-("jross","password123","Joel","Ross"),
-("fakeTutor","password","Fake","Tutor");
+("jross","$2a$10$FOk1bzqQEQ.07ydP2X26Au.Cuu6Q.WTm6RFY7wp82kydTRLIdqS7i","Joel","Ross"),
+("fakeTutor","$2a$10$eJqCoz24ghJIEAzc2NmgQu73D/exKr5l5zwnabrpNFYaV54cjlvLW","Fake","Tutor");
 
 INSERT INTO student (username,firstname,surname,tutor)
 VALUES
