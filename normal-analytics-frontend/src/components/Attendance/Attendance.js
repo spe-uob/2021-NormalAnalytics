@@ -62,18 +62,21 @@ function Attendance(props) {
             .catch((err) => console.log(err))
     }, []);
 
-
-    /////////////
+    /**
+     * Needed changes:
+     * Change graphs to represent attendance with corresponding dates
+     * Change table to show correct data
+     */
 
 
     const data1 = [
         {
             //data.units[0].name
-            name: "SPE",
+            name: "23/2/2022",
             score: 93
         },
         {
-            name: "CSA",
+            name: "24/2/2022",
             score: 94
         }
     ];
@@ -118,10 +121,6 @@ function Attendance(props) {
                             )
                         })}
                     </table>
-
-
-
-
 
 
                 </div>
