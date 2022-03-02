@@ -96,7 +96,13 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     public float AttendanceFromUnit(String studentUsername, String unitCode) {
         StudentTable student = studentRepository.findStudentTableByUsername(studentUsername).get();
         UnitTable unit = unitRepository.findUnitTableByCode(unitCode).get();
-        return attendanceRepository.findById(new AttendanceId(unit.getId(),student.getId())).get().getAttendance();
+        //return attendanceRepository.findById(new AttendanceId(unit.getId(),student.getId())).get().getAttendance();
+        List<AttendanceTable> attendance = attendanceRepository.findAttendanceTablesByStudentAndUnit(student,unit);
+        int attended = 0;
+        for(AttendanceTable a : attendance){
+            if(a.isPresent()) attended += 1;
+        }
+        return 100 * (float)attended/(float)attendance.size();
     }
 
     @Override

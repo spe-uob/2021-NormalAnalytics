@@ -4,10 +4,8 @@ import SPETeam.NormalAnalytics.Database.Repositories.AttendanceId;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="attendance")
@@ -15,6 +13,16 @@ public class AttendanceTable {
     @EmbeddedId
     AttendanceId id;
 
-    @Column(name="attendance") @Getter @Setter
-    float attendance;
+    @ManyToOne
+    @MapsId("student")
+    @JoinColumn(name="student") @Getter @Setter
+    StudentTable student;
+
+    @ManyToOne
+    @MapsId("unit")
+    @JoinColumn(name="unit") @Getter @Setter
+    UnitTable unit;
+
+    @Column(name="present") @Getter @Setter
+    boolean present;
 }

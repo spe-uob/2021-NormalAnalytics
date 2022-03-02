@@ -75,7 +75,10 @@ public class DatabaseTests {
 
     @Test
     void TestRetrieveAttendance(){
-        assert receiver.AttendanceFromUnit("iq20064","COMS20006") == 84;
+        final float expected = 66.66f;
+        final float precision = 0.01f;
+        float attendance = receiver.AttendanceFromUnit("oj20075","COMS20006");
+        assert Math.abs(expected - attendance) < precision;
     }
 
     @Test

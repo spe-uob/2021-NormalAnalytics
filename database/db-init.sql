@@ -40,10 +40,11 @@ FOREIGN KEY (unit) REFERENCES unit(id)
 CREATE TABLE attendance (
 student int NOT NULL,
 unit int NOT NULL,
-attendance real NOT NULL,
+date datetime NOT NULL,
+present bool NOT NULL,
 FOREIGN KEY (student) REFERENCES student(id),
 FOREIGN KEY (unit) REFERENCES unit(id),
-PRIMARY KEY (student, unit)
+PRIMARY KEY (student, unit, date)
 );
 
 CREATE TABLE grades (
@@ -91,16 +92,32 @@ VALUES
 ("Game of Life",TRUE,2),
 ("Exam",TRUE,2);
 
-INSERT INTO attendance (student,unit,attendance)
+INSERT INTO attendance (student,unit,date,present)
 VALUES
-(1,1,84),
-(1,2,60),
-(2,1,92),
-(2,2,75),
-(3,1,90),
-(3,2,93),
-(4,1,87),
-(4,2,70);
+(1,1,'01-01-22 12:00:00',false),
+(1,1,'02-01-22 12:00:00',false),
+(1,1,'03-01-22 12:00:00',false),
+(1,2,'01-01-22 10:00:00',true),
+(1,2,'02-01-22 10:00:00',true),
+(1,2,'03-01-22 10:00:00',true),
+(2,1,'01-01-22 12:00:00',false),
+(2,1,'02-01-22 12:00:00',true),
+(2,1,'03-01-22 12:00:00',true),
+(2,2,'01-01-22 10:00:00',true),
+(2,2,'02-01-22 10:00:00',false),
+(2,2,'03-01-22 10:00:00',false),
+(3,1,'01-01-22 12:00:00',true),
+(3,1,'02-01-22 12:00:00',false),
+(3,1,'03-01-22 12:00:00',true),
+(3,2,'01-01-22 10:00:00',false),
+(3,2,'02-01-22 10:00:00',true),
+(3,2,'03-01-22 10:00:00',false),
+(4,1,'01-01-22 12:00:00',true),
+(4,1,'02-01-22 12:00:00',true),
+(4,1,'03-01-22 12:00:00',false),
+(4,2,'01-01-22 10:00:00',false),
+(4,2,'02-01-22 10:00:00',false),
+(4,2,'03-01-22 10:00:00',true);
 
 INSERT INTO grades (student,assessment,grade)
 VALUES
