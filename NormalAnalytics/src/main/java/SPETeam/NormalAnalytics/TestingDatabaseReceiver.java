@@ -50,4 +50,7 @@ public class TestingDatabaseReceiver implements IDatabaseReceiver {
     public UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername) {
         return new UnitAndGrades[0];
     }
+
+    @Override
+    public StudentData AllStudentData(String student){return null;}
 }

@@ -60,6 +60,11 @@ public class DatabaseController {
         return new UnitList(unitArray);
     }
 
+    @GetMapping("/getAllStudentData/{studentUsername}")
+    public StudentData getAllStudentData(@PathVariable String studentUsername){
+        return receiver.AllStudentData(studentUsername);
+    }
+
     @GetMapping("/getAssessmentData/{unitCode}/{studentUsername}")
     public AssessmentData getAssessmentData(@PathVariable String unitCode,@PathVariable String studentUsername){
         AssessmentScoreList data = receiver.ScoresFromUnit(studentUsername,unitCode);
