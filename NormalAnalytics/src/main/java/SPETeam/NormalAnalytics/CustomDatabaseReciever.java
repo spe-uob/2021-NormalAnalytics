@@ -140,6 +140,7 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
             unit.setCode(u.getCode());
             unit.setAttendances(getAttendance(studentUsername,u.getCode()));
             unit.setScores(ScoresFromUnit(studentUsername,u.getCode()).getAssessments());
+            unit.setOverallAttendance(unit.getAttendances()[unit.getAttendances().length-1].getTotalAttendance());
             unitData.add(unit);
         }
         data.setUnitData((UnitData[]) unitData.toArray(new UnitData[unitData.size()]));
