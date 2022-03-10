@@ -6,4 +6,6 @@ import SPETeam.NormalAnalytics.entity.Responses.ResponseResult;
 
 public interface LoginService {
     ResponseResult login(TutorTable tutor);
+
+    ResponseResult logout();
 }

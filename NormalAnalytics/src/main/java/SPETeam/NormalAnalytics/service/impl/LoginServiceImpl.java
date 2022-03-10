@@ -50,5 +50,10 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult(200,"Login successful",map);
 
     }
+
+    @Override
+    public ResponseResult logout() {
+        return null;
+    }
 }
 
