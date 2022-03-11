@@ -25,6 +25,8 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     AttendanceRepository attendanceRepository;
     @Autowired
     GradesRepository gradesRepository;
+    @Autowired
+    TutorGroupRepository groupRepository;
 
     @Override
     public boolean VerifyLogin(String name,String password){
@@ -39,8 +41,11 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Override
     public List<Student> StudentsFromTutor(String tutorUsername) {
-        List<StudentTable> tutees = studentRepository.findStudentByTutorUsername(tutorUsername);
-        System.out.println(tutees);
+        List<TutorGroupTable> groups = groupRepository.findTutorGroupTableByTutorUsername(tutorUsername);
+        List<StudentTable> tutees = new ArrayList<>();
+        for(TutorGroupTable t : groups){
+            tutees.addAll(studentRepository.findStudentByTutorGroup(t));
+        }
         List<Student> jsonTutees = new ArrayList<>();
         for(StudentTable t : tutees){
             jsonTutees.add(t.asData());
