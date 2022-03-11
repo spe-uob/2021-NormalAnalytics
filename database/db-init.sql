@@ -80,7 +80,7 @@ VALUES
 INSERT INTO tutor_group (name,tutor)
 VALUES
 ("CS group",1),
-("Other group",2);
+("Other group",1);
 
 INSERT INTO student (username,firstname,surname,tutor_group)
 VALUES
