@@ -42,15 +42,34 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
     @Override
     public List<Student> StudentsFromTutor(String tutorUsername) {
         List<TutorGroupTable> groups = groupRepository.findTutorGroupTableByTutorUsername(tutorUsername);
-        List<StudentTable> tutees = new ArrayList<>();
+        List<Student> tutees = new ArrayList<>();
         for(TutorGroupTable t : groups){
-            tutees.addAll(studentRepository.findStudentByTutorGroup(t));
+            tutees.addAll(studentsFromGroup(t));
         }
-        List<Student> jsonTutees = new ArrayList<>();
-        for(StudentTable t : tutees){
-            jsonTutees.add(t.asData());
+        return tutees;
+    }
+    @Override
+    public List<GroupAndStudents> StudentsFromTutorByGroup(String tutorUsername){
+        List<GroupAndStudents> groups = new ArrayList<>();
+        for(TutorGroupTable t: groupRepository.findTutorGroupTableByTutorUsername(tutorUsername)){
+            GroupAndStudents group = new GroupAndStudents();
+            group.setGroupName(t.getName());
+            List<Student> students = studentsFromGroup(t);
+            Student[] studentArray = (Student[]) students.toArray(new Student[students.size()]);
+            group.setStudents(studentArray);
+            groups.add(group);
         }
-        return jsonTutees;
+        return groups;
+    }
+
+    //Helper
+    private List<Student> studentsFromGroup(TutorGroupTable group){
+        List<StudentTable> students = studentRepository.findStudentByTutorGroup(group);
+        List<Student> toReturn = new ArrayList<>();
+        for(StudentTable s: students){
+            toReturn.add(s.asData());
+        }
+        return toReturn;
     }
 
     @Override
