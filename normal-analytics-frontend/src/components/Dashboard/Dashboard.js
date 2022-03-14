@@ -58,25 +58,12 @@ function DashboardComponent(props) {
             .catch((err) => console.log(err))
     }, []);
 
-    // get assessments for each unit
-    // const [assessmentData, setAssessmentData] = useState([]);
-    // const [scoreData, setScoreData] = useState([]);
-    const units = ["COMS20006", "COMS20008"];
 
-    // let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
-    //
-    // const getAssessmentDataFetch = async (assessmentUrl) => {
-    //     const response = await fetch(assessmentUrl);
-    //     const jsonData = await response.json();
-    //     setAssessmentData(jsonData.names);
-    //     setScoreData(jsonData.scores);
-    // };
-    //
-    // useEffect(() => {
-    //     getAssessmentDataFetch(assessmentUrl);
-    // }, []);
-    //
-    // //////////
+    console.log(data);
+
+
+    // get assessments for each unit
+    const units = ["COMS20006", "COMS20008"];
 
     const [pleaseData, setPleaseData] = useState([]);
 
@@ -143,6 +130,8 @@ function DashboardComponent(props) {
                                 <table id={val.name}>
                                     <tr>
                                         <td>{val.name}</td>
+                                        <td></td>
+                                        <td>Score</td>
                                     </tr>
 
                                     {
@@ -162,12 +151,6 @@ function DashboardComponent(props) {
                                                     <td>{pleaseData[key1].scores[key2]}</td>
                                                 </tr>
                                             )
-
-
-                                            // above doesn't work
-                                            // what we need to do is if key2 == key 1 (if correct array in pleaseData
-                                            // need to loop through size of val2[key1].names.length and add row with following
-                                            // pleaseData[key1].names[inc] and pleaseData[key1].scores[inc]
                                         })
                                     }
                                 </table>
