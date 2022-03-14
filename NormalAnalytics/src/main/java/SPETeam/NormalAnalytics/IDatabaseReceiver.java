@@ -15,4 +15,5 @@ public interface IDatabaseReceiver {
     float UnitMedianForAssessment(String unitCode,String assessmentName);
     Student StudentFromUsername(String studentName);
     UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername);
+    StudentData AllStudentData(String studentUsername);
 }

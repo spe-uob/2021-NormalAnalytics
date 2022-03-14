@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
+import Dropdown from 'react-dropdown';
 
 
 
@@ -63,20 +64,30 @@ function Attendance(props) {
     }, []);
 
 
-    /////////////
+    let filterData =() =>{
+        console.log(data);
+    }
+    /**
+     * Needed changes:
+     * Change graphs to represent attendance with corresponding dates
+     * Change table to show correct data
+     */
 
 
     const data1 = [
         {
-            //data.units[0].name
-            name: "SPE",
+            name: "23/2/2022",
             score: 93
         },
         {
-            name: "CSA",
+            name: "24/2/2022",
             score: 94
         }
     ];
+
+    const options = [
+        'one', 'two', 'three'
+      ]
 
     return (
         <div className="dashboard">
@@ -98,7 +109,20 @@ function Attendance(props) {
                     <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="section">
-
+                    <div>
+                            <label class="control-label  ">Filter Units</label>
+                            <br />
+                            <div>
+                            <Dropdown options={options} onChange={filterData} />
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div>
+                        <button onClick={filterData}>
+                            Search
+                        </button>
+                        </div>
+                    </div>
 
                     <table>
                         <tr className="table-header">
@@ -118,10 +142,6 @@ function Attendance(props) {
                             )
                         })}
                     </table>
-
-
-
-
 
 
                 </div>
@@ -151,21 +171,7 @@ function Attendance(props) {
                         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
                     </LineChart>
                 </div>
-                <div className="piechart">
-                    <PieChart width={300} height={300}>
-                        <Pie
-                            dataKey="score"
-                            isAnimationActive={true}
-                            data={data1}
-                            outerRadius={100}
-                            fill="#82ca9d"
-                            label="% of attendance"
-                        />
-
-                        {/* Display the tooltips */}
-                        <Tooltip />
-                    </PieChart>
-                </div>
+                
             </div>
         </div>
     );
