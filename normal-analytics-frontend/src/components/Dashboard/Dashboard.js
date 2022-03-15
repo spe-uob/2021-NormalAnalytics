@@ -77,36 +77,39 @@ function DashboardComponent(props) {
                     <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
                     <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
-                <div className="section">
-                    {
-                        data && data["unitData"].map((unit) => {
-                            return (
-                                <table id={unit.name}>
-                                    <tr>
-                                        <td>{unit.name}</td>
-                                        <td/>
-                                        <td>Score</td>
-                                    </tr>
+                <div className="dash-section">
+                    <table className="mainTable">
+                        {
+                            data && data["unitData"].map((unit) => {
+                                return (
+                                    <table id={unit.name} className="subTable">
+                                        <tr>
+                                            <td>{unit.name}</td>
+                                            <td/>
+                                            <td>Score</td>
+                                        </tr>
 
 
-                                    {
-                                        unit.scores.map((assessment, key) => {
-                                            console.log(key);
+                                        {
+                                            unit.scores.map((assessment, key) => {
+                                                console.log(key);
 
-                                            return (
-                                              <tr>
-                                                  <td>{assessment.name}</td>
-                                                  <td/>
-                                                  <td><td>{assessment.score}</td></td>
-                                              </tr>
-                                            )
-                                        })
-                                    }
-                                </table>
-                            )
-                        })
-                    }
+                                                return (
+                                                  <tr>
+                                                      <td>{assessment.name}</td>
+                                                      <td/>
+                                                      <td><td>{assessment.score}</td></td>
+                                                  </tr>
+                                                )
+                                            })
+                                        }
+                                    </table>
+                                )
+                            })
+                        }
+                    </table>
                 </div>
+                <div className="dash-section alternate">Some graph can go here</div>
             </div>
 
         </div>
