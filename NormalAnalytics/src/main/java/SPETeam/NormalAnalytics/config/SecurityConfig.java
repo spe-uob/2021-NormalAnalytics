@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // For login interface, anonymous access is allowed
-                .antMatchers("/login").anonymous()
+                .antMatchers("/login").permitAll()
                 // All requests other than the above require authentication
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
