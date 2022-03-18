@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public ResponseResult login(@RequestBody TutorTable tutor){
         return loginService.login(tutor);
     }
