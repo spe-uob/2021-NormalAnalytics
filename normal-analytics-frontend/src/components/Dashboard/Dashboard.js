@@ -64,10 +64,8 @@ function DashboardComponent(props) {
                 <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                    <div className="dropdown-content">
-                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                    </div>
+                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
