@@ -40,6 +40,13 @@ public class DatabaseTests {
         assert containsStudent(students,"Luo");
     }
 
+    @Test
+    void OnlyRetrievesTutorsStudents(){
+        List<Student> students = receiver.StudentsFromTutor("jross");
+        assert !containsStudent(students,"John");
+    }
+
+
     boolean containsStudent(List<Student> list,String firstname){
         for(Student s : list){
             if(s.getFirstName().equals(firstname)) return true;
@@ -53,6 +60,12 @@ public class DatabaseTests {
         assert containsAssessmentWithScore("MVP",50,SPEAssessments);
         assert containsAssessmentWithScore("Beta",70,SPEAssessments);
         assert containsAssessmentWithScore("Release",100,SPEAssessments);
+    }
+
+    @Test
+    void OnlyScoresFromUnit(){
+        AssessmentScoreList SPEAssessments = receiver.ScoresFromUnit("iq20064","COMS20006");
+        assert !containsAssessmentWithScore("Bank",30,SPEAssessments);
     }
 
     boolean containsAssessmentWithScore(String assessment,float score,AssessmentScoreList list){
@@ -71,6 +84,15 @@ public class DatabaseTests {
             else correctUnits = false;
         }
         assert correctUnits;
+    }
+
+    @Test
+    void TestOnlyStudentsUnits(){
+        List<Unit> willUnits = receiver.UnitsFromStudent("iq20064");
+        for(Unit u : willUnits){
+            if(u.getCode().equals("COMS30042")) assert false;
+        }
+        assert true;
     }
 
     @Test
