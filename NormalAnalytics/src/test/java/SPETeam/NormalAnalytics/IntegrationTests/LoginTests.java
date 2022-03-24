@@ -29,7 +29,7 @@ public class LoginTests {
     public void MainUseCaseTest(){
         User user = new User();
         user.setUsername("jross");
-        user.setPassword("$2a$10$FOk1bzqQEQ.07ydP2X26Au.Cuu6Q.WTm6RFY7wp82kydTRLIdqS7i");
+        user.setPassword("password123");
         HttpEntity<User> loginData = new HttpEntity<>(user,headers);
 
         ResponseEntity<Token> loginConfirmation = restTemplate.exchange("http://localhost:"+port+"/login",
