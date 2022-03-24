@@ -11,7 +11,7 @@ import SPETeam.NormalAnalytics.entity.Responses.Student;
 
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"spring.h2.console.enabled=true","jdbc.url=jdbc:h2:mem:myDb"})
 public class DatabaseTests {
     @Autowired
     IDatabaseReceiver receiver;
@@ -33,6 +33,7 @@ public class DatabaseTests {
 
     @Test
     void TestRetrieveStudents() {
+
         List<Student> students = receiver.StudentsFromTutor("jross");
         assert containsStudent(students,"William");
         assert containsStudent(students,"Siana");
