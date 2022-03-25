@@ -1,0 +1,21 @@
+/* student-auth */
+
+.student-button{
+    padding: 16rem 32rem;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2rem solid #50a2bb;
+    border-radius: 10rem;
+}
+
+.student-button:hover{
+    background-color: #50a2bb;
+    color: white;
+}
+
+.dropdown-students {
+    margin: 25rem 0;
+}

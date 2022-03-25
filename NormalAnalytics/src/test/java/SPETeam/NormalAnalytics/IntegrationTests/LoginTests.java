@@ -1,21 +1,44 @@
 package SPETeam.NormalAnalytics.IntegrationTests;
 
+import SPETeam.NormalAnalytics.NormalAnalyticsApplication;
+import SPETeam.NormalAnalytics.entity.Requests.User;
+import SPETeam.NormalAnalytics.entity.Responses.Token;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = NormalAnalyticsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginTests {
 
+    @LocalServerPort
+    int port;
 
-    /*private MockMvc mvc = MockMvcBuilders.webAppContextSetup(context).build();
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+
     @Test
-    public void UnknownUserFails() throws Exception {
+    public void MainUseCaseTest(){
+        User user = new User();
+        user.setUsername("jross");
+        user.setPassword("password123");
+        HttpEntity<User> loginData = new HttpEntity<>(user,headers);
 
-        User unknownUser = new User();
-        unknownUser.setUsername("fakeUser");
-        unknownUser.setUsername("123123");
-        MvcResult result = mvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(unknownUser.toString())).andReturn();
-        assert result.getResponse().equals(Token.failed());
-    }*/
+        ResponseEntity<Token> loginConfirmation = restTemplate.exchange("http://localhost:"+port+"/login",
+                HttpMethod.POST,
+                loginData,
+                Token.class);
+
+        assert loginConfirmation.getBody().isSucceed();
+        String loggedInUser = loginConfirmation.getBody().getUsername();
+        assert loggedInUser.equals("jross");
+    }
 }
