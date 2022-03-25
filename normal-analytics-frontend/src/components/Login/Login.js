@@ -10,18 +10,18 @@ function LoginComponent(props) {
         let dropdownOptions = [];
         let studentObjects = {};
 
-        fetch("/login", {
+        fetch("/user/login", {
             method : "POST",
             headers : { "content-type" : "application/json; charset=UTF-8"},
             body : JSON.stringify({"username": username, "password": password}),
         })
                 .then(response => response.text())
                 .then(message => {
-                    let token = JSON.parse(message)["token"]
+                    let token = JSON.parse(message)["data"]["token"]
                     if (token != null) {
                         const url = "/database/getStudents/" + username
 
-                        fetch(url)
+                        fetch(url,{headers:{"token":token}})
                             .then(response => response.json())
                             .then(message => {
                                 let tutees = message["students"];
