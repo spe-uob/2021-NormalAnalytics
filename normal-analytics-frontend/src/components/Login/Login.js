@@ -35,7 +35,7 @@ function LoginComponent(props) {
 
                         props.history.push({
                             pathname: '/student',
-                                state: {"tutorUsername": username, "studentNames": dropdownOptions, "studentObjects": studentObjects}
+                                state: {"tutorUsername": username, "studentNames": dropdownOptions, "studentObjects": studentObjects,"token":token}
                         })
                     }
                 });

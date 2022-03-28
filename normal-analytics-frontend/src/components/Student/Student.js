@@ -19,7 +19,7 @@ function StudentComponent(props) {
         if (selectedItem != null) {
             props.history.push({
                 pathname: '/dashboard',
-                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem}
+                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem,"token":tutorAndTutees["token"]}
             })
         }
     }

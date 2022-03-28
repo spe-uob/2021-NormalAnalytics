@@ -9,6 +9,7 @@ function StudentAuthComponent(props) {
 
     let tutorAndTutees = passedState["tutorAndTutees"];
     let selectedItem = null;
+	let token = passedState["token"];
 
     let handleChange = (e) => {
         selectedItem = e;
@@ -18,7 +19,7 @@ function StudentAuthComponent(props) {
         if (selectedItem != null) {
             props.history.push({
                 pathname: '/dashboard',
-                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem}
+                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem,"token":token}
             })
         }
     }

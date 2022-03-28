@@ -15,7 +15,8 @@ function DashboardComponent(props) {
     }
 
     let handleClickLogOut = () => {
-        props.history.push({
+        fetch("/user/logout",{headers : { "content-type" : "application/json; charset=UTF-8", "token":passedState["token"]}});
+		props.history.push({
             pathname: '/login',
             state: passedState
         })
@@ -39,6 +40,7 @@ function DashboardComponent(props) {
     let studentName = passedState["studentUsername"]["value"];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
     let studentUsername = null;
+	axios.defaults.headers.common["token"] = passedState["token"];
 
     for (const [key, value] of Object.entries(studentObjects)) {
         if (studentName === key) {
