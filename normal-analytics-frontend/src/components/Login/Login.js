@@ -7,6 +7,7 @@ function LoginComponent(props) {
     let handleClick = () => {
         const username = document.getElementById('input-username').value
         const password = document.getElementById('input-password').value
+
         let groupAndStudents = {};
         let studentObjects = {};
 

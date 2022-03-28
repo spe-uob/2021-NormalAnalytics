@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity @Table(name="Student")
 public class StudentTable implements IGivesEntity<Student> {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id") @Getter @Setter
     int id;
 

@@ -1,5 +1,6 @@
 package SPETeam.NormalAnalytics.controller;
 
+import SPETeam.NormalAnalytics.Blackboard.BBReceiver;
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
 import SPETeam.NormalAnalytics.entity.Responses.Token;
 import SPETeam.NormalAnalytics.entity.Requests.User;
@@ -17,12 +18,15 @@ public class LoginController {
 
     @Autowired
     IDatabaseReceiver receiver;
+    @Autowired
+    BBReceiver bbReceiver;
 
     @PostMapping("/login")
     public Token login(@RequestBody User user){
         if(receiver.VerifyLogin(user.getUsername(), user.getPassword())){
             //add token
             user.setToken(JwtUtil.createToken());
+            bbReceiver.UpdateDatabase(user.getUsername());
             return Token.fromUser(user);
         }
         return Token.failed();

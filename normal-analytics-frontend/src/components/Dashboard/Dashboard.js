@@ -40,9 +40,9 @@ function DashboardComponent(props) {
     let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
 
-    // get each unit a student studies
+    // get all student data
     const [data, setData] = useState();
-    const url = "/database/getUnits/" + studentUsername;
+    const url = "/database/getAllStudentData/" + studentUsername;
     useEffect(() => {
         axios(url)
             .then((res) => {
@@ -51,34 +51,14 @@ function DashboardComponent(props) {
             .catch((err) => console.log(err))
     }, []);
 
-    // get assessments for each unit
-    const [assessmentData, setAssessmentData] = useState([]);
-    const [scoreData, setScoreData] = useState([]);
-
-    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
-
-    const getAssessmentDataFetch = async (assessmentUrl) => {
-        const response = await fetch(assessmentUrl);
-        const jsonData = await response.json();
-        setAssessmentData(jsonData.names);
-        setScoreData(jsonData.scores);
-    };
-
-    useEffect(() => {
-        getAssessmentDataFetch(assessmentUrl);
-    }, []);
-
-
     return (
         <div className="dashboard">
             <div className="nav-bar">
                 <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                    <div className="dropdown-content">
-                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                    </div>
+                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
@@ -88,30 +68,38 @@ function DashboardComponent(props) {
                     <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
                     <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
-                <div className="section">
-                    {data && data["units"].map((val, key) => {
-                        return (
-                            <table>
-                                <tr key={key} className="table-header">
-                                    <td className="column-header">Unit: {val.name}</td>
-                                    <td></td>
-                                    <td className="column-header">Score</td>
-                                </tr>
-
-                                {assessmentData.map((val, key) => {
-                                    return (
-                                        <tr key={key}>
-                                            <td>{val}</td>
-                                            <td></td>
-                                            <td>{scoreData[key]}</td>
+                <div className="dash-section">
+                    <table className="mainTable">
+                        {
+                            data && data["unitData"].map((unit) => {
+                                return (
+                                    <table id={unit.name} className="subTable">
+                                        <tr>
+                                            <td>{unit.name}</td>
+                                            <td/>
+                                            <td>Score</td>
                                         </tr>
-                                    )
-                                })}
-                            </table>
-                        )
-                    })}
 
+                                        {
+                                            unit.scores.map((assessment, key) => {
+                                                console.log(key);
+
+                                                return (
+                                                  <tr>
+                                                      <td>{assessment.name}</td>
+                                                      <td/>
+                                                      <td><td>{assessment.score}</td></td>
+                                                  </tr>
+                                                )
+                                            })
+                                        }
+                                    </table>
+                                )
+                            })
+                        }
+                    </table>
                 </div>
+                <div className="dash-section alternate">Some graph can go here</div>
             </div>
 
         </div>

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity @Table(name="Unit")
 public class UnitTable implements IGivesEntity<Unit> {
     @Id
-    @GeneratedValue @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id")
     @Getter @Setter
     int id;
 
