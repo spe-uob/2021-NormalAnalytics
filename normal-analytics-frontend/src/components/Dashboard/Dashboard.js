@@ -35,17 +35,10 @@ function DashboardComponent(props) {
         })
     }
 
-    let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
-    let studentName = passedState["studentUsername"]["value"];
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-    let studentUsername = null;
+    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
-    for (const [key, value] of Object.entries(studentObjects)) {
-        if (studentName === key) {
-            studentName = key
-            studentUsername = value;
-        }
-    }
 
     // get all student data
     const [data, setData] = useState();
@@ -86,7 +79,6 @@ function DashboardComponent(props) {
                                             <td/>
                                             <td>Score</td>
                                         </tr>
-
 
                                         {
                                             unit.scores.map((assessment, key) => {
