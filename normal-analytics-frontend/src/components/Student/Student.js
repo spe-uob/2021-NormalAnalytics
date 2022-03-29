@@ -3,37 +3,36 @@ import { withRouter } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import "./Student.css"
+import "../StudentAuth/StudentAuth.css"
 
-class Student extends React.Component {
-  selectedItem = null;
-  tutorAndTutees = null;
+function StudentComponent(props) {
+    let passedState = props.location.state;
 
-  handleChange = (e) => {
-    this.selectedItem = e;
-  }
+    let tutorAndTutees = passedState;
+    let selectedItem = null;
 
-  handleClick = () => {
-    if (this.selectedItem != null) {
-      this.props.history.push({
-        pathname: '/dashboard',
-        state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
-      })
+    let handleChange = (e) => {
+        selectedItem = e;
     }
-  }
 
-  render(){
-    this.tutorAndTutees = this.props.location.state;
+    let handleClick = () => {
+        if (selectedItem != null) {
+            props.history.push({
+                pathname: '/dashboard',
+                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem,"token":tutorAndTutees["token"]}
+            })
+        }
+    }
 
     return (
-    <div className="fullpage">
-      <div className="login">
-        <span className="title">Choose a Student</span>
-        <Dropdown options={this.props.location.state["studentNames"]} onChange={this.handleChange} value={this.props.location.state["studentNames"][0]} className="dropdown-students" />
-        <button className="student-button" onClick={this.handleClick.bind(this)}>Next</button>
-      </div>
-     </div>)
-  }
+        <div className="fullpage">
+            <div className="login">
+                <span className="title">Choose a Student</span>
+                <Dropdown options={tutorAndTutees["studentNames"]} onChange={handleChange} className="dropdown-students" />
+                <button onClick={handleClick.bind(this)} className="student-button">Next</button>
+            </div>
+        </div>
+    );
 }
 
-export default withRouter (Student);
+export default withRouter (StudentComponent);

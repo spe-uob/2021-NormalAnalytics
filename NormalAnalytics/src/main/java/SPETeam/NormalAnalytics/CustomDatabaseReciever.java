@@ -8,10 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Primary
 @Component("CustomDatabaseReceiver")
@@ -103,9 +100,8 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     @Override
     public float AttendanceFromUnit(String studentUsername, String unitCode) {
-        StudentTable student = studentRepository.findStudentTableByUsername(studentUsername).get();
-        UnitTable unit = unitRepository.findUnitTableByCode(unitCode).get();
-        return attendanceRepository.findById(new AttendanceId(unit.getId(),student.getId())).get().getAttendance();
+        AttendancePoint[] attendancePoints = getAttendance(studentUsername,unitCode);
+        return attendancePoints[attendancePoints.length - 1].getTotalAttendance();
     }
 
     @Override
@@ -138,6 +134,52 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
         }else{
             return student.get().asData();
         }
+    }
+
+    @Override
+    public StudentData AllStudentData(String studentUsername){
+        StudentData data = new StudentData();
+        Student student = StudentFromUsername(studentUsername);
+        data.setFirstName(student.getFirstName());
+        data.setSurname(student.getSurname());
+        List<UnitData> unitData = new ArrayList<>();
+        for(Unit u : UnitsFromStudent(studentUsername)){
+            UnitData unit = new UnitData();
+            unit.setName(u.getName());
+            unit.setCode(u.getCode());
+            unit.setAttendances(getAttendance(studentUsername,u.getCode()));
+            unit.setScores(ScoresFromUnit(studentUsername,u.getCode()).getAssessments());
+            unit.setOverallAttendance(unit.getAttendances()[unit.getAttendances().length-1].getTotalAttendance());
+            unitData.add(unit);
+        }
+        data.setUnitData((UnitData[]) unitData.toArray(new UnitData[unitData.size()]));
+        return data;
+    }
+
+    private AttendancePoint[] getAttendance(String username,String unitCode){
+        StudentTable student = studentRepository.findStudentTableByUsername(username).get();
+        UnitTable unit = unitRepository.findUnitTableByCode(unitCode).get();
+        List<AttendanceTable> attendance =
+                attendanceRepository.findAttendanceTablesByStudentAndUnit(student,unit);
+
+        attendance.sort(new Comparator<AttendanceTable>() {
+            @Override
+            public int compare(AttendanceTable o1, AttendanceTable o2) {
+                if(o1.getId().getDate().before(o2.getId().getDate())) return -1;
+                else if(o1.getId().getDate().after(o2.getId().getDate())) return 1;
+                else return 0;
+            }
+        });
+
+        List<AttendancePoint> attendancePoints = new ArrayList<>();
+        int meetingsAttended = 0;
+        for(AttendanceTable a : attendance){
+            AttendancePoint newPoint = a.asData();
+            if(newPoint.isPresent()) meetingsAttended += 1;
+            newPoint.setTotalAttendance(100 * (float)meetingsAttended / (float)(attendancePoints.size() + 1));
+            attendancePoints.add(newPoint);
+        }
+        return ((AttendancePoint[]) attendancePoints.toArray(new AttendancePoint[attendancePoints.size()]));
     }
 
     public UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername){

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Table(name="Tutor")
 public class TutorTable {
     @Id
-    @GeneratedValue @Column(name="Id") @Getter @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name="Id") @Getter @Setter
     int id;
 
     @Column(name="username") @Getter @Setter

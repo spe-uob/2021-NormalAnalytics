@@ -1,4 +1,4 @@
-/* dashboard */
+/* attendance */
 
 .nav-bar {
     width: 100vw;
@@ -40,47 +40,23 @@
     flex-wrap: wrap;
 }
 
-.dash-section {
-    width: 42.5vw;
+.section {
     height: 45vh;
     background-color: rgb(228, 243, 248);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-grow: 1;
+}
+.piechart{
+    height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
 }
 
-.alternate {
-    background-color: pink;
-}
 
-.mainTable {
-    border: 1rem solid black;
-    display: block;
-    width: 85%;
 
-    max-width: fit-content;
-    margin: 0 auto;
-    overflow-x: auto;
-    white-space: nowrap;
-}
 
-.subTable {
-    border: 3rem solid black;
-    border-spacing: 50rem 5rem;
-    margin: 5rem;
-    background-color: pink;
-    display: inline-block;
-    height: 100%;
-}
 
-.column-header {
-    font-weight: 700;
-}
-
-table tr td:empty {
-    width: 15rem;
-}
-
-table tr td {
-    padding: 5rem 0;
-}

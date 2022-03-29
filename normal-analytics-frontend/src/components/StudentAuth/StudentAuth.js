@@ -3,41 +3,36 @@ import { withRouter } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import "./StudentAuth.css"
+function StudentAuthComponent(props) {
+    
+    let passedState = props.location.state;
 
-class StudentAuth extends React.Component {
-    selectedItem = null;
-    tutorAndTutees = null;
+    let tutorAndTutees = passedState["tutorAndTutees"];
+    let selectedItem = null;
+	let token = passedState["token"];
 
-    handleChange = (e) => {
-        this.selectedItem = e;
+    let handleChange = (e) => {
+        selectedItem = e;
     }
 
-    handleClick = () => {
-        if (this.selectedItem != null) {
-            this.props.history.push({
+    let handleClick = () => {
+        if (selectedItem != null) {
+            props.history.push({
                 pathname: '/dashboard',
-                state: {"tutorAndTutees": this.tutorAndTutees, "studentUsername": this.selectedItem}
+                state: {"tutorAndTutees": tutorAndTutees, "studentUsername": selectedItem,"token":token}
             })
         }
     }
 
-    render(){
-        const {state} = this.props.location;
-        let myObj = JSON.stringify(state);
-        let myNewObj = JSON.parse(myObj);
-
-        this.tutorAndTutees = myNewObj["tutorAndTutees"];
-        
-        return (
+    return (
             <div className="fullpage">
                 <div className="login">
                     <span className="title">Choose a Student</span>
-                    <Dropdown options={this.tutorAndTutees["studentNames"]} onChange={this.handleChange} value={this.tutorAndTutees["studentNames"][0]} className="dropdown-students" />
-                    <button onClick={this.handleClick.bind(this)} className="student-button">Next</button>
+                    <Dropdown options={tutorAndTutees["studentNames"]} onChange={handleChange} className="dropdown-students" />
+                    <button onClick={handleClick.bind(this)} className="student-button">Next</button>
                 </div>
-            </div>)
-    }
+            </div>
+    );
 }
 
-export default withRouter (StudentAuth);
+export default withRouter (StudentAuthComponent);
