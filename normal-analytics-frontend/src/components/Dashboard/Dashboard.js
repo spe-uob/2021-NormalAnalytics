@@ -51,7 +51,7 @@ function DashboardComponent(props) {
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
 
-                            
+                            document.getElementById("tutorGroups").hidden = true;
                             window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
