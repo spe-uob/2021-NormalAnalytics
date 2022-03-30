@@ -19,3 +19,61 @@
 .dropdown-students {
     margin: 25rem 0;
 }
+
+.student-dropdown {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100px;
+}
+
+.student-dropdown li {
+    position: relative;
+}
+
+.student-dropdown li a {
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.student-dropdown li ul {
+    position: absolute;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    line-height: normal;
+    background-color: red;
+}
+
+.student-dropdown li ul li a {
+    text-align: left;
+    color: #cccccc;
+    font-size: 14px;
+    padding: 10px;
+    display: block;
+    white-space: nowrap;
+}
+
+.student-dropdown li ul li a:hover {
+    background-color: #0abf53;
+    color: #ffffff;
+}
+
+.student-dropdown li ul li ul {
+    left: 100%;
+    top: 0;
+}
+
+ul li:hover>a {
+    background-color: #0abf53;
+    color: #ffffff !important;
+}
+
+ul li:hover>ul {
+    display: block;
+}

@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import "./Dashboard.css"
 import axios from "axios";
 
+let runOnce = false;
 
 function DashboardComponent(props) {
     let passedState = props.location.state;
@@ -12,14 +13,7 @@ function DashboardComponent(props) {
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
     let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
-    let runOnce = false;
-
     let handleClickSelect = () => {
-        // props.history.push({
-        //     pathname: '/student-auth',
-        //     state: passedState
-        // })
-
         if (runOnce === false) {
             runOnce = true;
 
@@ -46,12 +40,12 @@ function DashboardComponent(props) {
                         let subLiElementText = document.createTextNode(eachStudentName);
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.onclick = function() {
-                            props.history.push({
+                            props.history.replace({
                                 pathname: '/dashboard',
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
 
-                            document.getElementById("tutorGroups").hidden = true;
+                            document.getElementById("lolbang").hidden = true;
                             window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
@@ -59,6 +53,8 @@ function DashboardComponent(props) {
 
                 })
             })
+        } else {
+            console.log("lol");
         }
     }
 
@@ -99,7 +95,7 @@ function DashboardComponent(props) {
         <div className="dashboard">
             <div className="nav-bar">
                 {/*<button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>*/}
-                <ul className="dropdown">
+                <ul className="dropdown student-dropdown">
                     <li id="lolbang" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
