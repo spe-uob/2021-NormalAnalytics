@@ -6,12 +6,60 @@ import axios from "axios";
 
 function DashboardComponent(props) {
     let passedState = props.location.state;
+    let tutorAndTutees = passedState.tutorAndTutees;
 
-    let handleClickChangeStudent = () => {
-        props.history.push({
-            pathname: '/student-auth',
-            state: passedState
-        })
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
+    let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
+    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
+
+    let runOnce = false;
+
+    let handleClickSelect = () => {
+        // props.history.push({
+        //     pathname: '/student-auth',
+        //     state: passedState
+        // })
+
+        if (runOnce === false) {
+            runOnce = true;
+
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+                let liElement = document.createElement("li");
+                let liElementText = document.createTextNode(key);
+                liElement.appendChild(liElementText);
+                liElement.id = key + "-li";
+                document.getElementById("tutorGroups").appendChild(liElement);
+
+                let ulElement = document.createElement("ul");
+                ulElement.id = key + "-ul";
+                document.getElementById(key + "-li").appendChild(ulElement);
+
+
+                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
+                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
+
+                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentNameAndUsername = {};
+                        studentNameAndUsername[eachStudentName] = username;
+
+                        let subLiElement = document.createElement("li");
+                        let subLiElementText = document.createTextNode(eachStudentName);
+                        subLiElement.appendChild(subLiElementText);
+                        subLiElement.onclick = function() {
+                            props.history.push({
+                                pathname: '/dashboard',
+                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                            })
+
+                            
+                            window.location.reload();
+                        };
+                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                    })
+
+                })
+            })
+        }
     }
 
     let handleClickLogOut = () => {
@@ -35,10 +83,6 @@ function DashboardComponent(props) {
         })
     }
 
-    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
-    let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
-
 
     // get all student data
     const [data, setData] = useState();
@@ -49,12 +93,17 @@ function DashboardComponent(props) {
                 setData(res.data);
             })
             .catch((err) => console.log(err))
-    }, []);
+    }, );
 
     return (
         <div className="dashboard">
             <div className="nav-bar">
-                <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+                {/*<button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>*/}
+                <ul className="dropdown">
+                    <li id="lolbang" onClick={handleClickSelect.bind(this)}>Select Student
+                        <ul id="tutorGroups"/>
+                    </li>
+                </ul>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
                     <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
@@ -82,7 +131,6 @@ function DashboardComponent(props) {
 
                                         {
                                             unit.scores.map((assessment, key) => {
-                                                console.log(key);
 
                                                 return (
                                                   <tr>

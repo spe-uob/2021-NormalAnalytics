@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import 'react-dropdown/style.css';
 
-import "../StudentAuth/StudentAuth.css"
+import "./Student.css"
 
 function StudentComponent(props) {
     let passedState = props.location.state;
