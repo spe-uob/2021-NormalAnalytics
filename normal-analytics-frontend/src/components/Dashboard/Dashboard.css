@@ -23,11 +23,6 @@
     margin: 0 20rem;
 }
 
-.nav-item:hover {
-    opacity: .6;
-    cursor: pointer;
-}
-
 .left {
     margin-right: auto;
 }
@@ -40,8 +35,16 @@
     flex-wrap: wrap;
 }
 
+.dash-section-area {
+    width: 85vw;
+    height: 90vh;
+    background-color: red;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .dash-section {
-    width: 42.5vw;
+    width: 50%;
     height: 45vh;
     background-color: rgb(228, 243, 248);
     display: flex;
@@ -83,4 +86,39 @@ table tr td:empty {
 
 table tr td {
     padding: 5rem 0;
+}
+
+/* dropdown styles */
+.student-dropdown {
+    font-size: 16rem;
+    color: black;
+    text-transform: lowercase;
+    text-decoration: underline;
+    letter-spacing: 1rem;
+    border: 2rem;
+    border-radius: 5rem;
+    margin: 0 auto 0 20rem;
+}
+
+.student-dropdown li:hover {
+    cursor: pointer;
+}
+
+#studentNameDropdown {
+    border: 2px solid pink;
+    padding: 5rem;
+}
+
+#studentNameDropdown:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.studentGroupDropdown {
+    border: 2px solid red;
+}
+
+.studentGroupDropdown:hover {
+        opacity: .6;
+        cursor: pointer;
 }
