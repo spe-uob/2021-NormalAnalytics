@@ -1,5 +1,6 @@
 package SPETeam.NormalAnalytics.service.impl;
 
+import SPETeam.NormalAnalytics.Blackboard.BBReceiver;
 import SPETeam.NormalAnalytics.Database.Tables.TutorTable;
 import SPETeam.NormalAnalytics.entity.Requests.User;
 import SPETeam.NormalAnalytics.entity.Responses.ResponseResult;
@@ -26,6 +27,9 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private BBReceiver bbReceiver;
+
     @Override
     public ResponseResult login(TutorTable tutor) {
         //AuthenticationManager 的认证方法authenticate进行认证
@@ -48,6 +52,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("token",jwt);
         //Store the complete user information in redis, userid as key
         redisCache.setCacheObject("login:"+userid,User);
+        bbReceiver.UpdateDatabase(tutor.getUsername());
         return new ResponseResult(200,"Login successful",map);
 
     }
