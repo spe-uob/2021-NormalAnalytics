@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import "./Dashboard.css"
 import axios from "axios";
-import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 
 let runOnce = false;
 
@@ -149,36 +149,38 @@ function DashboardComponent(props) {
                     <div className="dash-section alternate">
 
                         {/*graph showing unit average*/}
+                        <ResponsiveContainer width="75%" height="90%">
 
-                        <BarChart
-                            width={500}
-                            height={300}
-                            data={
-                                [
-                                    {
-                                        name: 'SPE', studentUnitAverage: 80
-                                    },
-                                    {
-                                        name: 'CSA', studentUnitAverage: 75
-                                    },
-                                    {
-                                        name: 'Algorithms II', studentUnitAverage: 99
-                                    },
-                                    {
-                                        name: 'PLC', studentUnitAverage: 12
-                                    }
-                                ]
-                            }
-                            margin={{
-                                top: 5, right: 30, left: 20, bottom: 5,
-                            }}
-                        >
-                            <XAxis dataKey="name" domain={[0, 100]}/>
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="studentUnitAverage" fill="#8884d8" />
-                        </BarChart>
+                            <BarChart
+                                data={
+                                    [
+                                        {
+                                            name: 'SPE', studentUnitAverage: 80
+                                        },
+                                        {
+                                            name: 'CSA', studentUnitAverage: 75
+                                        },
+                                        {
+                                            name: 'Algorithms II', studentUnitAverage: 99
+                                        },
+                                        {
+                                            name: 'PLC', studentUnitAverage: 12
+                                        }
+                                    ]
+                                }
+                                margin={{
+                                    top: 5, right: 30, left: 20, bottom: 5,
+                                }}
+                            >
+                                <XAxis dataKey="name" domain={[0, 100]}/>
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="studentUnitAverage" fill="#8884d8" />
+                            </BarChart>
+
+                        </ResponsiveContainer>
+
                     </div>
 
                     <div className="dash-section alternate"/>
