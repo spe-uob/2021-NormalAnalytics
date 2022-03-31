@@ -17,8 +17,9 @@ function LoginComponent(props) {
         })
                 .then(response => response.text())
                 .then(message => {
-                    let token = JSON.parse(message)["data"]["token"]
-                    if (token != null) {
+                    let statusCode = JSON.parse(message)["code"];
+                    if (statusCode != null && statusCode == 200) {
+					let token = JSON.parse(message)["data"]["token"]
                         const url = "/database/getStudents/" + username
 
                         fetch(url,{headers:{"token":token}})
