@@ -3,7 +3,12 @@ VALUES
     ('jross','password123','Joel','Ross'),
     ('fakeTutor','$2a$10$eJqCoz24ghJIEAzc2NmgQu73D/exKr5l5zwnabrpNFYaV54cjlvLW','Fake','Tutor');
 
-INSERT INTO student (username,firstname,surname,tutor)
+INSERT INTO tutor_group (name,tutor)
+VALUES
+    ('CS group',1),
+    ('Other group',1);
+
+INSERT INTO student (username,firstname,surname,tutor_group)
 VALUES
     ('iq20064','William','Tripp',1),
     ('oj20075','Siana','Dicheva',1),
