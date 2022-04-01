@@ -104,7 +104,7 @@ function DashboardComponent(props) {
 
             })
             .catch((err) => console.log(err))
-    }, );
+    }, []);
 
     return (
         <div className="dashboard">
