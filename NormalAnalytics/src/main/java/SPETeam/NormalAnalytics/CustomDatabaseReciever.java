@@ -165,10 +165,42 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
             unit.setAttendances(getAttendance(studentUsername,u.getCode()));
             unit.setScores(ScoresFromUnit(studentUsername,u.getCode()).getAssessments());
             unit.setOverallAttendance(unit.getAttendances()[unit.getAttendances().length-1].getTotalAttendance());
+            unit.setUnitAverage(calculateUnitAverageForStudent(student,u));
             unitData.add(unit);
         }
         data.setUnitData((UnitData[]) unitData.toArray(new UnitData[unitData.size()]));
         return data;
+    }
+
+    /*Add this back in if we need cohort average
+    private float calculateUnitAverage(Unit unitData){
+        UnitTable unit = unitRepository.findUnitTableByCode(unitData.getCode()).get();
+        List<StudentTable> students = studentRepository.findStudentTablesByUnitsContains(unit);
+        float total = 0;
+        float num = 0;
+        List<AssessmentTable> unitAssessments = assessmentRepository.findAssessmentTablesByUnit(unit);
+        for(StudentTable s : students){
+            num += 1;
+            total += calculateUnitAverageForStudent(s,unitAssessments);
+        }
+        if(num > 0) return total/num;
+        else return 0;
+    }*/
+
+    //TODO: rewrite this with summative weighting system and using tables directly
+    private float calculateUnitAverageForStudent(Student studentData,Unit unitData){
+        float total = 0;
+        float num = 0;
+        UnitTable unit = unitRepository.findUnitTableByCode(unitData.getCode()).get();
+        StudentTable student = studentRepository.findStudentTableByUsername(studentData.getUsername()).get();
+        List<AssessmentTable> assessments = assessmentRepository.findAssessmentTablesByUnit(unit);
+        for(AssessmentTable a : assessments){
+            num += 1;
+            total += gradesRepository.findGradeTableByStudentAndAssessment(student,a).get().getGrade();
+        }
+
+        if(num > 0) return total/num;
+        else return 0;
     }
 
     private AttendancePoint[] getAttendance(String username,String unitCode){
