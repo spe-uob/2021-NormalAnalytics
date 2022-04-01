@@ -84,11 +84,24 @@ function DashboardComponent(props) {
 
     // get all student data
     const [data, setData] = useState();
+    const [unitData, setUnitData] = useState();
     const url = "/database/getAllStudentData/" + studentUsername;
+    let unitAverageData = [];
     useEffect(() => {
         axios(url)
             .then((res) => {
                 setData(res.data);
+
+                //
+                for (let i = 0; i < res.data.unitData.length; i++) {
+                    let unitNameAndAverage = {};
+                    unitNameAndAverage["name"] = res.data.unitData[i].name;
+                    unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
+                    unitAverageData.push(unitNameAndAverage);
+                }
+
+                setUnitData(unitAverageData);
+
             })
             .catch((err) => console.log(err))
     }, );
@@ -152,22 +165,7 @@ function DashboardComponent(props) {
                         <ResponsiveContainer width="75%" height="90%">
 
                             <BarChart
-                                data={
-                                    [
-                                        {
-                                            name: 'SPE', studentUnitAverage: 80
-                                        },
-                                        {
-                                            name: 'CSA', studentUnitAverage: 75
-                                        },
-                                        {
-                                            name: 'Algorithms II', studentUnitAverage: 99
-                                        },
-                                        {
-                                            name: 'PLC', studentUnitAverage: 12
-                                        }
-                                    ]
-                                }
+                                data={unitData}
                                 margin={{
                                     top: 5, right: 30, left: 20, bottom: 5,
                                 }}
