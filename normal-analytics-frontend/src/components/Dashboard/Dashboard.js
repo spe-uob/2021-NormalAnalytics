@@ -92,13 +92,15 @@ function DashboardComponent(props) {
             .then((res) => {
                 setData(res.data);
 
-                //
                 for (let i = 0; i < res.data.unitData.length; i++) {
                     let unitNameAndAverage = {};
                     unitNameAndAverage["name"] = res.data.unitData[i].name;
                     unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
+                    unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
                     unitAverageData.push(unitNameAndAverage);
                 }
+
+                console.log(res.data);
 
                 setUnitData(unitAverageData);
 
@@ -143,6 +145,8 @@ function DashboardComponent(props) {
                                             {
                                                 unit.scores.map((assessment, key) => {
 
+                                                    console.log(key);
+
                                                     return (
                                                       <tr>
                                                           <td>{assessment.name}</td>
@@ -175,6 +179,7 @@ function DashboardComponent(props) {
                                 <Tooltip />
                                 <Legend />
                                 <Bar dataKey="studentUnitAverage" fill="#8884d8" />
+                                <Bar dataKey="cohortUnitAverage" fill="#FFBF00" />
                             </BarChart>
 
                         </ResponsiveContainer>
