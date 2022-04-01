@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -52,7 +53,8 @@ public class LoginServiceImpl implements LoginService {
         map.put("token",jwt);
         //Store the complete user information in redis, userid as key
         redisCache.setCacheObject("login:"+userid,User);
-        bbReceiver.UpdateDatabase(tutor.getUsername());
+        final String path = "."+ File.separator+"blackboard";
+        bbReceiver.UpdateDatabase(tutor.getUsername(),path);
         return new ResponseResult(200,"Login successful",map);
 
     }

@@ -32,12 +32,10 @@ public class BBReceiver {
     @Autowired
     StudentRepository studentRepo;
 
-    public void UpdateDatabase(String user) {
+    public void UpdateDatabase(String user,String path) {
         String sep = File.separator;
-        String path = "."+sep+"blackboard";
-        verifyOrCreateFolder(path);
         if(verifyOrCreateFolder(path+sep+user)){
-            System.out.println("Loading Blackboard data");
+            System.out.println("Loading Blackboard data from "+path+sep+user);
             File[] studentDirectories = new File(path+sep+user).listFiles((dir, name) -> dir.isDirectory());
 
             if(studentDirectories.length > 0) {
@@ -115,7 +113,7 @@ public class BBReceiver {
     private boolean verifyOrCreateFolder(String path){
         File folder = new File(path);
         if(!folder.exists()){
-            folder.mkdir();
+            folder.mkdirs();
             return false;
         }
         return true;
