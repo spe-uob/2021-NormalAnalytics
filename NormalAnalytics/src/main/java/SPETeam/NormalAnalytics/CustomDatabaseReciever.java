@@ -165,34 +165,35 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
             unit.setAttendances(getAttendance(studentUsername,u.getCode()));
             unit.setScores(ScoresFromUnit(studentUsername,u.getCode()).getAssessments());
             unit.setOverallAttendance(unit.getAttendances()[unit.getAttendances().length-1].getTotalAttendance());
-            unit.setUnitAverage(calculateUnitAverageForStudent(student,u));
+
+            UnitTable currentUnit = unitRepository.findUnitTableByCode(u.getCode()).get();
+            StudentTable studentForAverage = studentRepository.findStudentTableByUsername(studentUsername).get();
+            unit.setUnitAverage(calculateUnitAverageForStudent(studentForAverage,currentUnit));
+            unit.setCohortAverage(calculateCohortAverage(u));
+
             unitData.add(unit);
         }
         data.setUnitData((UnitData[]) unitData.toArray(new UnitData[unitData.size()]));
         return data;
     }
 
-    /*Add this back in if we need cohort average
-    private float calculateUnitAverage(Unit unitData){
+    private float calculateCohortAverage(Unit unitData){
         UnitTable unit = unitRepository.findUnitTableByCode(unitData.getCode()).get();
         List<StudentTable> students = studentRepository.findStudentTablesByUnitsContains(unit);
         float total = 0;
         float num = 0;
-        List<AssessmentTable> unitAssessments = assessmentRepository.findAssessmentTablesByUnit(unit);
         for(StudentTable s : students){
             num += 1;
-            total += calculateUnitAverageForStudent(s,unitAssessments);
+            total += calculateUnitAverageForStudent(s,unit);
         }
         if(num > 0) return total/num;
         else return 0;
-    }*/
+    }
 
     //TODO: rewrite this with summative weighting system and using tables directly
-    private float calculateUnitAverageForStudent(Student studentData,Unit unitData){
+    private float calculateUnitAverageForStudent(StudentTable student,UnitTable unit){
         float total = 0;
         float num = 0;
-        UnitTable unit = unitRepository.findUnitTableByCode(unitData.getCode()).get();
-        StudentTable student = studentRepository.findStudentTableByUsername(studentData.getUsername()).get();
         List<AssessmentTable> assessments = assessmentRepository.findAssessmentTablesByUnit(unit);
         for(AssessmentTable a : assessments){
             num += 1;
