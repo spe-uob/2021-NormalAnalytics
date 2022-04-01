@@ -1,10 +1,9 @@
 package SPETeam.NormalAnalytics.IntegrationTests;
 
 import SPETeam.NormalAnalytics.Blackboard.BBReceiver;
-import SPETeam.NormalAnalytics.Database.Repositories.AssessmentRepository;
-import SPETeam.NormalAnalytics.Database.Repositories.GradesRepository;
-import SPETeam.NormalAnalytics.Database.Repositories.UnitRepository;
+import SPETeam.NormalAnalytics.Database.Repositories.*;
 import SPETeam.NormalAnalytics.Database.Tables.AssessmentTable;
+import SPETeam.NormalAnalytics.Database.Tables.GradeTable;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,10 @@ public class ParserTests {
     AssessmentRepository assessmentRepo;
     @Autowired
     UnitRepository unitRepo;
+    @Autowired
+    GradesRepository gradeRepo;
+    @Autowired
+    StudentRepository studentRepo;
 
     String sep = File.separator;
     String rootPath = "."+sep+"test-blackboard";
@@ -54,8 +57,7 @@ public class ParserTests {
         bbReceiver.UpdateDatabase(tutor,rootPath);
         assert tutorFolder.exists();
     }
-
-    //TODO: test for correct score
+    
     void TestDatabaseUpdated() throws IOException{
 
         String path = rootPath+sep+tutor+sep+student;
@@ -67,14 +69,19 @@ public class ParserTests {
 
         bbReceiver.UpdateDatabase(tutor,rootPath);
         List<AssessmentTable> assessments = assessmentRepo.findAssessmentTablesByUnit(unitRepo.findUnitTableByCode("COMS20008").get());
-        boolean updated = false;
+        boolean addedToDB = false;
         for(AssessmentTable a : assessments){
             if(a.getName().equals("While Program Syntax and Semantics Quiz")) {
-                updated = true;
+                addedToDB = true;
+                GradeTable grade = gradeRepo.findById(
+                        new GradeId(studentRepo.findStudentTableByUsername(student).get().getId(), a.getId()))
+                        .get();
+                float expectedGrade = (146.95652f / 169f) * 100f;
+                assert Math.abs(grade.getGrade() - expectedGrade) < 0.00001f;
                 break;
             }
         }
-        assert updated;
+        assert addedToDB;
     }
 
 
