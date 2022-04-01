@@ -57,7 +57,7 @@ public class ParserTests {
         bbReceiver.UpdateDatabase(tutor,rootPath);
         assert tutorFolder.exists();
     }
-    
+
     void TestDatabaseUpdated() throws IOException{
 
         String path = rootPath+sep+tutor+sep+student;
