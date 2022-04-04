@@ -22,14 +22,14 @@ VALUES
     ('COMS20008','Computer Systems A'),
     ('COMS30042','Advanced Algorithms');
 
-INSERT INTO assessment (name,summative,unit)
+INSERT INTO assessment (name,weight,unit)
 VALUES
-    ('MVP',FALSE,1),
-    ('Beta',FALSE,1),
-    ('Release',TRUE,1),
-    ('Bank',FALSE,2),
-    ('Game of Life',TRUE,2),
-    ('Exam',TRUE,2);
+    ('MVP',0,1),
+    ('Beta',0,1),
+    ('Release',1,1),
+    ('Bank',0,2),
+    ('Game of Life',0.8,2),
+    ('Exam',0.2,2);
 
 INSERT INTO attendance (student,unit,date,present)
 VALUES

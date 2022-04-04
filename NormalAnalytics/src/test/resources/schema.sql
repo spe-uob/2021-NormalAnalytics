@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS student (
 CREATE TABLE IF NOT EXISTS assessment (
                             id int AUTO_INCREMENT,
                             name varchar(100) UNIQUE NOT NULL,
-                            summative bool NOT NULL,
+                            weight real NOT NULL,
                             unit int NOT NULL,
                             PRIMARY KEY (id),
                             FOREIGN KEY (unit) REFERENCES unit(id)

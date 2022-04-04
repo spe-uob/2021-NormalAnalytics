@@ -8,4 +8,5 @@ import lombok.Data;
 public class AssessmentScore {
     private String name;
     private float score;
+    private float weight;
 }

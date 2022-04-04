@@ -88,7 +88,7 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
                 for(GradeTable g : allStudentGrades){
                     for(AssessmentTable a : unitAssessments){
                         if(g.getAssessment().getId() == a.getId()){
-                            scoresToReturn.add(new AssessmentScore(a.getName(),g.getGrade()));
+                            scoresToReturn.add(new AssessmentScore(a.getName(),g.getGrade(),a.getWeight()));
                         }
                     }
                 }
@@ -192,16 +192,12 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
 
     //TODO: rewrite this with summative weighting system and using tables directly
     private float calculateUnitAverageForStudent(StudentTable student,UnitTable unit){
-        float total = 0;
-        float num = 0;
+        float overallGrade = 0f;
         List<AssessmentTable> assessments = assessmentRepository.findAssessmentTablesByUnit(unit);
         for(AssessmentTable a : assessments){
-            num += 1;
-            total += gradesRepository.findGradeTableByStudentAndAssessment(student,a).get().getGrade();
+            overallGrade += gradesRepository.findGradeTableByStudentAndAssessment(student,a).get().getGrade() * a.getWeight();
         }
-
-        if(num > 0) return total/num;
-        else return 0;
+        return overallGrade;
     }
 
     private AttendancePoint[] getAttendance(String username,String unitCode){

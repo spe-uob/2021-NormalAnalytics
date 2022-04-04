@@ -55,7 +55,7 @@ public class BBReceiver {
     private AssessmentTable persistNewAssessment(String name,String unitCode){
         AssessmentTable newAssessment = new AssessmentTable();
         newAssessment.setName(name);
-        newAssessment.setSummative(false);
+        newAssessment.setWeight(0);
         newAssessment.setUnit(unitRepo.findUnitTableByCode(unitCode).get());
         assessmentRepo.save(newAssessment);
         return newAssessment;
