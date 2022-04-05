@@ -99,10 +99,9 @@ function DashboardComponent(props) {
                     unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
                     unitAverageData.push(unitNameAndAverage);
                 }
+                setUnitData(unitAverageData);
 
                 console.log(res.data);
-
-                setUnitData(unitAverageData);
 
             })
             .catch((err) => console.log(err))
@@ -130,7 +129,7 @@ function DashboardComponent(props) {
                     <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="dash-section-area">
-                    <div className="dash-section">
+                    <div className="dash-section first">
                         <table className="mainTable">
                             {
                                 data && data["unitData"].map((unit) => {
@@ -163,7 +162,7 @@ function DashboardComponent(props) {
                         </table>
                     </div>
 
-                    <div className="dash-section alternate">
+                    <div className="dash-section">
 
                         {/*graph showing unit average*/}
                         <ResponsiveContainer width="75%" height="90%">
@@ -174,8 +173,8 @@ function DashboardComponent(props) {
                                     top: 5, right: 30, left: 20, bottom: 5,
                                 }}
                             >
-                                <XAxis dataKey="name" domain={[0, 100]}/>
-                                <YAxis />
+                                <XAxis dataKey="name"/>
+                                <YAxis domain={[0, 100]}/>
                                 <Tooltip />
                                 <Legend />
                                 <Bar dataKey="studentUnitAverage" fill="#8884d8" />
@@ -186,8 +185,7 @@ function DashboardComponent(props) {
 
                     </div>
 
-                    <div className="dash-section alternate"/>
-                    <div className="dash-section"/>
+                    <div className="dash-section "/>
                 </div>
             </div>
         </div>
@@ -196,54 +194,3 @@ function DashboardComponent(props) {
 }
 
 export default withRouter(DashboardComponent);
-
-// <LineChart
-//     width={500}
-//     height={300}
-//     data={[
-//         {
-//             name: 'SPE',
-//             studentUnitAverage: 80,
-//             cohortUnitAverage: 20
-//         },
-//         {
-//             name: 'CSA',
-//             studentUnitAverage: 50,
-//             cohortUnitAverage: 70
-//         },
-//         {
-//             name: 'Algorithms II',
-//             studentUnitAverage: 40,
-//             cohortUnitAverage: 40
-//         },
-//         {
-//             name: 'PLC',
-//             studentUnitAverage: 80,
-//             cohortUnitAverage: 12
-//         }
-//     ]}
-//     margin={{
-//         top: 5,
-//         right: 30,
-//         left: 20,
-//         bottom: 5
-//     }}
-// >
-//     {/*<CartesianGrid strokeDasharray="3 3" stroke="#cccccc" strokeWidth="3" />*/}
-//     <XAxis dataKey="name"/>
-//     <YAxis type="number" domain={[0, 100]}/>
-//     <Tooltip />
-//     <Legend />
-//     <Line
-//         type="monotone"
-//         dataKey="studentUnitAverage"
-//         stroke="#8884d8"
-//         strokeWidth="2"
-//     />
-//     <Line
-//         type="monotone"
-//         dataKey="cohortUnitAverage"
-//         stroke="#82ca9d"
-//         strokeWidth="2"
-//     />
-// </LineChart>

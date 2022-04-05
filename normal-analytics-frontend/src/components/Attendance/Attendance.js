@@ -5,17 +5,57 @@ import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
 import Dropdown from 'react-dropdown';
 
-
-
+let runOnce = false;
 
 function Attendance(props) {
     let passedState = props.location.state;
+    let tutorAndTutees = passedState.tutorAndTutees;
 
-    let handleClickChangeStudent = () => {
-        props.history.push({
-            pathname: '/student-auth',
-            state: passedState
-        })
+    let handleClickSelect = () => {
+        if (runOnce === false) {
+            runOnce = true;
+
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+                let liElement = document.createElement("li");
+                let liElementText = document.createTextNode(key);
+                liElement.appendChild(liElementText);
+                liElement.id = key + "-li";
+                liElement.className = "studentGroupDropdown";
+                document.getElementById("tutorGroups").appendChild(liElement);
+
+                let ulElement = document.createElement("ul");
+                ulElement.id = key + "-ul";
+                document.getElementById(key + "-li").appendChild(ulElement);
+
+
+                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
+                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
+
+                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentNameAndUsername = {};
+                        studentNameAndUsername[eachStudentName] = username;
+
+                        let subLiElement = document.createElement("li");
+                        let subLiElementText = document.createTextNode(eachStudentName);
+                        subLiElement.appendChild(subLiElementText);
+                        subLiElement.id = "studentNameDropdown";
+                        subLiElement.onclick = function() {
+                            props.history.replace({
+                                pathname: '/attendance',
+                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                            })
+
+                            document.getElementById("dropdown-button").hidden = true;
+                            window.location.reload();
+                        };
+                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                    })
+
+                })
+            })
+        } else {
+            console.log("lol");
+        }
     }
 
     let handleClickLogOut = () => {
@@ -39,17 +79,9 @@ function Attendance(props) {
         })
     }
 
-    let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
-    let studentName = passedState["studentUsername"]["value"];
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-
-    let studentUsername = null;
-    for (const [key, value] of Object.entries(studentObjects)) {
-        if (studentName === key) {
-            studentName = key
-            studentUsername = value;
-        }
-    }
+    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
     // gets all units
     const [data, setData] = useState();
@@ -92,13 +124,15 @@ function Attendance(props) {
     return (
         <div className="dashboard">
             <div className="nav-bar">
-                <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+                <ul className="dropdown student-dropdown">
+                    <li id="dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                        <ul id="tutorGroups"/>
+                    </li>
+                </ul>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item" style={{ border: "solid black" }} >Tutor logged in: {tutorUsername}</button>
-                    <div className="dropdown-content">
-                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                    </div>
+                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
