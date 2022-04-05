@@ -7,6 +7,15 @@ CREATE TABLE IF NOT EXISTS tutor (
                        PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS tutor_group (
+                                           id int AUTO_INCREMENT,
+                                           name varchar(100) NOT NULL,
+    tutor int NOT NULL,
+    FOREIGN KEY (tutor) REFERENCES tutor(id),
+    PRIMARY KEY (id)
+    );
+
+
 CREATE TABLE IF NOT EXISTS unit (
                       id int AUTO_INCREMENT,
                       code varchar(9) UNIQUE NOT NULL,
@@ -19,15 +28,15 @@ CREATE TABLE IF NOT EXISTS student (
                          username varchar(100) UNIQUE NOT NULL,
                          firstname varchar(100) NOT NULL,
                          surname varchar(100) NOT NULL,
-                         tutor int NOT NULL,
+                         tutor_group int NOT NULL,
                          PRIMARY KEY (id),
-                         FOREIGN KEY (tutor) REFERENCES tutor(id)
+                         FOREIGN KEY (tutor_group) REFERENCES tutor_group(id)
 );
 
 CREATE TABLE IF NOT EXISTS assessment (
                             id int AUTO_INCREMENT,
                             name varchar(100) UNIQUE NOT NULL,
-                            summative bool NOT NULL,
+                            weight real NOT NULL,
                             unit int NOT NULL,
                             PRIMARY KEY (id),
                             FOREIGN KEY (unit) REFERENCES unit(id)

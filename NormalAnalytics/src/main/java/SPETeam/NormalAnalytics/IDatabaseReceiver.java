@@ -16,4 +16,5 @@ public interface IDatabaseReceiver {
     Student StudentFromUsername(String studentName);
     UnitAndGrades[] UnitAndGradesFromStudent(String studentUsername);
     StudentData AllStudentData(String studentUsername);
+    List<GroupAndStudents> StudentsFromTutorByGroup(String tutorUsername);
 }

@@ -9,4 +9,6 @@ public class UnitData {
     private float overallAttendance;
     private AttendancePoint[] attendances;
     private AssessmentScore[] scores;
+    private float unitAverage;
+    private float cohortAverage;
 }

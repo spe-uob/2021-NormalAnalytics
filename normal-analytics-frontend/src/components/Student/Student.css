@@ -1,0 +1,25 @@
+/* student */
+
+/* dropdown styles */
+
+.student-dropdown li {
+    position: relative;
+}
+
+.student-dropdown li ul {
+    position: absolute;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    line-height: normal;
+}
+.student-dropdown li ul li ul {
+    left: 100%;
+    top: 0;
+}
+
+ul li:hover>ul {
+    display: block;
+}

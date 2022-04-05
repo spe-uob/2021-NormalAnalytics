@@ -3,7 +3,12 @@ VALUES
     ('jross','password123','Joel','Ross'),
     ('fakeTutor','$2a$10$eJqCoz24ghJIEAzc2NmgQu73D/exKr5l5zwnabrpNFYaV54cjlvLW','Fake','Tutor');
 
-INSERT INTO student (username,firstname,surname,tutor)
+INSERT INTO tutor_group (name,tutor)
+VALUES
+    ('CS group',1),
+    ('Other group',1);
+
+INSERT INTO student (username,firstname,surname,tutor_group)
 VALUES
     ('iq20064','William','Tripp',1),
     ('oj20075','Siana','Dicheva',1),
@@ -17,14 +22,14 @@ VALUES
     ('COMS20008','Computer Systems A'),
     ('COMS30042','Advanced Algorithms');
 
-INSERT INTO assessment (name,summative,unit)
+INSERT INTO assessment (name,weight,unit)
 VALUES
-    ('MVP',FALSE,1),
-    ('Beta',FALSE,1),
-    ('Release',TRUE,1),
-    ('Bank',FALSE,2),
-    ('Game of Life',TRUE,2),
-    ('Exam',TRUE,2);
+    ('MVP',0,1),
+    ('Beta',0,1),
+    ('Release',1,1),
+    ('Bank',0,2),
+    ('Game of Life',0.8,2),
+    ('Exam',0.2,2);
 
 INSERT INTO attendance (student,unit,date,present)
 VALUES

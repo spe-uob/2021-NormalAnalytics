@@ -24,8 +24,8 @@ public class StudentTable implements IGivesEntity<Student> {
     @Column(name="surname") @Getter @Setter
     String surname;
 
-    @ManyToOne @JoinColumn(name="tutor") @Getter @Setter
-    TutorTable tutor;
+    @ManyToOne @JoinColumn(name="tutor_group") @Getter @Setter
+    TutorGroupTable tutorGroup;
 
     @ManyToMany @JoinTable(name="unit_enrollment",
             joinColumns = @JoinColumn(name="student"),
