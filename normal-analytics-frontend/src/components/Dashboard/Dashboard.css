@@ -50,6 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .dash-section:nth-child(2) {
@@ -69,6 +70,7 @@
     display: block;
     width: 85%;
     max-width: fit-content;
+    height: fit-content;
     margin: 0 auto;
     overflow-x: auto;
     white-space: nowrap;
@@ -80,10 +82,10 @@
     margin: 5rem;
     background-color: pink;
     display: inline-block;
-    height: 100%;
+    height: fit-content;
 }
 
-.column-header {
+.table-headers {
     font-weight: 700;
 }
 
@@ -93,6 +95,7 @@ table tr td:empty {
 
 table tr td {
     padding: 5rem 0;
+    text-align: center;
 }
 
 /* dropdown styles */
@@ -128,4 +131,8 @@ table tr td {
 .studentGroupDropdown:hover {
         opacity: .6;
         cursor: pointer;
+}
+
+.dash-filter {
+    margin: 20rem 0;
 }

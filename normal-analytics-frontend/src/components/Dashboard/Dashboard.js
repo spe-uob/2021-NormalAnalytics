@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import "./Dashboard.css"
 import axios from "axios";
 import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
+import Dropdown from "react-dropdown";
 
 let runOnce = false;
 
@@ -133,10 +134,12 @@ function DashboardComponent(props) {
                                 data && data["unitData"].map((unit) => {
                                     return (
                                         <table id={unit.name} className="subTable">
-                                            <tr>
+                                            <tr className="table-headers">
                                                 <td>{unit.name}</td>
                                                 <td/>
                                                 <td>Score</td>
+                                                <td/>
+                                                <td>Weight (%)</td>
                                             </tr>
 
                                             {
@@ -148,7 +151,10 @@ function DashboardComponent(props) {
                                                       <tr>
                                                           <td>{assessment.name}</td>
                                                           <td/>
-                                                          <td><td>{assessment.score}</td></td>
+                                                          <td>{assessment.score}</td>
+                                                          <td/>
+                                                          <td>{assessment.weight * 100}</td>
+
                                                       </tr>
                                                     )
                                                 })
@@ -158,6 +164,8 @@ function DashboardComponent(props) {
                                 })
                             }
                         </table>
+
+                        <Dropdown options={[]} className="dash-filter">Filter</Dropdown>
                     </div>
 
                     <div className="dash-section">
