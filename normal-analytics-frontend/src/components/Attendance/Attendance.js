@@ -53,8 +53,6 @@ function Attendance(props) {
 
                 })
             })
-        } else {
-            console.log("lol");
         }
     }
 

@@ -56,8 +56,6 @@ function DashboardComponent(props) {
 
                 })
             })
-        } else {
-            console.log("lol");
         }
     }
 

@@ -4,21 +4,24 @@ import 'react-dropdown/style.css';
 
 import "./Student.css"
 
+let runOnce = false;
+
 function StudentComponent(props) {
     let passedState = props.location.state;
-
     let tutorAndTutees = passedState;
-    let runOnce = false;
+
+    console.log(passedState);
 
     let handleClickSelect = () => {
         if (runOnce === false) {
             runOnce = true;
 
-            Object.keys(passedState.groupAndStudents).forEach(key => {
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
                 let liElementText = document.createTextNode(key);
                 liElement.appendChild(liElementText);
                 liElement.id = key + "-li";
+                liElement.className = "studentGroupDropdown";
                 document.getElementById("tutorGroups").appendChild(liElement);
 
                 let ulElement = document.createElement("ul");
@@ -26,7 +29,7 @@ function StudentComponent(props) {
                 document.getElementById(key + "-li").appendChild(ulElement);
 
 
-                Object.values(passedState.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
+                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
                     Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
 
                         let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
@@ -36,11 +39,15 @@ function StudentComponent(props) {
                         let subLiElement = document.createElement("li");
                         let subLiElementText = document.createTextNode(eachStudentName);
                         subLiElement.appendChild(subLiElementText);
+                        subLiElement.id = "studentNameDropdown";
                         subLiElement.onclick = function() {
-                            props.history.push({
+                            props.history.replace({
                                 pathname: '/dashboard',
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
+
+                            document.getElementById("dropdown-button").hidden = true;
+                            window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
                     })
@@ -55,8 +62,8 @@ function StudentComponent(props) {
             <div className="login">
                 <span className="title">Choose a Student</span>
 
-                <ul className="dropdown">
-                    <li id="lolbang" onClick={handleClickSelect.bind(this)}>Select Student
+                <ul className="dropdown student-dropdown">
+                    <li id="dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>
