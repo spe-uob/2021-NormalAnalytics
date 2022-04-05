@@ -15,8 +15,8 @@ public class AssessmentTable {
     @Column(name="name") @NotNull @Getter @Setter
     String name;
 
-    @Column(name="summative") @NotNull @Getter @Setter
-    boolean summative;
+    @Column(name="weight") @NotNull @Getter @Setter
+    float weight;
 
     @ManyToOne @JoinColumn(name = "unit") @NotNull @Getter @Setter
     UnitTable unit;
