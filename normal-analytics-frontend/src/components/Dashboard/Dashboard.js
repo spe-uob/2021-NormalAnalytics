@@ -16,8 +16,7 @@ function DashboardComponent(props) {
     let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
     let handleClickSelect = () => {
-        if (runOnce === false) {
-            runOnce = true;
+        // if tutorGroups.ul exists, delete then ... otherwise just ...
 
             Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
@@ -44,20 +43,26 @@ function DashboardComponent(props) {
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
                         subLiElement.onclick = function() {
-                            props.history.replace({
-                                pathname: '/dashboard',
-                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
-                            })
+                            // props.history.replace({
+                            //     pathname: '/dashboard',
+                            //     state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                            // })
+
+                            props.history.replace(`/reload`);
+                            setTimeout(() => {
+                                props.history.replace({
+                                    pathname: '/dashboard',
+                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                })
+                            });
 
                             document.getElementsByClassName("dash-dropdown-button").hidden = true;
-                            window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
                     })
 
                 })
             })
-        }
     }
 
     let handleClickLogOut = () => {
@@ -99,8 +104,6 @@ function DashboardComponent(props) {
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
-
-                console.log(res.data);
 
             })
             .catch((err) => console.log(err))
@@ -144,9 +147,6 @@ function DashboardComponent(props) {
 
                                             {
                                                 unit.scores.map((assessment, key) => {
-
-                                                    console.log(key);
-
                                                     return (
                                                       <tr>
                                                           <td>{assessment.name}</td>

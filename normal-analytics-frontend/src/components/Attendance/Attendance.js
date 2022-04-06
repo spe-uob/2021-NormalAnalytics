@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
@@ -12,8 +12,6 @@ function Attendance(props) {
     let tutorAndTutees = passedState.tutorAndTutees;
 
     let handleClickSelect = () => {
-        if (runOnce === false) {
-            runOnce = true;
 
             Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
@@ -40,20 +38,29 @@ function Attendance(props) {
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
                         subLiElement.onclick = function() {
-                            props.history.replace({
-                                pathname: '/attendance',
-                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
-                            })
+                            // props.history.replace({
+                            //     pathname: '/attendance',
+                            //     state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                            // })
+
+                            props.history.replace(`/reload`);
+                            setTimeout(() => {
+                                props.history.replace({
+                                    pathname: '/attendance',
+                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                })
+                            });
+
+
 
                             document.getElementsByClassName("attendance-dropdown-button").hidden = true;
-                            window.location.reload();
+                            // window.location.reload(true);
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
                     })
 
                 })
             })
-        }
     }
 
     let handleClickLogOut = () => {
@@ -88,7 +95,6 @@ function Attendance(props) {
         axios(url)
             .then((res) => {
                 setData(res.data);
-                console.log(res.data);
             })
             .catch((err) => console.log(err))
     }, []);
