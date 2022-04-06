@@ -56,7 +56,6 @@ function Attendance(props) {
 
 
                             document.getElementsByClassName("attendance-dropdown-button").hidden = true;
-                            // window.location.reload(true);
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
                     })
@@ -76,13 +75,6 @@ function Attendance(props) {
     let handleClickDashboard = () => {
         props.history.push({
             pathname: '/dashboard',
-            state: passedState
-        })
-    }
-
-    let handleClickAllData = () => {
-        props.history.push({
-            pathname: '/alldata',
             state: passedState
         })
     }
@@ -147,7 +139,6 @@ function Attendance(props) {
                 <div className="sidebar">
                     <button className="sidebar-link" onClick={handleClickDashboard.bind(this)} >General</button>
                     <button className="sidebar-link" >Attendance</button>
-                    <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="section">
                     <div>

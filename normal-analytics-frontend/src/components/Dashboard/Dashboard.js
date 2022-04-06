@@ -18,8 +18,6 @@ function DashboardComponent(props) {
 	axios.defaults.headers.common["token"] = token;
 
     let handleClickSelect = () => {
-        // if tutorGroups.ul exists, delete then ... otherwise just ...
-
         if (runOnce === false) {
             runOnce = true;
 
@@ -48,10 +46,6 @@ function DashboardComponent(props) {
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
                         subLiElement.onclick = function () {
-                            // props.history.replace({
-                            //     pathname: '/dashboard',
-                            //     state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
-                            // })
 
                             props.history.replace(`/reload`);
                             setTimeout(() => {
@@ -87,13 +81,6 @@ function DashboardComponent(props) {
     let handleClickAttendance = () => {
         props.history.push({
             pathname: '/attendance',
-            state: passedState
-        })
-    }
-
-    let handleClickAllData = () =>{
-        props.history.push({
-            pathname: '/alldata',
             state: passedState
         })
     }
@@ -140,7 +127,6 @@ function DashboardComponent(props) {
                 <div className="sidebar">
                     <button className="sidebar-link" >General</button>
                     <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
-                    <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="dash-section-area">
                     <div className="dash-section first">
