@@ -45,7 +45,7 @@ function Attendance(props) {
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
 
-                            document.getElementById("dropdown-button").hidden = true;
+                            document.getElementsByClassName("attendance-dropdown-button").hidden = true;
                             window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
@@ -123,7 +123,7 @@ function Attendance(props) {
         <div className="dashboard">
             <div className="nav-bar">
                 <ul className="dropdown student-dropdown">
-                    <li id="dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                    <li id="dropdown-button" className="attendance-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>

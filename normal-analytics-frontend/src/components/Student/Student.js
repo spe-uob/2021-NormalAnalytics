@@ -46,8 +46,7 @@ function StudentComponent(props) {
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
 
-                            document.getElementById("dropdown-button").hidden = true;
-                            window.location.reload();
+                            document.getElementsByClassName("student-dropdown-button").hidden = true;
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
                     })
@@ -63,7 +62,7 @@ function StudentComponent(props) {
                 <span className="title">Choose a Student</span>
 
                 <ul className="dropdown student-dropdown">
-                    <li id="dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                    <li id="dropdown-button" className="student-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>

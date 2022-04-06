@@ -49,7 +49,7 @@ function DashboardComponent(props) {
                                 state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
                             })
 
-                            document.getElementById("dropdown-button").hidden = true;
+                            document.getElementsByClassName("dash-dropdown-button").hidden = true;
                             window.location.reload();
                         };
                         document.getElementById(key + "-ul").appendChild(subLiElement);
@@ -110,7 +110,7 @@ function DashboardComponent(props) {
         <div className="dashboard">
             <div className="nav-bar">
                 <ul className="dropdown student-dropdown">
-                    <li id="dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                    <li id="dropdown-button" className="dash-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>
@@ -165,7 +165,7 @@ function DashboardComponent(props) {
                             }
                         </table>
 
-                        <Dropdown options={[]} className="dash-filter">Filter</Dropdown>
+                        <Dropdown options={["Summative", "Formative", "Both"]} className="dash-filter">Filter</Dropdown>
                     </div>
 
                     <div className="dash-section">
