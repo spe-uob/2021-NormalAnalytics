@@ -9,6 +9,7 @@ let runOnce = false;
 function StudentComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState;
+	let token = passedState["token"];
 
     console.log(passedState);
 
@@ -43,7 +44,7 @@ function StudentComponent(props) {
                         subLiElement.onclick = function() {
                             props.history.replace({
                                 pathname: '/dashboard',
-                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername,"token":token}
                             })
 
                             document.getElementsByClassName("student-dropdown-button").hidden = true;

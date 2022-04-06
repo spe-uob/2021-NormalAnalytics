@@ -11,18 +11,19 @@ function LoginComponent(props) {
         let groupAndStudents = {};
         let studentObjects = {};
 
-        fetch("/login", {
+        fetch("/user/login", {
             method : "POST",
             headers : { "content-type" : "application/json; charset=UTF-8"},
             body : JSON.stringify({"username": username, "password": password}),
         })
             .then(response => response.text())
             .then(message => {
-                let token = JSON.parse(message)["token"]
-                if (token != null) {
-                    const url = "/database/getStudentsByGroup/" + username
+                let statusCode = JSON.parse(message)["code"];
+                if (statusCode != null && statusCode == 200) {
+                    let token = JSON.parse(message)["data"]["token"]
+					const url = "/database/getStudentsByGroup/" + username
 
-                    fetch(url)
+                    fetch(url,{headers:{"token":token}})
                         .then(response => response.json())
                         .then(message => {
                             for (let i = 0; i < message.groups.length; i++) {
@@ -42,7 +43,7 @@ function LoginComponent(props) {
 
                     props.history.push({
                         pathname: '/student',
-                        state: {"tutorUsername": username, "groupAndStudents": groupAndStudents, "studentObjects": studentObjects}
+                        state: {"tutorUsername": username, "groupAndStudents": groupAndStudents, "studentObjects": studentObjects,"token":token}
                     })
                 }
             });

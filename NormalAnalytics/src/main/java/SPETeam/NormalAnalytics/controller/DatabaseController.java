@@ -57,7 +57,7 @@ public class DatabaseController {
     public AssessmentScoreList getAssessments(@PathVariable String unitCode,@PathVariable String studentUsername){
         return receiver.ScoresFromUnit(studentUsername,unitCode);
     }
-    
+
     @GetMapping("/getUnits/{studentUsername}")
     public UnitList getUnits(@PathVariable String studentUsername){
         List<Unit> unitList = receiver.UnitsFromStudent(studentUsername);

@@ -10,6 +10,7 @@ let runOnce = false;
 function Attendance(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
+	let token = passedState["token"];
 
     let handleClickSelect = () => {
 
@@ -47,7 +48,7 @@ function Attendance(props) {
                             setTimeout(() => {
                                 props.history.replace({
                                     pathname: '/attendance',
-                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername,"token":token}
                                 })
                             });
 
