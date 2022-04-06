@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
 import Dropdown from 'react-dropdown';
 
-let runOnce = false;
-
 function Attendance(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
+    let runOnce = passedState.runOnce;
 
     let handleClickSelect = () => {
+        if (runOnce === false) {
+            runOnce = true;
 
             Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
@@ -37,20 +38,19 @@ function Attendance(props) {
                         let subLiElementText = document.createTextNode(eachStudentName);
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
-                        subLiElement.onclick = function() {
-                            // props.history.replace({
-                            //     pathname: '/attendance',
-                            //     state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
-                            // })
+                        subLiElement.onclick = function () {
 
                             props.history.replace(`/reload`);
                             setTimeout(() => {
                                 props.history.replace({
                                     pathname: '/attendance',
-                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                    state: {
+                                        "tutorAndTutees": tutorAndTutees,
+                                        "studentNameAndUsername": studentNameAndUsername,
+                                        "runOnce": false
+                                    }
                                 })
                             });
-
 
 
                             document.getElementsByClassName("attendance-dropdown-button").hidden = true;
@@ -61,6 +61,7 @@ function Attendance(props) {
 
                 })
             })
+        }
     }
 
     let handleClickLogOut = () => {

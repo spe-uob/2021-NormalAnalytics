@@ -5,11 +5,10 @@ import axios from "axios";
 import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 import Dropdown from "react-dropdown";
 
-let runOnce = false;
-
 function DashboardComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
+    let runOnce = passedState.runOnce;
 
     let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
@@ -17,6 +16,9 @@ function DashboardComponent(props) {
 
     let handleClickSelect = () => {
         // if tutorGroups.ul exists, delete then ... otherwise just ...
+
+        if (runOnce === false) {
+            runOnce = true;
 
             Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
@@ -42,7 +44,7 @@ function DashboardComponent(props) {
                         let subLiElementText = document.createTextNode(eachStudentName);
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
-                        subLiElement.onclick = function() {
+                        subLiElement.onclick = function () {
                             // props.history.replace({
                             //     pathname: '/dashboard',
                             //     state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
@@ -52,7 +54,11 @@ function DashboardComponent(props) {
                             setTimeout(() => {
                                 props.history.replace({
                                     pathname: '/dashboard',
-                                    state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                    state: {
+                                        "tutorAndTutees": tutorAndTutees,
+                                        "studentNameAndUsername": studentNameAndUsername,
+                                        "runOnce": false
+                                    }
                                 })
                             });
 
@@ -63,6 +69,7 @@ function DashboardComponent(props) {
 
                 })
             })
+        }
     }
 
     let handleClickLogOut = () => {

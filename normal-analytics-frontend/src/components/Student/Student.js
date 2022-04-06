@@ -4,17 +4,14 @@ import 'react-dropdown/style.css';
 
 import "./Student.css"
 
-let runOnce = false;
-
 function StudentComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState;
 
-    console.log(passedState);
-
     let handleClickSelect = () => {
-        if (runOnce === false) {
-            runOnce = true;
+
+        if (passedState.runOnce === false || passedState.runOnce == null) {
+            passedState.runOnce = true;
 
             Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
                 let liElement = document.createElement("li");
@@ -40,10 +37,14 @@ function StudentComponent(props) {
                         let subLiElementText = document.createTextNode(eachStudentName);
                         subLiElement.appendChild(subLiElementText);
                         subLiElement.id = "studentNameDropdown";
-                        subLiElement.onclick = function() {
+                        subLiElement.onclick = function () {
                             props.history.replace({
                                 pathname: '/dashboard',
-                                state: {"tutorAndTutees": tutorAndTutees, "studentNameAndUsername": studentNameAndUsername}
+                                state: {
+                                    "tutorAndTutees": tutorAndTutees,
+                                    "studentNameAndUsername": studentNameAndUsername,
+                                    "runOnce": false
+                                }
                             })
 
                             document.getElementsByClassName("student-dropdown-button").hidden = true;
