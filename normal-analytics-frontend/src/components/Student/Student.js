@@ -7,6 +7,7 @@ import "./Student.css"
 function StudentComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState;
+	let token = passedState["token"];
 
     let handleClickSelect = () => {
 
@@ -43,8 +44,10 @@ function StudentComponent(props) {
                                 state: {
                                     "tutorAndTutees": tutorAndTutees,
                                     "studentNameAndUsername": studentNameAndUsername,
-                                    "runOnce": false
+                                    "runOnce": false,
+                                    "token": token
                                 }
+
                             })
 
                             document.getElementsByClassName("student-dropdown-button").hidden = true;

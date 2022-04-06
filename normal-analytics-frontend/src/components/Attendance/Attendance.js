@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import Dropdown from 'react-dropdown';
 
 function Attendance(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
     let runOnce = passedState.runOnce;
+	let token = passedState["token"];
 
     let handleClickSelect = () => {
         if (runOnce === false) {
@@ -47,7 +48,8 @@ function Attendance(props) {
                                     state: {
                                         "tutorAndTutees": tutorAndTutees,
                                         "studentNameAndUsername": studentNameAndUsername,
-                                        "runOnce": false
+                                        "runOnce": false,
+                                        "token": token
                                     }
                                 })
                             });

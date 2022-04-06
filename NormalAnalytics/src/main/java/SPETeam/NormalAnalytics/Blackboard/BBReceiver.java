@@ -32,20 +32,20 @@ public class BBReceiver {
     @Autowired
     StudentRepository studentRepo;
 
-    public void UpdateDatabase(String user) {
+    public void UpdateDatabase(String user,String path) {
         String sep = File.separator;
-        String path = "."+sep+"blackboard";
-        verifyOrCreateFolder(path);
         if(verifyOrCreateFolder(path+sep+user)){
-            System.out.println("Loading Blackboard data");
+            System.out.println("Loading Blackboard data from "+path+sep+user);
             File[] studentDirectories = new File(path+sep+user).listFiles((dir, name) -> dir.isDirectory());
-            GradeParser parser = new GradeParser();
 
-            for(File student: studentDirectories){
-                for(String f : student.list()){
-                    updateDatabaseFromFile(parser,student.getPath()+sep+f);
+            if(studentDirectories.length > 0) {
+                GradeParser parser = new GradeParser();
+                for (File student : studentDirectories) {
+                    for (String f : student.list()) {
+                        updateDatabaseFromFile(parser, student.getPath() + sep + f);
+                    }
                 }
-            }
+            }else System.out.println("No student data found");
 
         }else{
             System.out.println("No Blackboard data found");
@@ -77,34 +77,43 @@ public class BBReceiver {
             }else{
                 assessment = assessmentRepo.findAssessmentTableByNameAndUnit(d.getAssessmentName(),unitRepo.findUnitTableByCode(d.unitCode).get()).get();
             }
-            StudentTable student = studentRepo.findStudentTableByUsername(d.studentUsername).get();
-            Optional<GradeTable> existingGrade = gradeRepo.findById(
-                    new GradeId(
-                            student.getId(),
-                            assessment.getId()
-                    )
-            );
-            if(existingGrade.isPresent()){
-                if(existingGrade.get().getGrade() != d.assessmentScore){
-                    System.out.println("Updating grade");
-                    existingGrade.get().setGrade(d.assessmentScore);
-                    gradeRepo.save(existingGrade.get());
-                }
-            }else{
-                System.out.println("Adding new grade");
-                GradeTable newGrade = new GradeTable();
-                newGrade.setGradeId(new GradeId(student.getId(),assessment.getId()));
-                newGrade.setGrade(d.assessmentScore);
-                newGrade.setAssessment(assessment);
-                newGrade.setStudent(student);
-                gradeRepo.save(newGrade);
-            }
+            addOrUpdateGrade(assessment,d);
         }
     }
+
+    private void addOrUpdateGrade(AssessmentTable assessment,BBAssessmentData data){
+        StudentTable student = studentRepo.findStudentTableByUsername(data.studentUsername).get();
+        Optional<GradeTable> existingGrade = gradeRepo.findById(
+                new GradeId(
+                        student.getId(),
+                        assessment.getId()
+                )
+        );
+        if(existingGrade.isPresent()){
+            if(existingGrade.get().getGrade() != data.assessmentScore){
+                System.out.println("Updating grade");
+                existingGrade.get().setGrade(data.assessmentScore);
+                gradeRepo.save(existingGrade.get());
+            }
+        }else{
+            System.out.println("Adding new grade");
+            persistNewGrade(student,assessment,data);
+        }
+    }
+
+    private void persistNewGrade(StudentTable student,AssessmentTable assessment,BBAssessmentData data){
+        GradeTable newGrade = new GradeTable();
+        newGrade.setGradeId(new GradeId(student.getId(),assessment.getId()));
+        newGrade.setGrade(data.assessmentScore);
+        newGrade.setAssessment(assessment);
+        newGrade.setStudent(student);
+        gradeRepo.save(newGrade);
+    }
+
     private boolean verifyOrCreateFolder(String path){
         File folder = new File(path);
         if(!folder.exists()){
-            folder.mkdir();
+            folder.mkdirs();
             return false;
         }
         return true;

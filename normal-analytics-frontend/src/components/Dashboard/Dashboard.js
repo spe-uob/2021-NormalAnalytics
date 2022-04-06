@@ -13,6 +13,9 @@ function DashboardComponent(props) {
     let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
     let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
+	let token = passedState["token"];
+	
+	axios.defaults.headers.common["token"] = token;
 
     let handleClickSelect = () => {
         // if tutorGroups.ul exists, delete then ... otherwise just ...
@@ -57,7 +60,8 @@ function DashboardComponent(props) {
                                     state: {
                                         "tutorAndTutees": tutorAndTutees,
                                         "studentNameAndUsername": studentNameAndUsername,
-                                        "runOnce": false
+                                        "runOnce": false,
+                                        "token": token
                                     }
                                 })
                             });
@@ -73,7 +77,8 @@ function DashboardComponent(props) {
     }
 
     let handleClickLogOut = () => {
-        props.history.push({
+        fetch("/user/logout",{headers : { "content-type" : "application/json; charset=UTF-8", "token":passedState["token"]}});
+		props.history.push({
             pathname: '/login',
             state: passedState
         })
