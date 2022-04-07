@@ -1,8 +1,15 @@
+// __tests__/welcome-page.js
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import '@testing-library/jest-dom'
+import { BrowserRouter } from "react-router-dom";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+
+import WelcomePage from '../src/components/WelcomePage/WelcomePage'
+
+
+test('welcome page - basic test ', () => {
+
+  const wrapper = render(<BrowserRouter><WelcomePage /></BrowserRouter>);
+        expect(wrapper.getByRole('link')).toHaveTextContent('Sign In');
+      
+})
