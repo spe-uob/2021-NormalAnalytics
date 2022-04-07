@@ -48,7 +48,8 @@ function LoginComponent(props) {
                 }
             });
     }
-
+    
+    
     return (
         <div className="fullpage">
             <div className="login">
@@ -60,12 +61,19 @@ function LoginComponent(props) {
                     </label>
                     <label>
                         Password:
-                        <input type="text" className="input" id="input-password" />
                     </label>
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        id="input-password"
+                        className="input"
+                    />
                 </form>
                 <button className="login-button" onClick={handleClick.bind(this)}>Log In</button>
             </div>
         </div>)
-}
+    }
+
 
 export default withRouter(LoginComponent);
