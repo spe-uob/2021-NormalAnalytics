@@ -1,66 +1,71 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
- 
+import {withRouter} from 'react-router-dom';
+
 import "./Login.css"
 
-class Login extends React.Component {
-  handleClick = () => {
-    const username = document.getElementById('input-username').value
-    const password = document.getElementById('input-password').value
-    let options = [];
-    let studentObjects = {};
+function LoginComponent(props) {
+    let handleClick = () => {
+        const username = document.getElementById('input-username').value
+        const password = document.getElementById('input-password').value
 
-    fetch("/login", {
-        method : "POST",
-        headers : { "content-type" : "application/json; charset=UTF-8"},
-        body : JSON.stringify({"username": username, "password": password}),
-    })
+        let groupAndStudents = {};
+        let studentObjects = {};
+
+        fetch("/user/login", {
+            method : "POST",
+            headers : { "content-type" : "application/json; charset=UTF-8"},
+            body : JSON.stringify({"username": username, "password": password}),
+        })
             .then(response => response.text())
             .then(message => {
-                let token = JSON.parse(message)["token"]
-                if (token != null) {
-                    const url = "/database/getStudents/" + username
+                let statusCode = JSON.parse(message)["code"];
+                if (statusCode != null && statusCode == 200) {
+                    let token = JSON.parse(message)["data"]["token"]
+					const url = "/database/getStudentsByGroup/" + username
 
-                    fetch(url)
+                    fetch(url,{headers:{"token":token}})
                         .then(response => response.json())
                         .then(message => {
-                            let tutees = message["students"];
+                            for (let i = 0; i < message.groups.length; i++) {
+                                let groupName = "";
+                                let groupStudents = {};
 
-                            for (let i = 0; i < tutees.length; i++) {
-                                let name = tutees[i]["firstName"] + " " + tutees[i]["surname"];
-                                let studentUsername = tutees[i]["username"];
-                                studentObjects[name] = studentUsername;
-                                options.push(name);
+                                groupName = message.groups[i].groupName;
+                                for (let j = 0; j < message.groups[i].students.length; j++) {
+                                    let name = message.groups[i].students[j].firstName + " " +  message.groups[i].students[j].surname;
+                                    let username = message.groups[i].students[j].username;
+                                    groupStudents[name] = username;
+                                }
+
+                                groupAndStudents[groupName] = [groupStudents];
                             }
                         });
 
-                    this.props.history.push({
+                    props.history.push({
                         pathname: '/student',
-                            state: {"tutorUsername": username, "studentNames": options, "studentObjects": studentObjects}
+                        state: {"tutorUsername": username, "groupAndStudents": groupAndStudents, "studentObjects": studentObjects,"token":token}
                     })
                 }
             });
-  }
-  
-  render(){
+    }
+
     return (
-    <div className="fullpage">
-      <div className="login">
-        <span className="title">Sign In</span>
-        <form>
-        <label>
-          Name:
-          <input type="text" className="input" id="input-username" />
-        </label>
-        <label>
-          Password:
-          <input type="text" className="input" id="input-password" />
-        </label>
-        </form>
-        <button className="login-button" onClick={this.handleClick.bind(this)}>Log In</button>
-      </div>
-     </div>)
-  }
+        <div className="fullpage">
+            <div className="login">
+                <span className="title">Sign In</span>
+                <form>
+                    <label>
+                        Name:
+                        <input type="text" className="input" id="input-username" />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="text" className="input" id="input-password" />
+                    </label>
+                </form>
+                <button className="login-button" onClick={handleClick.bind(this)}>Log In</button>
+            </div>
+        </div>)
 }
 
-export default withRouter (Login);
+export default withRouter(LoginComponent);

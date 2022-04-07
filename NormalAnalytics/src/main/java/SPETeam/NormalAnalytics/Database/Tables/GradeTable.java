@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name="grades")
 public class GradeTable {
     @EmbeddedId
+    @Setter
     private GradeId gradeId;
 
     @ManyToOne

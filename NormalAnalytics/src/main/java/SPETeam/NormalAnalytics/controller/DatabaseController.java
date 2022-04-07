@@ -36,6 +36,15 @@ public class DatabaseController {
         return new StudentList(studentArray);
     }
 
+    @GetMapping("getStudentsByGroup/{tutorUsername}")
+    public GroupList getTutorGroups(@PathVariable String tutorUsername){
+        List<GroupAndStudents> groups = receiver.StudentsFromTutorByGroup(tutorUsername);
+        GroupAndStudents[] groupArray = (GroupAndStudents[]) groups.toArray(new GroupAndStudents[groups.size()]);
+        GroupList toReturn = new GroupList();
+        toReturn.setGroups(groupArray);
+        return toReturn;
+    }
+
     @GetMapping("/getGradesAndUnits/{studentUsername}")
     public StudentUnitsAndGrades getStudentData(@PathVariable String studentUsername){
         StudentUnitsAndGrades unitsAndGrades = new StudentUnitsAndGrades();
@@ -58,6 +67,11 @@ public class DatabaseController {
         }
         Unit[] unitArray = (Unit[]) unitList.toArray(new Unit[unitList.size()]);
         return new UnitList(unitArray);
+    }
+
+    @GetMapping("/getAllStudentData/{studentUsername}")
+    public StudentData getAllStudentData(@PathVariable String studentUsername){
+        return receiver.AllStudentData(studentUsername);
     }
 
     @GetMapping("/getAssessmentData/{unitCode}/{studentUsername}")

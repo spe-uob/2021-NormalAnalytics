@@ -2,20 +2,77 @@ import React, { useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 import "./Dashboard.css"
 import axios from "axios";
-
+import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
+import Dropdown from "react-dropdown";
 
 function DashboardComponent(props) {
     let passedState = props.location.state;
+    let tutorAndTutees = passedState.tutorAndTutees;
+    let runOnce = passedState.runOnce;
 
-    let handleClickChangeStudent = () => {
-        props.history.push({
-            pathname: '/student-auth',
-            state: passedState
-        })
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
+    let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
+    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
+	let token = passedState["token"];
+	
+	axios.defaults.headers.common["token"] = token;
+
+    let handleClickSelect = () => {
+        if (runOnce === false) {
+            runOnce = true;
+
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+                let liElement = document.createElement("li");
+                let liElementText = document.createTextNode(key);
+                liElement.appendChild(liElementText);
+                liElement.id = key + "-li";
+                liElement.className = "studentGroupDropdown";
+                document.getElementById("tutorGroups").appendChild(liElement);
+
+                let ulElement = document.createElement("ul");
+                ulElement.id = key + "-ul";
+                document.getElementById(key + "-li").appendChild(ulElement);
+
+
+                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
+                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
+
+                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentNameAndUsername = {};
+                        studentNameAndUsername[eachStudentName] = username;
+
+                        let subLiElement = document.createElement("li");
+                        let subLiElementText = document.createTextNode(eachStudentName);
+                        subLiElement.appendChild(subLiElementText);
+                        subLiElement.id = "studentNameDropdown";
+                        subLiElement.onclick = function () {
+
+                            props.history.replace(`/reload`);
+                            setTimeout(() => {
+                                props.history.replace({
+                                    pathname: '/dashboard',
+                                    state: {
+                                        "tutorAndTutees": tutorAndTutees,
+                                        "studentNameAndUsername": studentNameAndUsername,
+                                        "runOnce": false,
+                                        "token": token
+                                    }
+                                })
+                            });
+
+                            document.getElementsByClassName("dash-dropdown-button").hidden = true;
+                        };
+                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                    })
+
+                })
+            })
+        }
     }
 
     let handleClickLogOut = () => {
-        props.history.push({
+        fetch("/user/logout",{headers : { "content-type" : "application/json; charset=UTF-8", "token":passedState["token"]}});
+		props.history.push({
             pathname: '/login',
             state: passedState
         })
@@ -28,64 +85,40 @@ function DashboardComponent(props) {
         })
     }
 
-    let handleClickAllData = () =>{
-        props.history.push({
-            pathname: '/alldata',
-            state: passedState
-        })
-    }
-
-    let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
-    let studentName = passedState["studentUsername"]["value"];
-    let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-
-    let studentUsername = null;
-    for (const [key, value] of Object.entries(studentObjects)) {
-        if (studentName === key) {
-            studentName = key
-            studentUsername = value;
-        }
-    }
-
-    // get each unit a student studies
+    // get all student data
     const [data, setData] = useState();
-    const url = "/database/getUnits/" + studentUsername;
+    const [unitData, setUnitData] = useState();
+    const url = "/database/getAllStudentData/" + studentUsername;
+    let unitAverageData = [];
     useEffect(() => {
         axios(url)
             .then((res) => {
                 setData(res.data);
+
+                for (let i = 0; i < res.data.unitData.length; i++) {
+                    let unitNameAndAverage = {};
+                    unitNameAndAverage["name"] = res.data.unitData[i].name;
+                    unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
+                    unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
+                    unitAverageData.push(unitNameAndAverage);
+                }
+                setUnitData(unitAverageData);
             })
             .catch((err) => console.log(err))
     }, []);
 
-    // get assessments for each unit
-    const [assessmentData, setAssessmentData] = useState([]);
-    const [scoreData, setScoreData] = useState([]);
-
-    let assessmentUrl = "/database/getAssessmentData/" + "COMS20006" + "/" + studentUsername;
-
-    const getAssessmentDataFetch = async (assessmentUrl) => {
-        const response = await fetch(assessmentUrl);
-        const jsonData = await response.json();
-        setAssessmentData(jsonData.names);
-        setScoreData(jsonData.scores);
-    };
-
-    useEffect(() => {
-        getAssessmentDataFetch(assessmentUrl);
-    }, []);
-
-
     return (
         <div className="dashboard">
             <div className="nav-bar">
-                <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+                <ul className="dropdown student-dropdown">
+                    <li id="dropdown-button" className="dash-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                        <ul id="tutorGroups"/>
+                    </li>
+                </ul>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                    <div className="dropdown-content">
-                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                    </div>
+                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
@@ -93,42 +126,71 @@ function DashboardComponent(props) {
                 <div className="sidebar">
                     <button className="sidebar-link" >General</button>
                     <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
-                    <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
-                <div className="section">
-                    {data && data["units"].map((val, key) => {
-                        return (
-                            <table>
-                                <tr key={key} className="table-header">
-                                    <td className="column-header">Unit: {val.name}</td>
-                                    <td></td>
-                                    <td className="column-header">Score</td>
-                                </tr>
-
-                                {assessmentData.map((val, key) => {
+                <div className="dash-section-area">
+                    <div className="dash-section first">
+                        <table className="mainTable">
+                            {
+                                data && data["unitData"].map((unit) => {
                                     return (
-                                        <tr key={key}>
-                                            <td>{val}</td>
-                                            <td></td>
-                                            <td>{scoreData[key]}</td>
-                                        </tr>
+                                        <table id={unit.name} className="subTable">
+                                            <tr className="table-headers">
+                                                <td>{unit.name}</td>
+                                                <td/>
+                                                <td>Score</td>
+                                                <td/>
+                                                <td>Weight (%)</td>
+                                            </tr>
+
+                                            {
+                                                unit.scores.map((assessment, key) => {
+                                                    return (
+                                                      <tr>
+                                                          <td>{assessment.name}</td>
+                                                          <td/>
+                                                          <td>{assessment.score}</td>
+                                                          <td/>
+                                                          <td>{assessment.weight * 100}</td>
+
+                                                      </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
                                     )
-                                })}
+                                })
+                            }
+                        </table>
 
-                                {/*{scoreData.map((val, key) => {*/}
-                                {/*    return (*/}
-                                {/*        <tr key={key}>*/}
-                                {/*            <td>{val}</td>*/}
-                                {/*        </tr>*/}
-                                {/*    )*/}
-                                {/*})}*/}
-                            </table>
-                        )
-                    })}
+                        <Dropdown options={["Summative", "Formative", "Both"]} className="dash-filter">Filter</Dropdown>
+                    </div>
 
+                    <div className="dash-section">
+
+                        {/*graph showing unit average*/}
+                        <ResponsiveContainer width="75%" height="90%">
+
+                            <BarChart
+                                data={unitData}
+                                margin={{
+                                    top: 5, right: 30, left: 20, bottom: 5,
+                                }}
+                            >
+                                <XAxis dataKey="name"/>
+                                <YAxis domain={[0, 100]}/>
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="studentUnitAverage" fill="#8884d8" />
+                                <Bar dataKey="cohortUnitAverage" fill="#FFBF00" />
+                            </BarChart>
+
+                        </ResponsiveContainer>
+
+                    </div>
+
+                    <div className="dash-section "/>
                 </div>
             </div>
-
         </div>
     );
 

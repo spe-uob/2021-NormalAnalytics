@@ -1,20 +1,68 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import {withRouter} from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from "recharts";
-
-
-
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import Dropdown from 'react-dropdown';
 
 function Attendance(props) {
     let passedState = props.location.state;
+    let tutorAndTutees = passedState.tutorAndTutees;
+    let runOnce = passedState.runOnce;
+	let token = passedState["token"];
 
-    let handleClickChangeStudent = () => {
-        props.history.push({
-            pathname: '/student-auth',
-            state: passedState
-        })
+    let handleClickSelect = () => {
+        if (runOnce === false) {
+            runOnce = true;
+
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+                let liElement = document.createElement("li");
+                let liElementText = document.createTextNode(key);
+                liElement.appendChild(liElementText);
+                liElement.id = key + "-li";
+                liElement.className = "studentGroupDropdown";
+                document.getElementById("tutorGroups").appendChild(liElement);
+
+                let ulElement = document.createElement("ul");
+                ulElement.id = key + "-ul";
+                document.getElementById(key + "-li").appendChild(ulElement);
+
+
+                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
+                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
+
+                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentNameAndUsername = {};
+                        studentNameAndUsername[eachStudentName] = username;
+
+                        let subLiElement = document.createElement("li");
+                        let subLiElementText = document.createTextNode(eachStudentName);
+                        subLiElement.appendChild(subLiElementText);
+                        subLiElement.id = "studentNameDropdown";
+                        subLiElement.onclick = function () {
+
+                            props.history.replace(`/reload`);
+                            setTimeout(() => {
+                                props.history.replace({
+                                    pathname: '/attendance',
+                                    state: {
+                                        "tutorAndTutees": tutorAndTutees,
+                                        "studentNameAndUsername": studentNameAndUsername,
+                                        "runOnce": false,
+                                        "token": token
+                                    }
+                                })
+                            });
+
+
+                            document.getElementsByClassName("attendance-dropdown-button").hidden = true;
+                        };
+                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                    })
+
+                })
+            })
+        }
     }
 
     let handleClickLogOut = () => {
@@ -31,24 +79,9 @@ function Attendance(props) {
         })
     }
 
-    let handleClickAllData = () => {
-        props.history.push({
-            pathname: '/alldata',
-            state: passedState
-        })
-    }
-
-    let studentObjects = passedState["tutorAndTutees"]["studentObjects"];
-    let studentName = passedState["studentUsername"]["value"];
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
-
-    let studentUsername = null;
-    for (const [key, value] of Object.entries(studentObjects)) {
-        if (studentName === key) {
-            studentName = key
-            studentUsername = value;
-        }
-    }
+    let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
 
     // gets all units
     const [data, setData] = useState();
@@ -57,37 +90,48 @@ function Attendance(props) {
         axios(url)
             .then((res) => {
                 setData(res.data);
-                console.log(res.data);
             })
             .catch((err) => console.log(err))
     }, []);
 
 
-    /////////////
+    let filterData =() =>{
+        console.log(data);
+    }
+    /**
+     * Needed changes:
+     * Change graphs to represent attendance with corresponding dates
+     * Change table to show correct data
+     */
 
 
     const data1 = [
         {
-            //data.units[0].name
-            name: "SPE",
+            name: "23/2/2022",
             score: 93
         },
         {
-            name: "CSA",
+            name: "24/2/2022",
             score: 94
         }
     ];
 
+    const options = [
+        'one', 'two', 'three'
+      ]
+
     return (
         <div className="dashboard">
             <div className="nav-bar">
-                <button className="nav-item left" onClick={handleClickChangeStudent.bind(this)}>Change Student</button>
+                <ul className="dropdown student-dropdown">
+                    <li id="dropdown-button" className="attendance-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                        <ul id="tutorGroups"/>
+                    </li>
+                </ul>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item" style={{ border: "solid black" }} >Tutor logged in: {tutorUsername}</button>
-                    <div className="dropdown-content">
-                        <a className="log-out" onClick={handleClickLogOut.bind(this)}>Log Out</a>
-                    </div>
+                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
@@ -95,10 +139,22 @@ function Attendance(props) {
                 <div className="sidebar">
                     <button className="sidebar-link" onClick={handleClickDashboard.bind(this)} >General</button>
                     <button className="sidebar-link" >Attendance</button>
-                    <button className="sidebar-link" onClick={handleClickAllData.bind(this)}>All Data</button>
                 </div>
                 <div className="section">
-
+                    <div>
+                            <label class="control-label  ">Filter Units</label>
+                            <br />
+                            <div>
+                            <Dropdown options={options} onChange={filterData} />
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div>
+                        <button onClick={filterData}>
+                            Search
+                        </button>
+                        </div>
+                    </div>
 
                     <table>
                         <tr className="table-header">
@@ -118,10 +174,6 @@ function Attendance(props) {
                             )
                         })}
                     </table>
-
-
-
-
 
 
                 </div>
@@ -151,21 +203,7 @@ function Attendance(props) {
                         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
                     </LineChart>
                 </div>
-                <div className="piechart">
-                    <PieChart width={300} height={300}>
-                        <Pie
-                            dataKey="score"
-                            isAnimationActive={true}
-                            data={data1}
-                            outerRadius={100}
-                            fill="#82ca9d"
-                            label="% of attendance"
-                        />
-
-                        {/* Display the tooltips */}
-                        <Tooltip />
-                    </PieChart>
-                </div>
+                
             </div>
         </div>
     );

@@ -11,6 +11,14 @@ id int UNIQUE AUTO_INCREMENT,
 PRIMARY KEY (id)
 );
 
+CREATE TABLE tutor_group(
+id int UNIQUE AUTO_INCREMENT,
+name varchar(100) NOT NULL,
+tutor int NOT NULL,
+FOREIGN KEY (tutor) REFERENCES tutor(id),
+PRIMARY KEY (id)
+);
+
 CREATE TABLE unit (
 id int UNIQUE AUTO_INCREMENT,
 code varchar(9) UNIQUE NOT NULL,
@@ -23,15 +31,15 @@ id int UNIQUE AUTO_INCREMENT,
 username varchar(100) UNIQUE NOT NULL,
 firstname varchar(100) NOT NULL,
 surname varchar(100) NOT NULL,
-tutor int NOT NULL,
+tutor_group int NOT NULL,
 PRIMARY KEY (id),
-FOREIGN KEY (tutor) REFERENCES tutor(id)
+FOREIGN KEY (tutor_group) REFERENCES tutor_group(id)
 );
 
 CREATE TABLE assessment (
 id int UNIQUE AUTO_INCREMENT,
 name varchar(100) UNIQUE NOT NULL,
-summative bool NOT NULL,
+weight real NOT NULL,
 unit int NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (unit) REFERENCES unit(id)
@@ -40,10 +48,11 @@ FOREIGN KEY (unit) REFERENCES unit(id)
 CREATE TABLE attendance (
 student int NOT NULL,
 unit int NOT NULL,
-attendance real NOT NULL,
+date datetime NOT NULL,
+present bool NOT NULL,
 FOREIGN KEY (student) REFERENCES student(id),
 FOREIGN KEY (unit) REFERENCES unit(id),
-PRIMARY KEY (student, unit)
+PRIMARY KEY (student, unit, date)
 );
 
 CREATE TABLE grades (
@@ -68,7 +77,12 @@ VALUES
 ("jross","$2a$10$FOk1bzqQEQ.07ydP2X26Au.Cuu6Q.WTm6RFY7wp82kydTRLIdqS7i","Joel","Ross"),
 ("fakeTutor","$2a$10$eJqCoz24ghJIEAzc2NmgQu73D/exKr5l5zwnabrpNFYaV54cjlvLW","Fake","Tutor");
 
-INSERT INTO student (username,firstname,surname,tutor)
+INSERT INTO tutor_group (name,tutor)
+VALUES
+("CS group",1),
+("Other group",1);
+
+INSERT INTO student (username,firstname,surname,tutor_group)
 VALUES
 ("iq20064","William","Tripp",1),
 ("oj20075","Siana","Dicheva",1),
@@ -82,25 +96,41 @@ VALUES
 ("COMS20008","Computer Systems A"),
 ("COMS30042","Advanced Algorithms");
 
-INSERT INTO assessment (name,summative,unit)
+INSERT INTO assessment (name,weight,unit)
 VALUES
-("MVP",FALSE,1),
-("Beta",FALSE,1),
-("Release",TRUE,1),
-("Bank",FALSE,2),
-("Game of Life",TRUE,2),
-("Exam",TRUE,2);
+("MVP",0,1),
+("Beta",0,1),
+("Release",1,1),
+("Bank",0,2),
+("Game of Life",0.8,2),
+("Exam",0.2,2);
 
-INSERT INTO attendance (student,unit,attendance)
+INSERT INTO attendance (student,unit,date,present)
 VALUES
-(1,1,84),
-(1,2,60),
-(2,1,92),
-(2,2,75),
-(3,1,90),
-(3,2,93),
-(4,1,87),
-(4,2,70);
+(1,1,'2022-01-01 12:00:00',false),
+(1,1,'2022-01-02 12:00:00',false),
+(1,1,'2022-01-03 12:00:00',false),
+(1,2,'2022-01-01 10:00:00',true),
+(1,2,'2022-01-02 10:00:00',true),
+(1,2,'2022-01-03 10:00:00',true),
+(2,1,'2022-01-01 12:00:00',false),
+(2,1,'2022-01-02 12:00:00',true),
+(2,1,'2022-01-03 12:00:00',true),
+(2,2,'2022-01-01 10:00:00',true),
+(2,2,'2022-01-02 10:00:00',false),
+(2,2,'2022-01-03 10:00:00',false),
+(3,1,'2022-01-01 12:00:00',true),
+(3,1,'2022-01-02 12:00:00',false),
+(3,1,'2022-01-03 12:00:00',true),
+(3,2,'2022-01-01 10:00:00',false),
+(3,2,'2022-01-02 10:00:00',true),
+(3,2,'2022-01-03 10:00:00',false),
+(4,1,'2022-01-01 12:00:00',true),
+(4,1,'2022-01-02 12:00:00',true),
+(4,1,'2022-01-03 12:00:00',false),
+(4,2,'2022-01-01 10:00:00',false),
+(4,2,'2022-01-02 10:00:00',false),
+(4,2,'2022-01-03 10:00:00',true);
 
 INSERT INTO grades (student,assessment,grade)
 VALUES

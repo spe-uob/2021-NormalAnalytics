@@ -11,7 +11,7 @@ import SPETeam.NormalAnalytics.entity.Responses.Student;
 
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"spring.h2.console.enabled=true","jdbc.url=jdbc:h2:mem:myDb"})
 public class DatabaseTests {
     @Autowired
     IDatabaseReceiver receiver;
@@ -33,12 +33,20 @@ public class DatabaseTests {
 
     @Test
     void TestRetrieveStudents() {
+
         List<Student> students = receiver.StudentsFromTutor("jross");
         assert containsStudent(students,"William");
         assert containsStudent(students,"Siana");
         assert containsStudent(students,"Sam");
         assert containsStudent(students,"Luo");
     }
+
+    //TODO: add new data to rewrite this with
+    /*void OnlyRetrievesTutorsStudents(){
+        List<Student> students = receiver.StudentsFromTutor("jross");
+        assert !containsStudent(students,"John");
+    }*/
+
 
     boolean containsStudent(List<Student> list,String firstname){
         for(Student s : list){
@@ -53,6 +61,12 @@ public class DatabaseTests {
         assert containsAssessmentWithScore("MVP",50,SPEAssessments);
         assert containsAssessmentWithScore("Beta",70,SPEAssessments);
         assert containsAssessmentWithScore("Release",100,SPEAssessments);
+    }
+
+    @Test
+    void OnlyScoresFromUnit(){
+        AssessmentScoreList SPEAssessments = receiver.ScoresFromUnit("iq20064","COMS20006");
+        assert !containsAssessmentWithScore("Bank",30,SPEAssessments);
     }
 
     boolean containsAssessmentWithScore(String assessment,float score,AssessmentScoreList list){
@@ -74,8 +88,20 @@ public class DatabaseTests {
     }
 
     @Test
+    void TestOnlyStudentsUnits(){
+        List<Unit> willUnits = receiver.UnitsFromStudent("iq20064");
+        for(Unit u : willUnits){
+            if(u.getCode().equals("COMS30042")) assert false;
+        }
+        assert true;
+    }
+
+    @Test
     void TestRetrieveAttendance(){
-        assert receiver.AttendanceFromUnit("iq20064","COMS20006") == 84;
+        final float expected = 66.66f;
+        final float precision = 0.01f;
+        float attendance = receiver.AttendanceFromUnit("oj20075","COMS20006");
+        assert Math.abs(expected - attendance) < precision;
     }
 
     @Test
