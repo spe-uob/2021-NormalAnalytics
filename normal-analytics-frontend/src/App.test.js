@@ -13,3 +13,11 @@ test('welcome page - basic test ', () => {
         expect(wrapper.getByRole('link')).toHaveTextContent('Sign In');
       
 })
+
+test('welcome page - basic test functionality ', () => {
+
+  const wrapper = render(<BrowserRouter><WelcomePage /></BrowserRouter>);
+    expect(wrapper.getByRole('link')).toBeEnabled;
+
+      
+})
