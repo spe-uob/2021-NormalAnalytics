@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
@@ -9,7 +9,7 @@ function Attendance(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
     let runOnce = passedState.runOnce;
-	let token = passedState["token"];
+    let token = passedState["token"];
 
     let handleClickSelect = () => {
         if (runOnce === false) {
@@ -85,17 +85,28 @@ function Attendance(props) {
 
     // gets all units
     const [data, setData] = useState();
-    const url = "/database/getUnits/" + studentUsername;
+    const [unitData, setUnitData] = useState();
+    let unitAverageData = [];
+    const url = "/database/getAllStudentData/" + studentUsername;
     useEffect(() => {
         axios(url)
             .then((res) => {
                 setData(res.data);
+
+                for (let i = 0; i < res.data.unitData.length; i++) {
+                    let unitNameAndAverage = {};
+                    unitNameAndAverage["name"] = res.data.unitData[i].name;
+                    unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
+                    unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
+                    unitAverageData.push(unitNameAndAverage);
+                }
+                setUnitData(unitAverageData);
             })
             .catch((err) => console.log(err))
     }, []);
 
 
-    let filterData =() =>{
+    let filterData = () => {
         console.log(data);
     }
     /**
@@ -118,20 +129,20 @@ function Attendance(props) {
 
     const options = [
         'one', 'two', 'three'
-      ]
+    ]
 
     return (
         <div className="dashboard">
             <div className="nav-bar">
                 <ul className="dropdown student-dropdown">
                     <li id="dropdown-button" className="attendance-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
-                        <ul id="tutorGroups"/>
+                        <ul id="tutorGroups" />
                     </li>
                 </ul>
                 <button className="nav-item">Current student: {studentName}</button>
                 <div className="dropdown">
-                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
+                    <button className="nav-item dropdown-title" style={{ border: "solid black" }} >Tutor logged in: {tutorUsername}</button>
+                    <span className="nav-item dropdown-item" style={{ border: "solid black" }} onClick={handleClickLogOut.bind(this)}>Log Out</span>
                 </div>
             </div>
 
@@ -140,70 +151,68 @@ function Attendance(props) {
                     <button className="sidebar-link" onClick={handleClickDashboard.bind(this)} >General</button>
                     <button className="sidebar-link" >Attendance</button>
                 </div>
-                <div className="section">
-                    <div>
-                            <label class="control-label  ">Filter Units</label>
-                            <br />
-                            <div>
-                            <Dropdown options={options} onChange={filterData} />
-                            </div>
-                        </div>
-                    <div class="row">
-                        <div>
-                        <button onClick={filterData}>
-                            Search
-                        </button>
-                        </div>
+                <div className="dash-section-area">
+                    <div className="dash-section first">
+                        <table className="mainTable">
+                            {
+                                data && data["unitData"].map((unit) => {
+                                    return (
+                                        <table id={unit.name} className="subTable">
+                                            <label>{unit.name}</label>
+                                            <tr className="table-headers">
+                                                <td>Date</td>
+                                                <td />
+                                                <td>Attendance</td>
+                                            </tr>
+
+                                            {
+                                                unit.scores.map((attendance, key) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{attendance.date}</td>
+                                                            <td />
+                                                            <td>{attendance.score}</td>
+                                                            
+                                                           
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
+                                    )
+                                })
+                            }
+                        </table>
+
+                        <Dropdown options={["Summative", "Formative", "Both"]} className="dash-filter">Filter</Dropdown>
                     </div>
-
-                    <table>
-                        <tr className="table-header">
-                            <td className="column-header">Unit</td>
-                            <td></td>
-                            <td className="column-header">Attendance</td>
-                        </tr>
-
-                        {data && data["units"].map((val, key) => {
-                            return (
-                                <tr>
-                                    <td>{val.name}</td>
-                                    <td></td>
-                                    <td>{val.attendance}%</td>
-                                </tr>
-
-                            )
-                        })}
-                    </table>
-
-
+                    <div className="dash-section">
+                        <LineChart
+                            width={500}
+                            height={300}
+                            data={data1}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis dataKey="score" />
+                            <Tooltip />
+                            <Legend />
+                            <Line
+                                type="monotone"
+                                dataKey="score"
+                                stroke="#8884d8"
+                                activeDot={{ r: 8 }}
+                            />
+                            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                        </LineChart>
+                    </div>
                 </div>
-                <div>
-                    <LineChart
-                        width={500}
-                        height={300}
-                        data={data1}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis dataKey="score" />
-                        <Tooltip />
-                        <Legend />
-                        <Line
-                            type="monotone"
-                            dataKey="score"
-                            stroke="#8884d8"
-                            activeDot={{ r: 8 }}
-                        />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                    </LineChart>
-                </div>
-                
             </div>
         </div>
     );
