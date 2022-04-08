@@ -1,4 +1,4 @@
-package SPETeam.NormalAnalytics.IntegrationTests;
+package SPETeam.NormalAnalytics.UnitTests;
 
 import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
