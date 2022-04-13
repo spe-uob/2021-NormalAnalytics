@@ -176,7 +176,9 @@ function Attendance(props) {
                                                             <td>{attendance.date}</td>
 
                                                             <td />
-                                                            
+                                                            <td>{attendance.totalAttendance}</td>
+
+                                                            <td />
                                                             
                                                            
                                                         </tr>
