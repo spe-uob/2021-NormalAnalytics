@@ -92,12 +92,14 @@ function Attendance(props) {
         axios(url)
             .then((res) => {
                 setData(res.data);
+                console.log(res.data)
 
                 for (let i = 0; i < res.data.unitData.length; i++) {
                     let unitNameAndAverage = {};
                     unitNameAndAverage["name"] = res.data.unitData[i].name;
-                    unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
-                    unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
+                    
+                    unitNameAndAverage["overallAttendance"] = res.data.unitData[i].overallAttendance;
+                    
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
@@ -168,12 +170,13 @@ function Attendance(props) {
                                             </tr>
 
                                             {
-                                                unit.scores.map((attendance, key) => {
+                                                unit.attendances.map((attendance, key) => {
                                                     return (
                                                         <tr>
                                                             <td>{attendance.date}</td>
+
                                                             <td />
-                                                            <td>{attendance.score}</td>
+                                                            
                                                             
                                                            
                                                         </tr>
