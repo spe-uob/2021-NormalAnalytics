@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer } from "recharts";
 import Dropdown from 'react-dropdown';
 
 function Attendance(props) {
@@ -99,14 +99,15 @@ function Attendance(props) {
                     unitNameAndAverage["name"] = res.data.unitData[i].name;
                     
                     unitNameAndAverage["overallAttendance"] = res.data.unitData[i].overallAttendance;
-                    
+                    unitNameAndAverage["missed"] = 1 - res.data.unitData[i].overallAttendance;
+
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
             })
             .catch((err) => console.log(err))
     }, []);
-
+    console.log(setUnitData)
     /**
      * Needed changes:
      * Change graphs to represent attendance with corresponding dates
@@ -206,7 +207,9 @@ function Attendance(props) {
                     </div>
                     <div className="dash-section">
                     <Dropdown options={["Present", "Missing"]} className="dash-filter">Filter</Dropdown>  
+                    <ResponsiveContainer width="75%" height="90%">
                         <LineChart 
+                            data={unitData}
                             width={500}
                             height={300}
                             margin={{ top: 5,
@@ -215,18 +218,16 @@ function Attendance(props) {
                                 bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis  dataKey="name">
-                            <Label
-                                value='Dates'
-                            />
-                            
+                    
                         </XAxis>
-                        <YAxis >
+                        <YAxis dataKey="overallAttendance" >
                         </YAxis>
                         <Tooltip />
                         
-                        <Line data={data1} type="monotone" dataKey="score" stroke="#8884d8" activeDot={{r: 8}}/>
-                        <Line data = {data2}type="monotone" dataKey="score" stroke="#82ca9d" />
+                        <Line type="monotone" dataKey="overallAttendance" stroke="#8884d8" activeDot={{r: 8}}/>
+                        
                         </LineChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
             </div>
