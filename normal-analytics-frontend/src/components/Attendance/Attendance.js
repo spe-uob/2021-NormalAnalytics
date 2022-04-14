@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from "recharts";
 import Dropdown from 'react-dropdown';
 
 function Attendance(props) {
@@ -123,13 +123,28 @@ function Attendance(props) {
     const data1 = [
         {
             name: "23/2/2022",
-            score: 93
+            score: 93,
+            
         },
         {
             name: "24/2/2022",
-            score: 94
+            score: 94,
+            
         }
     ];
+
+    const data2 = [
+        {
+            name: "23/2/2022",
+            score: 60,
+        },
+        {
+            name: "24/2/2022",
+            score: 55,
+           
+        }
+    ];
+
 
     const options = [
         'one', 'two', 'three'
@@ -191,32 +206,30 @@ function Attendance(props) {
                             }
                         </table>
 
-                        <Dropdown options={["Summative", "Formative", "Both"]} className="dash-filter">Filter</Dropdown>
+                       
                     </div>
                     <div className="dash-section">
-                        <LineChart
+                    <Dropdown options={["Present", "Missing"]} className="dash-filter">Filter</Dropdown>  
+                        <LineChart 
                             width={500}
                             height={300}
-                            data={data1}
-                            margin={{
-                                top: 5,
+                            margin={{ top: 5,
                                 right: 30,
                                 left: 20,
-                                bottom: 5
-                            }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis dataKey="score" />
-                            <Tooltip />
-                            <Legend />
-                            <Line
-                                type="monotone"
-                                dataKey="score"
-                                stroke="#8884d8"
-                                activeDot={{ r: 8 }}
+                                bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis  dataKey="data1.name">
+                            <Label
+                                value='Dates'
                             />
-                            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                            
+                        </XAxis>
+                        <YAxis >
+                        </YAxis>
+                        <Tooltip />
+                        
+                        <Line data={data1} type="monotone" dataKey="score" stroke="#8884d8" activeDot={{r: 8}}/>
+                        <Line data = {data2}type="monotone" dataKey="score" stroke="#82ca9d" />
                         </LineChart>
                     </div>
                 </div>
