@@ -107,10 +107,6 @@ function Attendance(props) {
             .catch((err) => console.log(err))
     }, []);
 
-
-    let filterData = () => {
-        console.log(data);
-    }
     /**
      * Needed changes:
      * Change graphs to represent attendance with corresponding dates
@@ -218,7 +214,7 @@ function Attendance(props) {
                                 left: 20,
                                 bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis  dataKey="data1.name">
+                        <XAxis  dataKey="name">
                             <Label
                                 value='Dates'
                             />
