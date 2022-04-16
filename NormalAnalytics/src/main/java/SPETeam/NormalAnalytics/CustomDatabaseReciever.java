@@ -199,7 +199,6 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
         else return 0;
     }
 
-    //TODO: rewrite this with summative weighting system and using tables directly
     private float calculateUnitAverageForStudent(StudentTable student,UnitTable unit){
         float overallGrade = 0f;
         List<AssessmentTable> assessments = assessmentRepository.findAssessmentTablesByUnit(unit);

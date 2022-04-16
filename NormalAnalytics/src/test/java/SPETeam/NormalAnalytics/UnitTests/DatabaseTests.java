@@ -1,14 +1,13 @@
 package SPETeam.NormalAnalytics.UnitTests;
 
 import SPETeam.NormalAnalytics.IDatabaseReceiver;
-import SPETeam.NormalAnalytics.entity.Responses.AssessmentScore;
-import SPETeam.NormalAnalytics.entity.Responses.AssessmentScoreList;
-import SPETeam.NormalAnalytics.entity.Responses.Unit;
+import SPETeam.NormalAnalytics.entity.Responses.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import SPETeam.NormalAnalytics.entity.Responses.Student;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"spring.h2.console.enabled=true","jdbc.url=jdbc:h2:mem:myDb"})
@@ -40,13 +39,6 @@ public class DatabaseTests {
         assert containsStudent(students,"Sam");
         assert containsStudent(students,"Luo");
     }
-
-    //TODO: add new data to rewrite this with
-    /*void OnlyRetrievesTutorsStudents(){
-        List<Student> students = receiver.StudentsFromTutor("jross");
-        assert !containsStudent(students,"John");
-    }*/
-
 
     boolean containsStudent(List<Student> list,String firstname){
         for(Student s : list){
@@ -102,6 +94,60 @@ public class DatabaseTests {
         final float precision = 0.01f;
         float attendance = receiver.AttendanceFromUnit("oj20075","COMS20006");
         assert Math.abs(expected - attendance) < precision;
+    }
+
+    @Test
+    void TestRetrieveStudentsByGroup(){
+        List<GroupAndStudents> groups = receiver.StudentsFromTutorByGroup("jross");
+        boolean containsCSGroup = false;
+        boolean containsOtherGroup = false;
+        for(GroupAndStudents g : groups){
+            if(g.getGroupName().equals("CS group")){
+                containsCSGroup = true;
+                assert usernamesFromTutorGroup(g).
+                        containsAll(Arrays.asList(new String[] {"iq20064","oj20075","ne20327","kk19041"}));
+            }else if(g.getGroupName().equals("Other group")){
+                containsOtherGroup = true;
+                assert usernamesFromTutorGroup(g).contains("ab12345");
+            }else assert false;
+        }
+        assert containsCSGroup;
+        assert containsOtherGroup;
+    }
+
+    private List<String> usernamesFromTutorGroup(GroupAndStudents group){
+        List<String> toReturn = new ArrayList<>();
+        for(Student s : group.getStudents()){
+            toReturn.add(s.getUsername());
+        }
+        return toReturn;
+    }
+
+    @Test
+    void TestRetrievesStudentAllDataObject(){
+        StudentData data = receiver.AllStudentData("iq20064");
+        assert data.getSurname().equals("Tripp");
+        assert data.getUnitData().length == 2;
+        for(UnitData u : data.getUnitData()){
+            assert u.getScores().length == 3;
+            assert u.getAttendances().length == 3;
+        }
+    }
+
+    @Test
+    void TestCalculatesUnitAverageCorrectly(){
+        UnitData CSAData = new UnitData();
+        boolean unitFound = false;
+        for(UnitData u:receiver.AllStudentData("iq20064").getUnitData()){
+            if(u.getCode().equals("COMS20008")){
+                unitFound = true;
+                CSAData = u;
+                break;
+            }
+        }
+        assert unitFound;
+        assert Math.abs(CSAData.getUnitAverage() - 81f) < 0.1f;
+        assert Math.abs(CSAData.getCohortAverage() - 75.75f) < 0.01f;
     }
 
     @Test
