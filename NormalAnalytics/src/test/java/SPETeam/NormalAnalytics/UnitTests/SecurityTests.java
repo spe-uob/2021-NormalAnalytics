@@ -19,16 +19,10 @@ public class SecurityTests {
     @SneakyThrows
     @Test
     public void TestJwt(){
-        String jwt1 = createJWT("token1");
-        Claims claims = parseJWT(jwt1);
+        String jwt = createJWT("token");
+        Claims claims = parseJWT(jwt);
         String subject = claims.getSubject();
-
-        String jwt2 = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmNWJhYzllYmUzYjY0MjI3OTU4NDBlMWVmZjM2ZjkwMiIsInN1YiI6InRva2VuMiIsImlzcyI6InNnIiwiaWF0IjoxNjQ5NDIyMTgyLCJleHAiOjE2NDk0MjU3ODJ9.W40rW1nX3FF6egV226H077q5dXnLfOcDhbgHY37hH_s";
-        Claims claims2 = parseJWT(jwt2);
-        String subject2 = claims2.getSubject();
-
-        assert subject.equals("token1");
-        assert subject2.equals("token2");
+        assert subject.equals("token");
     }
 
     @Test
