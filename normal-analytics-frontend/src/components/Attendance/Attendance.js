@@ -111,9 +111,7 @@ function Attendance(props) {
     /**
      * Needed changes:
      * Change graphs to represent attendance with corresponding dates
-     * Change table to show correct data
-     * use unitData to get attendance per unit 
-     * change graph to lines per unit with opyion to choose 
+    
      */
 
 
