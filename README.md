@@ -61,19 +61,19 @@ cd 2021-NormalAnalytics/database
 ```
 - Open MariaDB command prompt and authentisicate with the following command
 ```sh 
-mysql -u user - p 
+mysql -u user -p 
 ```
 Then will be asked for your password. Finally type the following command to initialise the database: 
 ```sh 
-source 2021-NormalAnalytics/database/db-init.sql 
+source [location of project on disk]/2021-NormalAnalytics/database/db-init.sql 
 ```
 
-Note: You could use your own data or use the database/test_data.sql script
+Note: This script populates the database with test data which can be safely removed if you wish
 
 - Enter your database and Redis server credentials in ./NormalAnalytics/src/main/resources/application.properties
 - Start Redis server by the following command:
 ```sh 
-sudo redis server start
+sudo redis-server
 ```
 Note - you will need sudo password
 - Navigate to to ./NormalAnalytics and run the command 'mvn clean install'
@@ -81,11 +81,12 @@ Note - you will need sudo password
 - Navigate to ./NormalAnalytics/target and run the command 'java -jar NormalAnalytics-0.0.1-SNAPSHOT.jar'
 
 - Open in browser on localhost:8080
-- to run frontend navigate to 2021-NormalAnalytics/normal-analytics-frontend folder and run the following command in a terminal of your choice
+- If you wish to run the frontend seperately navigate to 2021-NormalAnalytics/normal-analytics-frontend folder and run the following command in a terminal of your choice
 ```sh 
 npm install
 npm start
 ```
+
 ## Test
 
 - To run frontend tests run command 
@@ -94,14 +95,43 @@ npm test
 ```
 - To run general tests run command
 ```sh 
-mvn run test
+mvn test
 ```
+
+## Remote Deployment Guide on IBM Cloud
+- From the IBM Cloud dashboard, navigate to `DevOps` > `Toolchains` in the sidebar
+- Create a toolchain
+- Select `Develop a Kubernetes App`
+- Change the source provider to `Github`
+- Set the repository type to `Existing`
+- Enter the URL of the repository (Note: if you aren't the owner of the repository, you made need to make a fork and use its URL instead)
+- Navigate to `Delivery Pipeline`
+- Create a new API key or enter exisiting
+- Set your organisation's `Resource Group`, `Cluster Name` and `Cluster Namespace`
+- Click `Create`
+- Click `Delivery Pipeline`
+- Click on the settings gear of `Build` tile then `Configure Stage`
+- Under Jobs tab, switch the `Builder Type` to `Maven`
+- Replace the textbox under `Build script` with
+```sh
+#!/bin/bash
+mvn -B -f NormalAnalytics/pom.xml package -DskipTests=True
+```
+- Click `Save`
+- Click on the settings gear of `Deploy` tile then `Configure Stage`.
+- Under the `Jobs` tab, inside `Deploy` script, replace what is in the textbox with
+```sh
+source ./check_and_deploy_kubectl.sh
+```
+- Click `Save`
+- Begin the Pipeline
+
+If your organisation does not have exisiting remote Redis and/or MariaDB servers, additional Dockerfiles for creating database containers in the `redis` and `database` directories respectively
+
 ## Licence
 The system use MIT License. 
 ## Ethics
 No sensitive is collected in this system, general ethics form could be seen on [Ethics form](https://github.com/spe-uob/2021-NormalAnalytics/tree/main/docs)
-## Deployment
-This system is deployed on IBM Cloud
 
 
 
