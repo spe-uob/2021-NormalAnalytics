@@ -24,6 +24,11 @@
     margin: 0 20rem;
 }
 
+.nav-item:nth-child(4):hover {
+    cursor: pointer;
+    opacity: .6;
+}
+
 /* below nav bar */
 
 .dashboard-content {
