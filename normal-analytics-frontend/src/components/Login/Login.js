@@ -43,6 +43,8 @@ function LoginComponent(props) {
                         pathname: '/student',
                         state: {"tutorUsername": tutorUsername, "groupAndStudents": groupAndStudents, "token":token}
                     })
+                } else {
+                    alert("Wrong combination of username and password.");
                 }
             });
     }
@@ -66,6 +68,7 @@ function LoginComponent(props) {
                     <input
                         placeholder="Enter your password"
                         className="input"
+                        type="password"
                         id="input-password"
                     />
                 </form>
