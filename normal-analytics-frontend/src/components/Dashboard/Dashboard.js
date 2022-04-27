@@ -3,48 +3,47 @@ import {withRouter} from 'react-router-dom';
 import "./Dashboard.css"
 import axios from "axios";
 import {BarChart, Bar, Legend, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
-import Dropdown from "react-dropdown";
 
 function DashboardComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState.tutorAndTutees;
     let runOnce = passedState.runOnce;
 
-    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let tutorUsername = passedState["tutorAndTutees"]["tutorUsername"]
+    let studentName = Object.keys(passedState["studentNameAndUsername"])[0];
     let studentUsername = passedState["studentNameAndUsername"][Object.keys(passedState["studentNameAndUsername"])[0]];
-	let token = passedState["token"];
-	
-	axios.defaults.headers.common["token"] = token;
+    let token = passedState["token"];
+
+    axios.defaults.headers.common["token"] = token;
 
     let handleClickSelect = () => {
         if (runOnce === false) {
             runOnce = true;
 
-            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(groupName => {
                 let liElement = document.createElement("li");
-                let liElementText = document.createTextNode(key);
+                let liElementText = document.createTextNode(groupName);
                 liElement.appendChild(liElementText);
-                liElement.id = key + "-li";
+                liElement.id = groupName + "-li";
                 liElement.className = "studentGroupDropdown";
                 document.getElementById("tutorGroups").appendChild(liElement);
 
                 let ulElement = document.createElement("ul");
-                ulElement.id = key + "-ul";
-                document.getElementById(key + "-li").appendChild(ulElement);
+                ulElement.id = groupName + "-ul";
+                document.getElementById(groupName + "-li").appendChild(ulElement);
 
 
-                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
-                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
+                Object.values(tutorAndTutees.groupAndStudents[groupName]).forEach(studentObject => {
+                    Object.keys(studentObject).forEach(studentName => {
 
-                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentUsername = studentObject[studentName];
                         let studentNameAndUsername = {};
-                        studentNameAndUsername[eachStudentName] = username;
+                        studentNameAndUsername[studentName] = studentUsername;
 
                         let subLiElement = document.createElement("li");
-                        let subLiElementText = document.createTextNode(eachStudentName);
+                        let subLiElementText = document.createTextNode(studentName);
                         subLiElement.appendChild(subLiElementText);
-                        subLiElement.id = "studentNameDropdown";
+                        subLiElement.className = "studentNameDropdown";
                         subLiElement.onclick = function () {
 
                             props.history.replace(`/reload`);
@@ -59,10 +58,8 @@ function DashboardComponent(props) {
                                     }
                                 })
                             });
-
-                            document.getElementsByClassName("dash-dropdown-button").hidden = true;
                         };
-                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                        document.getElementById(groupName + "-ul").appendChild(subLiElement);
                     })
 
                 })
@@ -72,7 +69,7 @@ function DashboardComponent(props) {
 
     let handleClickLogOut = () => {
         fetch("/user/logout",{headers : { "content-type" : "application/json; charset=UTF-8", "token":passedState["token"]}});
-		props.history.push({
+        props.history.push({
             pathname: '/login',
             state: passedState
         })
@@ -86,14 +83,14 @@ function DashboardComponent(props) {
     }
 
     // get all student data
-    const [data, setData] = useState();
-    const [unitData, setUnitData] = useState();
+    const [allStudentData, setAllStudentData] = useState();
+    const [unitData, setUnitData] = useState(); // data taken from allStudentData formatted for graphing
     const url = "/database/getAllStudentData/" + studentUsername;
     let unitAverageData = [];
     useEffect(() => {
         axios(url)
             .then((res) => {
-                setData(res.data);
+                setAllStudentData(res.data);
 
                 for (let i = 0; i < res.data.unitData.length; i++) {
                     let unitNameAndAverage = {};
@@ -111,16 +108,14 @@ function DashboardComponent(props) {
     return (
         <div className="dashboard">
             <div className="nav-bar">
-                <ul className="dropdown student-dropdown">
-                    <li id="dropdown-button" className="dash-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                <ul className="student-dropdown">
+                    <li className="student-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>
-                <button className="nav-item">Current student: {studentName}</button>
-                <div className="dropdown">
-                    <button className="nav-item dropdown-title" style={{border: "solid black"}} >Tutor logged in: {tutorUsername}</button>
-                    <span className="nav-item dropdown-item" style={{border: "solid black"}} onClick={handleClickLogOut.bind(this)}>Log Out</span>
-                </div>
+                <span className="nav-item">Current student: {studentName}</span>
+                <span className="nav-item">Tutor logged in: {tutorUsername}</span>
+                <span className="nav-item" onClick={handleClickLogOut.bind(this)}>Log Out</span>
             </div>
 
             <div className="dashboard-content">
@@ -129,12 +124,13 @@ function DashboardComponent(props) {
                     <button className="sidebar-link" onClick={handleClickAttendance.bind(this)}>Attendance</button>
                 </div>
                 <div className="dash-section-area">
-                    <div className="dash-section first">
-                        <table className="mainTable">
+                    <div className="dash-section dash-section-full">
+                        <table className="main-table">
                             {
-                                data && data["unitData"].map((unit) => {
+                                // loop through each unit a student studies and set up tables for each
+                                allStudentData && allStudentData["unitData"].map((unit) => {
                                     return (
-                                        <table id={unit.name} className="subTable">
+                                        <table id={unit.name} className="sub-table">
                                             <tr className="table-headers">
                                                 <td>{unit.name}</td>
                                                 <td/>
@@ -144,16 +140,18 @@ function DashboardComponent(props) {
                                             </tr>
 
                                             {
-                                                unit.scores.map((assessment, key) => {
+                                                // loop through each assessment for unit in current iteration and populate
+                                                // row for each with name, score and weight
+                                                unit.scores.map((assessment) => {
                                                     return (
-                                                      <tr>
-                                                          <td>{assessment.name}</td>
-                                                          <td/>
-                                                          <td>{assessment.score}</td>
-                                                          <td/>
-                                                          <td>{assessment.weight * 100}</td>
+                                                        <tr>
+                                                            <td>{assessment.name}</td>
+                                                            <td/>
+                                                            <td>{assessment.score}</td>
+                                                            <td/>
+                                                            <td>{assessment.weight * 100}</td>
 
-                                                      </tr>
+                                                        </tr>
                                                     )
                                                 })
                                             }
@@ -162,15 +160,11 @@ function DashboardComponent(props) {
                                 })
                             }
                         </table>
-
-                        <Dropdown options={["Summative", "Formative", "Both"]} className="dash-filter">Filter</Dropdown>
                     </div>
 
                     <div className="dash-section">
-
-                        {/*graph showing unit average*/}
+                        {/*graph showing student unit average vs cohort unit average*/}
                         <ResponsiveContainer width="75%" height="90%">
-
                             <BarChart
                                 data={unitData}
                                 margin={{
