@@ -9,14 +9,13 @@
     align-items: center;
     justify-content: flex-end;
     flex-direction: row;
-    background-color: #2FB0C4;
+    background-color: #fcfcfc;
+    border-bottom: 3rem solid #272343;
 }
 
 .nav-item {
     font-size: 16rem;
     color: black;
-    text-transform: lowercase;
-    text-decoration: underline;
     letter-spacing: 1rem;
     background: none;
     border: 2rem ;
@@ -27,6 +26,7 @@
 .nav-item:nth-child(4):hover {
     cursor: pointer;
     opacity: .6;
+    text-decoration: underline;
 }
 
 /* below nav bar */
@@ -48,24 +48,24 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border-right: 2rem solid black;
-    background-color: #2fb0c4b0;
+    border-right: 3rem solid #272343;
+    background-color: #bae8e8;
 }
 
 .sidebar-link {
     font-size: 20rem;
     margin: 10rem 0;
-    color: black;
-    text-transform: lowercase;
-    text-decoration: underline;
+    color: #272343;
     letter-spacing: 1rem;
     background: none;
     border: none;
+    font-family: 'Lato', sans-serif;
 }
 
 .sidebar-link:hover {
     opacity: .6;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 /* dashboard main */
@@ -80,27 +80,24 @@
 .dash-section {
     width: 50%;
     height: 45vh;
-    background-color: rgb(228, 243, 248);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: #fcfcfc;
 }
 
 .dash-section-full {
     width: 100%;
+    border-bottom: 1.5rem solid #272343;
 }
 
 .dash-section:nth-child(2) {
-    background-color: pink;
-}
-
-.dash-section:nth-child(3) {
-    background-color: lightgreen;
+    border-right: 1.5rem solid #272343;
 }
 
 .main-table {
-    border: 1rem solid black;
+    border: 1.5rem solid #272343;
     display: block;
     width: 85%;
     max-width: fit-content;
@@ -111,12 +108,20 @@
 }
 
 .sub-table {
-    border: 3rem solid black;
+    border: 3rem solid #272343;
     border-spacing: 50rem 5rem;
     margin: 5rem;
-    background-color: pink;
+    padding: 5rem;
     display: inline-block;
     height: fit-content;
+}
+
+.sub-table:nth-child(odd) {
+    background-color: #bae8e8;
+}
+
+.sub-table:hover {
+    background-color: #cccccc;
 }
 
 .table-headers {

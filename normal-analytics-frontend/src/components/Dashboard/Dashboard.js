@@ -95,8 +95,8 @@ function DashboardComponent(props) {
                 for (let i = 0; i < res.data.unitData.length; i++) {
                     let unitNameAndAverage = {};
                     unitNameAndAverage["name"] = res.data.unitData[i].name;
-                    unitNameAndAverage["studentUnitAverage"] = res.data.unitData[i].unitAverage;
-                    unitNameAndAverage["cohortUnitAverage"] = res.data.unitData[i].cohortAverage;
+                    unitNameAndAverage["Student Unit Average"] = res.data.unitData[i].unitAverage;
+                    unitNameAndAverage["Cohort Unit Average"] = res.data.unitData[i].cohortAverage;
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
@@ -109,13 +109,13 @@ function DashboardComponent(props) {
         <div className="dashboard">
             <div className="nav-bar">
                 <ul className="student-dropdown">
-                    <li className="student-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                    <li className="student-dropdown-button" onClick={handleClickSelect.bind(this)}>Select student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>
                 <span className="nav-item">Current student: {studentName}</span>
                 <span className="nav-item">Tutor logged in: {tutorUsername}</span>
-                <span className="nav-item" onClick={handleClickLogOut.bind(this)}>Log Out</span>
+                <span className="nav-item" onClick={handleClickLogOut.bind(this)}>Log out</span>
             </div>
 
             <div className="dashboard-content">
@@ -126,6 +126,108 @@ function DashboardComponent(props) {
                 <div className="dash-section-area">
                     <div className="dash-section dash-section-full">
                         <table className="main-table">
+                            {
+                                // loop through each unit a student studies and set up tables for each
+                                allStudentData && allStudentData["unitData"].map((unit) => {
+                                    return (
+                                        <table id={unit.name} className="sub-table">
+                                            <tr className="table-headers">
+                                                <td>{unit.name}</td>
+                                                <td/>
+                                                <td>Score</td>
+                                                <td/>
+                                                <td>Weight (%)</td>
+                                            </tr>
+
+                                            {
+                                                // loop through each assessment for unit in current iteration and populate
+                                                // row for each with name, score and weight
+                                                unit.scores.map((assessment) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{assessment.name}</td>
+                                                            <td/>
+                                                            <td>{assessment.score}</td>
+                                                            <td/>
+                                                            <td>{assessment.weight * 100}</td>
+
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
+                                    )
+                                })
+                            }
+
+                            {
+                                // loop through each unit a student studies and set up tables for each
+                                allStudentData && allStudentData["unitData"].map((unit) => {
+                                    return (
+                                        <table id={unit.name} className="sub-table">
+                                            <tr className="table-headers">
+                                                <td>{unit.name}</td>
+                                                <td/>
+                                                <td>Score</td>
+                                                <td/>
+                                                <td>Weight (%)</td>
+                                            </tr>
+
+                                            {
+                                                // loop through each assessment for unit in current iteration and populate
+                                                // row for each with name, score and weight
+                                                unit.scores.map((assessment) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{assessment.name}</td>
+                                                            <td/>
+                                                            <td>{assessment.score}</td>
+                                                            <td/>
+                                                            <td>{assessment.weight * 100}</td>
+
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
+                                    )
+                                })
+                            }
+
+                            {
+                                // loop through each unit a student studies and set up tables for each
+                                allStudentData && allStudentData["unitData"].map((unit) => {
+                                    return (
+                                        <table id={unit.name} className="sub-table">
+                                            <tr className="table-headers">
+                                                <td>{unit.name}</td>
+                                                <td/>
+                                                <td>Score</td>
+                                                <td/>
+                                                <td>Weight (%)</td>
+                                            </tr>
+
+                                            {
+                                                // loop through each assessment for unit in current iteration and populate
+                                                // row for each with name, score and weight
+                                                unit.scores.map((assessment) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{assessment.name}</td>
+                                                            <td/>
+                                                            <td>{assessment.score}</td>
+                                                            <td/>
+                                                            <td>{assessment.weight * 100}</td>
+
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </table>
+                                    )
+                                })
+                            }
+
                             {
                                 // loop through each unit a student studies and set up tables for each
                                 allStudentData && allStudentData["unitData"].map((unit) => {
@@ -173,17 +275,36 @@ function DashboardComponent(props) {
                             >
                                 <XAxis dataKey="name"/>
                                 <YAxis domain={[0, 100]}/>
-                                <Tooltip />
+                                <Tooltip cursor={{fill: '#cccccc'}} />
                                 <Legend />
-                                <Bar dataKey="studentUnitAverage" fill="#8884d8" />
-                                <Bar dataKey="cohortUnitAverage" fill="#FFBF00" />
+                                <Bar dataKey="Student Unit Average" fill="#ffd803" />
+                                <Bar dataKey="Cohort Unit Average" fill="#bae8e8"  />
                             </BarChart>
 
                         </ResponsiveContainer>
 
                     </div>
 
-                    <div className="dash-section "/>
+                    <div className="dash-section">
+                        {/*graph showing student unit average vs cohort unit average*/}
+                        <ResponsiveContainer width="75%" height="90%">
+                            <BarChart
+                                data={unitData}
+                                margin={{
+                                    top: 5, right: 30, left: 20, bottom: 5,
+                                }}
+                            >
+                                <XAxis dataKey="name"/>
+                                <YAxis domain={[0, 100]}/>
+                                <Tooltip cursor={{fill: '#cccccc'}} />
+                                <Legend />
+                                <Bar dataKey="Student Unit Average" fill="#ffd803" />
+                                <Bar dataKey="Cohort Unit Average" fill="#bae8e8"  />
+                            </BarChart>
+
+                        </ResponsiveContainer>
+
+                    </div>
                 </div>
             </div>
         </div>
