@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * Implementation of IDatabaseReceiver for the schema provided with the repository
+ */
 @Primary
 @Component("CustomDatabaseReceiver")
 public class CustomDatabaseReciever implements IDatabaseReceiver {

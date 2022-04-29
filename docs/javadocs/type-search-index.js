@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"SPETeam.NormalAnalytics.Blackboard","l":"BBAssessmentData"},{"p":"SPETeam.NormalAnalytics.Blackboard","l":"BBReceiver"},{"p":"SPETeam.NormalAnalytics","l":"CustomDatabaseReciever"},{"p":"SPETeam.NormalAnalytics.Blackboard","l":"GradeParser"},{"p":"SPETeam.NormalAnalytics","l":"IDatabaseReceiver"}]
