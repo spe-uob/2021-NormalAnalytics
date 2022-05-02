@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class implement LoginService
+ */
 @Component
 public class LoginServiceImpl implements LoginService {
 
@@ -33,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseResult<Map<String, String>> login(TutorTable tutor) {
-        //AuthenticationManager 的认证方法authenticate进行认证
+        //authentication method
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(tutor.getUsername(),(tutor.getPassword()));

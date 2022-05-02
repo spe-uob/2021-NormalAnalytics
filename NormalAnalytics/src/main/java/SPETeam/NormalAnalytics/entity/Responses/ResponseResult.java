@@ -2,7 +2,10 @@ package SPETeam.NormalAnalytics.entity.Responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-
+/**
+ * This class is the response result
+ * @param <T>
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseResult<T> {
     /**
