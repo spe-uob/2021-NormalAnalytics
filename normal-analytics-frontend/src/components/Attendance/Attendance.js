@@ -108,42 +108,7 @@ function Attendance(props) {
             .catch((err) => console.log(err))
     }, []);
     console.log(setUnitData)
-    /**
-     * Needed changes:
-     * Change graphs to represent attendance with corresponding dates
     
-     */
-
-
-    const data1 = [
-        {
-            name: "23/2/2022",
-            score: 93,
-            
-        },
-        {
-            name: "24/2/2022",
-            score: 94,
-            
-        }
-    ];
-
-    const data2 = [
-        {
-            name: "23/2/2022",
-            score: 60,
-        },
-        {
-            name: "24/2/2022",
-            score: 55,
-           
-        }
-    ];
-
-
-    const options = [
-        'one', 'two', 'three'
-    ]
 
     return (
         <div className="dashboard">

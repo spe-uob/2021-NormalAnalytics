@@ -1,9 +1,8 @@
 // __tests__/welcome-page.js
-import { render, screen } from '@testing-library/react';
+import { getByText, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { BrowserRouter } from "react-router-dom";
-import userEvent from '@testing-library/user-event'
-
+import userEvent from '@testing-library/user-event';
 
 import WelcomePage from '../src/components/WelcomePage/WelcomePage'
 import Login from './components/Login/Login';
