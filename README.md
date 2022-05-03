@@ -35,6 +35,18 @@ Follow this link : http://4c110c5a-eu-gb.lb.appdomain.cloud:8080/
 
 Log in with your given credentials 
 
+### Importing Blackboard data
+
+- On initial login, a directory ./NormalAnalytics/blackboard will be created
+- In the directory, find the subdirectory for your tutor username
+- Within this directory, create a subdirectory with the username of the student who's grades you wish to import
+- Students can access their grades on Blackboard via the `My Marks` icon in the dropdown menu under their username
+- From their they can select the assessment you wish to import
+- Press `Ctrl + S` to download the page's HTML files
+- Inside the newly downloaded folder, you should find a file named `myGrades.html`
+- Copy this file into the corresponding student directory and rename it to the code of it's unit (For example, to import grades from SPE, you would rename `myGrades.html` to `COMS20006.html`
+- The database should be updated upon next login
+
 ## Developer guide:
 ### Dependencies:
 
