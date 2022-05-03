@@ -193,7 +193,7 @@ function Attendance(props) {
                         <XAxis  dataKey="date" tick={CustomizedAxisTick}>
                     
                         </XAxis>
-                        <YAxis dataKey="name"> 
+                        <YAxis dataKey="totalAttendance"> 
                         </YAxis>
                         <Tooltip />
                         
