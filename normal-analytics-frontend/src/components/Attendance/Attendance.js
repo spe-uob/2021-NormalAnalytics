@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import "./Attendance.css"
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer, Brush } from "recharts";
 import Dropdown from 'react-dropdown';
+import moment from 'moment';
+
 
 function Attendance(props) {
     let passedState = props.location.state;
@@ -100,7 +102,13 @@ function Attendance(props) {
                     
                     unitNameAndAverage["overallAttendance"] = res.data.unitData[i].overallAttendance;
                     unitNameAndAverage["missed"] = 1 - res.data.unitData[i].overallAttendance;
-
+                    for (let y = 0; y < res.data.unitData[i].attendances.length; y++) {
+                        let nameAndAttendance = {};
+                        nameAndAttendance["date"] = res.data.unitData[i].attendances[y].date;
+                        nameAndAttendance["totalAttendance"] = res.data.unitData[i].attendances[y].totalAttendance;
+                        unitAverageData.push(nameAndAttendance);
+                    }
+                    
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
@@ -109,7 +117,21 @@ function Attendance(props) {
     }, []);
     console.log(setUnitData)
     
-
+    const CustomizedAxisTick = ({ x, y, payload }) => {
+        const dateTip = moment(payload.value)
+          .format("L")
+           return (
+          <g transform={`translate(${x},${y})`}>
+         <text x={23} y={0} dy={14} fontSize="0.90em" fontFamily="bold" textAnchor="end" fill="#363636">
+           {dateTip}</text>
+          </g>
+         );
+        }
+        const xAxisTickFormatter = (timestamp_measured) => {
+            return moment(timestamp_measured)
+              .format("L")
+             }
+        
     return (
         <div className="dashboard">
             <div className="nav-bar">
@@ -136,30 +158,18 @@ function Attendance(props) {
                             {
                                 data && data["unitData"].map((unit) => {
                                     return (
-                                        <table id={unit.name} className="subTable">
-                                            <label>{unit.name}</label>
+                                        <table className="subTable">
+                                            
                                             <tr className="table-headers">
-                                                <td>Date</td>
+                                                <td>Unit Name</td>
                                                 <td />
                                                 <td>Attendance</td>
                                             </tr>
-
-                                            {
-                                                unit.attendances.map((attendance, key) => {
-                                                    return (
-                                                        <tr>
-                                                            <td>{attendance.date}</td>
-
-                                                            <td />
-                                                            <td>{attendance.totalAttendance}</td>
-
-                                                            <td />
-                                                            
-                                                           
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
+                                            <tr >
+                                            <td>{unit.name}</td>
+                                            <td>{unit.overallAttendance}</td>
+                                            </tr>
+                                           
                                         </table>
                                     )
                                 })
@@ -169,26 +179,28 @@ function Attendance(props) {
                        
                     </div>
                     <div className="dash-section">
-                    <Dropdown options={["Present", "Missing"]} className="dash-filter">Filter</Dropdown>  
+                    
                     <ResponsiveContainer width="75%" height="90%">
                         <LineChart 
                             data={unitData}
-                            width={500}
+                            width={1000}
                             height={300}
                             margin={{ top: 5,
                                 right: 30,
                                 left: 20,
                                 bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis  dataKey="name">
+                        <XAxis  dataKey="date" tick={CustomizedAxisTick}>
                     
                         </XAxis>
-                        <YAxis dataKey="overallAttendance" >
+                        <YAxis dataKey="name"> 
                         </YAxis>
                         <Tooltip />
                         
-                        <Line type="monotone" dataKey="overallAttendance" stroke="#8884d8" activeDot={{r: 8}}/>
-                        
+                        <Line type="monotone" dataKey="totalAttendance" stroke="#8884d8" activeDot={{r: 8}}/>
+
+                        <Brush tickFormatter={xAxisTickFormatter} dataKey="date" />
+
                         </LineChart>
                         </ResponsiveContainer>
                     </div>
