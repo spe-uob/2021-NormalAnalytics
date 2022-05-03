@@ -37,7 +37,7 @@ Log in with your given credentials
 
 ### Importing Blackboard data
 
-- On initial login, a directory ./NormalAnalytics/blackboard will be created
+- On initial login, a directory ./NormalAnalytics/target/blackboard will be created (or ./NormalAnalytics/blackboard if running through an IDE)
 - In the directory, find the subdirectory for your tutor username
 - Within this directory, create a subdirectory with the username of the student who's grades you wish to import
 - Students can access their grades on Blackboard via the `My Marks` icon in the dropdown menu under their username
