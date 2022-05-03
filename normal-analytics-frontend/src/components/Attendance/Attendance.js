@@ -99,7 +99,7 @@ function Attendance(props) {
                 for (let i = 0; i < res.data.unitData.length; i++) {
                     let unitNameAndAverage = {};
                     unitNameAndAverage["name"] = res.data.unitData[i].name;
-                    
+
                     unitNameAndAverage["overallAttendance"] = res.data.unitData[i].overallAttendance;
                     unitNameAndAverage["missed"] = 1 - res.data.unitData[i].overallAttendance;
                     for (let y = 0; y < res.data.unitData[i].attendances.length; y++) {
@@ -108,7 +108,7 @@ function Attendance(props) {
                         nameAndAttendance["totalAttendance"] = res.data.unitData[i].attendances[y].totalAttendance;
                         unitAverageData.push(nameAndAttendance);
                     }
-                    
+
                     unitAverageData.push(unitNameAndAverage);
                 }
                 setUnitData(unitAverageData);
@@ -116,22 +116,23 @@ function Attendance(props) {
             .catch((err) => console.log(err))
     }, []);
     console.log(setUnitData)
-    
+
     const CustomizedAxisTick = ({ x, y, payload }) => {
         const dateTip = moment(payload.value)
-          .format("L")
-           return (
-          <g transform={`translate(${x},${y})`}>
-         <text x={23} y={0} dy={14} fontSize="0.90em" fontFamily="bold" textAnchor="end" fill="#363636">
-           {dateTip}</text>
-          </g>
-         );
-        }
-        const xAxisTickFormatter = (timestamp_measured) => {
-            return moment(timestamp_measured)
-              .format("L")
-             }
-        
+            .format("L")
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text x={23} y={0} dy={14} fontSize="0.90em" fontFamily="bold" textAnchor="end" fill="#363636">
+                    {dateTip}</text>
+            </g>
+        );
+    }
+    const xAxisFormatter = (timestamp_measured) => {
+        return moment(timestamp_measured)
+            .format("L")
+    }
+    
+
     return (
         <div className="dashboard">
             <div className="nav-bar">
@@ -159,49 +160,51 @@ function Attendance(props) {
                                 data && data["unitData"].map((unit) => {
                                     return (
                                         <table className="subTable">
-                                            
+
                                             <tr className="table-headers">
                                                 <td>Unit Name</td>
                                                 <td />
                                                 <td>Attendance</td>
                                             </tr>
                                             <tr >
-                                            <td>{unit.name}</td>
-                                            <td>{unit.overallAttendance}</td>
+                                                <td>{unit.name}</td>
+                                                <td>{unit.overallAttendance}</td>
                                             </tr>
-                                           
+
                                         </table>
                                     )
                                 })
                             }
                         </table>
 
-                       
+
                     </div>
                     <div className="dash-section">
-                    
-                    <ResponsiveContainer width="75%" height="90%">
-                        <LineChart 
-                            data={unitData}
-                            width={1000}
-                            height={300}
-                            margin={{ top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis  dataKey="date" tick={CustomizedAxisTick}>
-                    
-                        </XAxis>
-                        <YAxis dataKey="totalAttendance"> 
-                        </YAxis>
-                        <Tooltip />
-                        
-                        <Line type="monotone" dataKey="totalAttendance" stroke="#8884d8" activeDot={{r: 8}}/>
 
-                        <Brush tickFormatter={xAxisTickFormatter} dataKey="date" />
+                        <ResponsiveContainer width="75%" height="90%">
+                            <LineChart
+                                data={unitData}
+                                width={1000}
+                                height={300}
+                                margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 5
+                                }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                
 
-                        </LineChart>
+                                <Line type="monotone" dataKey="totalAttendance" stroke="#8884d8" activeDot={{ r: 8 }}  />
+                                
+                                <Brush tickFormatter={xAxisFormatter} dataKey="date" />
+                                <XAxis dataKey="date" tick={CustomizedAxisTick}>
+
+                                </XAxis>
+                                <YAxis >
+                                </YAxis>
+                                <Tooltip />
+                            </LineChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
