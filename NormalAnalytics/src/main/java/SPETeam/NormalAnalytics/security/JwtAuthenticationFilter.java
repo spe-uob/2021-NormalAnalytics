@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * This filter will fetch the token in the request header and parse the token to extract the userid.
+ * Use userid to get the corresponding LoginUser object in redis.
+ * Then encapsulate the Authentication object into the SecurityContextHolder.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

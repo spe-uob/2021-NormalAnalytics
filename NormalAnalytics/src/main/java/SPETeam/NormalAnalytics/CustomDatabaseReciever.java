@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * Implementation of IDatabaseReceiver for the schema provided with the repository
+ */
 @Primary
 @Component("CustomDatabaseReceiver")
 public class CustomDatabaseReciever implements IDatabaseReceiver {
@@ -203,7 +206,10 @@ public class CustomDatabaseReciever implements IDatabaseReceiver {
         float overallGrade = 0f;
         List<AssessmentTable> assessments = assessmentRepository.findAssessmentTablesByUnit(unit);
         for(AssessmentTable a : assessments){
-            overallGrade += gradesRepository.findGradeTableByStudentAndAssessment(student,a).get().getGrade() * a.getWeight();
+            Optional<GradeTable> gradeToAdd = gradesRepository.findGradeTableByStudentAndAssessment(student,a);
+            if(gradeToAdd.isPresent()) {
+                overallGrade += gradeToAdd.get().getGrade() * a.getWeight();
+            }
         }
         return overallGrade;
     }

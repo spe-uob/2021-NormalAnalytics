@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Used to modify the database based on locally downloaded Blackboard data
+ */
+
 @Component
 public class BBReceiver {
 
@@ -32,6 +36,11 @@ public class BBReceiver {
     @Autowired
     StudentRepository studentRepo;
 
+    /**
+     * Checks the local machine for Blackboard HTML grade pages to extract data from and update the database with
+     * @param user the username of the tutor logging in
+     * @param path the filepath of the folder in which tutor directories are/will be stored
+     */
     public void UpdateDatabase(String user,String path) {
         String sep = File.separator;
         if(verifyOrCreateFolder(path+sep+user)){
