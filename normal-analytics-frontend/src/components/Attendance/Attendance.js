@@ -178,11 +178,11 @@ function Attendance(props) {
                     </div>
 
                     <div className="dash-section dash-section-full">
-                        <table className="mainTable">
+                        <table className="main-table attendanceMainTable">
                             {
                                 data && data["unitData"].map((unit) => {
                                     return (
-                                        <table className="subTable">
+                                        <table className="sub-table">
 
                                             <tr className="table-headers">
                                                 <td>Unit Name</td>
@@ -191,6 +191,7 @@ function Attendance(props) {
                                             </tr>
                                             <tr >
                                                 <td>{unit.name}</td>
+                                                <td />
                                                 <td>{unit.overallAttendance}</td>
                                             </tr>
 
