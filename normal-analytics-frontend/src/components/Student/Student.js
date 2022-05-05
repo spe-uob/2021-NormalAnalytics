@@ -1,43 +1,42 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import 'react-dropdown/style.css';
-
 import "./Student.css"
 
 function StudentComponent(props) {
     let passedState = props.location.state;
     let tutorAndTutees = passedState;
-	let token = passedState["token"];
+    let token = passedState["token"];
 
-    let handleClickSelect = () => {
-
+    let handleClick = () => {
         if (passedState.runOnce === false || passedState.runOnce == null) {
             passedState.runOnce = true;
 
-            Object.keys(tutorAndTutees.groupAndStudents).forEach(key => {
+            // loop through each group of students
+            Object.keys(tutorAndTutees.groupAndStudents).forEach(groupName => {
                 let liElement = document.createElement("li");
-                let liElementText = document.createTextNode(key);
+                let liElementText = document.createTextNode(groupName);
                 liElement.appendChild(liElementText);
-                liElement.id = key + "-li";
+                liElement.id = groupName + "-li";
                 liElement.className = "studentGroupDropdown";
                 document.getElementById("tutorGroups").appendChild(liElement);
 
                 let ulElement = document.createElement("ul");
-                ulElement.id = key + "-ul";
-                document.getElementById(key + "-li").appendChild(ulElement);
+                ulElement.id = groupName + "-ul";
+                document.getElementById(groupName + "-li").appendChild(ulElement);
 
+                // loop through each student within group of current iteration
+                Object.values(tutorAndTutees.groupAndStudents[groupName]).forEach(studentObject => {
+                    Object.keys(studentObject).forEach(studentName => {
 
-                Object.values(tutorAndTutees.groupAndStudents[key]).forEach(arrayOfStudentNameAndUsernameObjects => {
-                    Object.keys(arrayOfStudentNameAndUsernameObjects).forEach(eachStudentName => {
-
-                        let username = arrayOfStudentNameAndUsernameObjects[eachStudentName];
+                        let studentUsername = studentObject[studentName];
                         let studentNameAndUsername = {};
-                        studentNameAndUsername[eachStudentName] = username;
+                        studentNameAndUsername[studentName] = studentUsername;
 
                         let subLiElement = document.createElement("li");
-                        let subLiElementText = document.createTextNode(eachStudentName);
+                        let subLiElementText = document.createTextNode(studentName);
                         subLiElement.appendChild(subLiElementText);
-                        subLiElement.id = "studentNameDropdown";
+                        subLiElement.className = "studentNameDropdown";
                         subLiElement.onclick = function () {
                             props.history.replace({
                                 pathname: '/dashboard',
@@ -47,14 +46,10 @@ function StudentComponent(props) {
                                     "runOnce": false,
                                     "token": token
                                 }
-
                             })
-
-                            document.getElementsByClassName("student-dropdown-button").hidden = true;
                         };
-                        document.getElementById(key + "-ul").appendChild(subLiElement);
+                        document.getElementById(groupName + "-ul").appendChild(subLiElement);
                     })
-
                 })
             })
         }
@@ -62,11 +57,11 @@ function StudentComponent(props) {
 
     return (
         <div className="fullpage">
-            <div className="login">
-                <span className="title">Choose a Student</span>
+            <div className="box student-box">
+                <span className="student-title">Choose a Student</span>
 
-                <ul className="dropdown student-dropdown">
-                    <li id="dropdown-button" className="student-dropdown-button" onClick={handleClickSelect.bind(this)}>Select Student
+                <ul className="student-dropdown student-page">
+                    <li className="student-dropdown-button" onClick={handleClick.bind(this)}>Select Student
                         <ul id="tutorGroups"/>
                     </li>
                 </ul>

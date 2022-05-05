@@ -15,7 +15,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+/**
+ * Parses Blackboard HTML pages into BBAssessmentData
+ */
 public class GradeParser {
+
+    /**
+     * Attempts to parse a given grade page into BBAssessmentData
+     * @param filePath The file path of the HTML grade page to parse
+     * @return A list of assessment results extracted from the page
+     */
     public List<BBAssessmentData> parse(String filePath){
         String sep = File.separator;
         String[] splitPath = filePath.split(Pattern.quote(sep));

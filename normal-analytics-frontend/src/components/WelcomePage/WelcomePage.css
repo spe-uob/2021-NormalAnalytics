@@ -1,7 +1,8 @@
 /* welcome */
 
-.fullpage{
-    height:100vh;
+.fullpage {
+    width: 100vw;
+    height: 100vh;
     background: url(../../images/backgroundimage.jpg) no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -9,7 +10,7 @@
     justify-content: center;
 }
 
-.login{
+.box {
     background-color: aliceblue;
     width: 30vw;
     height: 40vh;
@@ -21,13 +22,13 @@
     flex-direction: column;
 }
 
-.title {
+.welcome-title {
     font-size: 28rem;
     font-weight: 500;
     letter-spacing: 1rem;
 }
 
-.button{
+.button {
     padding: 16rem 32rem;
     text-decoration: none;
     transition-duration: 0.4s;
@@ -39,7 +40,7 @@
     border-radius: 10rem;
 }
 
-.button:hover{
+.button:hover {
     background-color: #50a2bb;
     color: white;
 }

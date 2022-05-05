@@ -12,6 +12,10 @@ import javax.annotation.Resource;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This class implements UserDetailsService
+ * Query user information from the database based on username
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

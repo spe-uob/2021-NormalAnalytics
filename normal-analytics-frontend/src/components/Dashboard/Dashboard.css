@@ -1,5 +1,7 @@
 /* dashboard */
 
+/* navigation bar */
+
 .nav-bar {
     width: 100vw;
     height: 10vh;
@@ -7,15 +9,13 @@
     align-items: center;
     justify-content: flex-end;
     flex-direction: row;
-    font-size: 10rem;
-    background-color: #2FB0C4;
+    background-color: #fcfcfc;
+    border-bottom: 3rem solid #272343;
 }
 
 .nav-item {
     font-size: 16rem;
     color: black;
-    text-transform: lowercase;
-    text-decoration: underline;
     letter-spacing: 1rem;
     background: none;
     border: 2rem ;
@@ -23,9 +23,13 @@
     margin: 0 20rem;
 }
 
-.left {
-    margin-right: auto;
+.nav-item:nth-child(4):hover {
+    cursor: pointer;
+    opacity: .6;
+    text-decoration: underline;
 }
+
+/* below nav bar */
 
 .dashboard-content {
     width: 100vw;
@@ -35,10 +39,40 @@
     flex-wrap: wrap;
 }
 
+/* sidebar */
+
+.sidebar {
+    width: 15vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-right: 3rem solid #272343;
+    background-color: #bae8e8;
+}
+
+.sidebar-link {
+    font-size: 20rem;
+    margin: 10rem 0;
+    color: #272343;
+    letter-spacing: 1rem;
+    background: none;
+    border: none;
+    font-family: 'Lato', sans-serif;
+}
+
+.sidebar-link:hover {
+    opacity: .6;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* dashboard main */
+
 .dash-section-area {
     width: 85vw;
     height: 90vh;
-    background-color: red;
     display: flex;
     flex-wrap: wrap;
 }
@@ -46,27 +80,24 @@
 .dash-section {
     width: 50%;
     height: 45vh;
-    background-color: rgb(228, 243, 248);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: #fcfcfc;
+}
+
+.dash-section-full {
+    width: 100%;
+    border-bottom: 1.5rem solid #272343;
 }
 
 .dash-section:nth-child(2) {
-    background-color: pink;
+    border-right: 1.5rem solid #272343;
 }
 
-.dash-section:nth-child(3) {
-    background-color: lightgreen;
-}
-
-.first {
-    width: 100%;
-}
-
-.mainTable {
-    border: 1rem solid black;
+.main-table {
+    border: 1.5rem solid #272343;
     display: block;
     width: 85%;
     max-width: fit-content;
@@ -76,21 +107,25 @@
     white-space: nowrap;
 }
 
-.subTable {
-    border: 3rem solid black;
+.sub-table {
+    border: 3rem solid #272343;
     border-spacing: 50rem 5rem;
     margin: 5rem;
-    background-color: pink;
+    padding: 5rem;
     display: inline-block;
     height: fit-content;
 }
 
-.table-headers {
-    font-weight: 700;
+.sub-table:nth-child(odd) {
+    background-color: #bae8e8;
 }
 
-table tr td:empty {
-    width: 15rem;
+.sub-table:hover {
+    background-color: #cccccc;
+}
+
+.table-headers {
+    font-weight: 700;
 }
 
 table tr td {
@@ -98,74 +133,6 @@ table tr td {
     text-align: center;
 }
 
-/* dropdown styles */
-.student-dropdown {
-    font-size: 16rem;
-    color: black;
-    text-transform: lowercase;
-    text-decoration: underline;
-    letter-spacing: 1rem;
-    border: 2rem;
-    border-radius: 5rem;
-    margin: 0 auto 0 20rem;
-}
-
-.student-dropdown li:hover {
-    cursor: pointer;
-}
-
-#studentNameDropdown {
-    border: 2px solid pink;
-    padding: 5rem;
-}
-
-#studentNameDropdown:hover {
-    color: red;
-    cursor: pointer;
-}
-
-.studentGroupDropdown {
-    border: 2px solid red;
-}
-
-.studentGroupDropdown:hover {
-        opacity: .6;
-        cursor: pointer;
-}
-
-.dash-filter {
-    margin: 20rem 0;
-}
-
-/**SIDEBAR**/
-.sidebar {
-    width: 15vw;
-    height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-right: 2rem solid black;
-    background-color: #2fb0c4b0;
-}
-
-.database {
-    width: 85vh;
-    height: 100vh;
-    background-color: blue;
-}
-.sidebar-link {
-    font-size: 20rem;
-    margin: 10rem 0;
-    color: black;
-    text-transform: lowercase;
-    text-decoration: underline;
-    letter-spacing: 1rem;
-    background: none;
-    border: none;
-}
-
-.sidebar-link:hover {
-    opacity: .6;
-    cursor: pointer;
+table tr td:empty {
+    width: 15rem;
 }
