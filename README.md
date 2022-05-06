@@ -34,6 +34,8 @@ for students and offer further support.”
 Follow this link : http://4c110c5a-eu-gb.lb.appdomain.cloud:8080/
 
 Log in with your given credentials 
+Example : username: jross
+          password: password123
 
 ### Importing Blackboard data
 
